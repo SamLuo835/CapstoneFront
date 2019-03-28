@@ -1,0 +1,88 @@
+.header{
+    margin-top: 20px;
+    height: 200px;
+    width:100%;
+    background-color: white;
+    display: flex;
+    border-radius: 8px;
+}
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+   
+    font-size: 3.0em;
+    color:#073063;
+}
+.menuflexbox{
+    position: relative;
+    top:50px;
+    left:70px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu{
+    position: relative;
+    top:20px;
+}
+
+.menu span{
+    position: relative;
+    top:30px;
+    float: right;
+}
+
+.menu a{
+    display: inline;
+}
+
+.active{
+    color:gray;
+}
+
+img{
+    max-width: 250px;
+}
+
+.footer-information {
+    background: #003767;
+    padding: 48px;
+    overflow: hidden;
+    width:100%;
+    flex-shrink: 0;
+    
+}
+
+.footer-information .content {
+    max-width: 1056px;
+    margin: 0px auto 0px;
+}
+
+.footer-information .align-left {
+    font-size: 0.9em;
+    line-height: 1.8;
+}
+
+.clear {
+    clear: both;
+}
+
+.align-right {
+    float: right;
+}
+
+.footer-logo {
+    float: left;
+    margin: 0 0 20px 0;
+}
+
+.footer-information p{
+    color:white;
+}
+
+
+.app{
+    flex: 1 0 auto;
+}
+
+
