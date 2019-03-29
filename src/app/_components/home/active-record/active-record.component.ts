@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreService } from '../../_service/core.service';
+import { CoreService } from '../../../_service/core.service';
+
 @Component({
-  selector: 'app-bike-inventory',
-  templateUrl: './bike-inventory.component.html',
-  styleUrls: ['./bike-inventory.component.css'],
-  providers:[CoreService]
+  selector: 'app-active-record',
+  templateUrl: './active-record.component.html',
+  styleUrls: ['./active-record.component.css']
 })
-export class BikeInventoryComponent implements OnInit {
+export class ActiveRecordComponent implements OnInit {
 
   constructor(private _core :CoreService) { }
 
