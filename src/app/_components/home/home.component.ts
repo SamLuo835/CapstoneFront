@@ -7,6 +7,8 @@ import {AuthService} from '../../_service/auth.service'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
+  compoentIndex;
 
   constructor(private _auth :AuthService) { }
 
@@ -16,4 +18,10 @@ export class HomeComponent implements OnInit {
   logoutButton(event){
     this._auth.logoutUser();
   }
+
+  receiveMessage($event){
+    this.compoentIndex = $event;
+    console.log(this.compoentIndex);
+  }
+  
 }

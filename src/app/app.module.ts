@@ -17,8 +17,18 @@ import {TokenInterceptorService} from './_service/token-interceptor.service';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutComponent } from './_components/about/about.component';
 import { PasswordRecoverComponent } from './_components/password-recover/password-recover.component';
+import { LeftMenuComponent } from './_components/left-menu/left-menu.component';
+import { BikeInventoryComponent } from './_components/bike-inventory/bike-inventory.component';
+import { ActiveRecordComponent } from './_components/active-record/active-record.component';
+import { UserComponent } from './_components/user/user.component';
+import { ArchiveRecordComponent } from './_components/archive-record/archive-record.component';
+import { RepairToolComponent } from './_components/repair-tool/repair-tool.component';
+import { LockComponent } from './_components/lock/lock.component';
+import { LoadingSpinnerComponent } from './_utility/loading-spinner/loading-spinner.component';
+import {CoreService} from './_service/core.service';
 
 
 @NgModule({
@@ -28,7 +38,15 @@ import { PasswordRecoverComponent } from './_components/password-recover/passwor
     HomeComponent,
     TimeoutDialog,
     AboutComponent,
-    PasswordRecoverComponent
+    PasswordRecoverComponent,
+    LeftMenuComponent,
+    BikeInventoryComponent,
+    ActiveRecordComponent,
+    UserComponent,
+    ArchiveRecordComponent,
+    RepairToolComponent,
+    LockComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -41,10 +59,11 @@ import { PasswordRecoverComponent } from './_components/password-recover/passwor
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgIdleKeepaliveModule.forRoot()
+    NgIdleKeepaliveModule.forRoot(),
+    MatExpansionModule
   ],
   entryComponents:[TimeoutDialog],
-  providers: [AuthService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}],
+  providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

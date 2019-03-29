@@ -4,21 +4,27 @@ import {Keepalive} from '@ng-idle/keepalive';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {AuthService} from '../app/_service/auth.service';
 import {Router} from '@angular/router';
-
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers:[Location]
 })
 export class AppComponent {
   title = 'Capstonefront';
   imgSrc='../assets/images/logo.png'
   lastPing?: Date = null;
 
-  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,private _auth :AuthService) {
+
+  getClass(path){
+    return (this._location.path().substr(0, path.length) === path) ? 'active' : '';
+  }
+
+  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,private _auth :AuthService,private _location :Location) {
      // sets an idle timeout of 5 seconds, for testing purposes.
-     idle.setIdle(5);
+     idle.setIdle(600);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
      idle.setTimeout(5);
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document

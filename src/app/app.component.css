@@ -33,12 +33,20 @@ h1{
 }
 
 .menu a{
+    color:#003767;
     display: inline;
 }
 
-.active{
-    color:gray;
+
+.menu .active{
+    color:#00b2ce;
+    
 }
+
+.menu a:hover{
+    color:#00b2ce;
+}
+
 
 img{
     max-width: 250px;
@@ -84,5 +92,9 @@ img{
 .app{
     flex: 1 0 auto;
 }
+
+
+
+
 
 

@@ -1,4 +1,16 @@
-<p>
-  home works!
-</p>
-<input type="button" class="btn btn-primary" (click)="logoutButton($event)" value="Logout">
+<div class="py-5">
+<div class="row">
+<div class="col-lg-2.5">
+  <app-left-menu (messageEvent)="receiveMessage($event)">
+  </app-left-menu>
+</div>
+
+<div class="col-lg-9">
+  <app-bike-inventory *ngIf="compoentIndex === 1"></app-bike-inventory>
+  <app-lock *ngIf="compoentIndex === 2"></app-lock>
+  <app-repair-tool *ngIf="compoentIndex === 3"></app-repair-tool>
+  <app-active-record *ngIf="compoentIndex === 4"></app-active-record>
+  <app-archive-record *ngIf="compoentIndex === 5"></app-archive-record>
+  <app-user *ngIf="compoentIndex === 6"></app-user>
+</div>
+</div>
