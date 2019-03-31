@@ -1,4 +1,4 @@
-<div class="py-5">
+<div style="padding-top:6rem!important">
   <div class="row">
     <div class="col-md-6 mx-auto">
       <span class="anchor" id="formLogin"></span>
@@ -27,16 +27,14 @@
               <mat-form-field class="full-width">
                   <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl"
                          [errorStateMatcher]="matcher"  name="password" [(ngModel)]="loginUserData.password" >
-                  <mat-error *ngIf="passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')">
-                    Please enter a valid Password 
-                  </mat-error>
                   <mat-error *ngIf="passwordFormControl.hasError('required')">
                     Password is <strong>required</strong>
                   </mat-error>
               </mat-form-field>
             </div>
             <span class="error" >{{errorMsg}}</span>
-            <button type="button" (click)="loginUser()" class="btn btn-success float-right">Login</button>
+            <button type="button" (click)="loginUser()" [disabled]="passwordFormControl.hasError('required') || emailFormControl.hasError('required') || emailFormControl.hasError('email')" 
+            class="btn btn-success float-right">Login</button>
           </form>
         </div>
         <!--/card-block-->

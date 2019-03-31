@@ -4,7 +4,8 @@ import {Keepalive} from '@ng-idle/keepalive';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {AuthService} from '../app/_service/auth.service';
 import {Router} from '@angular/router';
-import {Location} from '@angular/common'
+import {Location} from '@angular/common';
+import {DataShareService} from '../app/_service/data-share.service'
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,11 @@ export class AppComponent {
     return (this._location.path().substr(0, path.length) === path) ? 'active' : '';
   }
 
-  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,private _auth :AuthService,private _location :Location) {
+  goToPage(){
+    this._dataShare.changeShowForm(false);
+  }
+
+  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,private _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
      // sets an idle timeout of 5 seconds, for testing purposes.
      idle.setIdle(600);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.

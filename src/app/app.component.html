@@ -7,7 +7,7 @@
   <h1>Sheridan Bike Rental System</h1>
   <div class="menu">
   <span><a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a>|
-  <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" >About</a>|
+  <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a>|
   <a class="nav-link" [ngClass]="getClass('/password-recover')" *ngIf="!_auth.loggedIn()" routerLink="/password-recover" >Forget Password</a>
   <a class="nav-link"  routerLink="" *ngIf="_auth.loggedIn()" (click)="_auth.logoutUser()" >Logout</a>
 </span>

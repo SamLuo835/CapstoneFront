@@ -1,7 +1,7 @@
 .header{
     margin-top: 20px;
     height: 200px;
-    width:100%;
+    width:150%!important;
     background-color: white;
     display: flex;
     border-radius: 8px;
@@ -90,7 +90,8 @@ img{
 
 
 .app{
-    flex: 1 0 auto;
+    flex: 2 0 auto;
+    min-height: 80vh;
 }
 
 

@@ -8,6 +8,8 @@ import { HomeComponent } from './_components/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthService} from './_service/auth.service';
@@ -29,7 +31,8 @@ import { RepairToolComponent } from './_components/home/repair-tool/repair-tool.
 import { LockComponent } from './_components/home/lock/lock.component';
 import { LoadingSpinnerComponent } from './_utility/loading-spinner/loading-spinner.component';
 import {CoreService} from './_service/core.service';
-
+import { NewRentalComponent } from './_components/home/new-rental/new-rental.component';
+import {DataShareService} from './_service/data-share.service'
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import {CoreService} from './_service/core.service';
     ArchiveRecordComponent,
     RepairToolComponent,
     LockComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    NewRentalComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,10 +64,12 @@ import {CoreService} from './_service/core.service';
     ReactiveFormsModule,
     HttpClientModule,
     NgIdleKeepaliveModule.forRoot(),
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents:[TimeoutDialog],
-  providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}],
+  providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},MatNativeDateModule,DataShareService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

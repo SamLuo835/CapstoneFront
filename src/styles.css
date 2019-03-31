@@ -10,7 +10,7 @@ body{
 
 app-root{
     display:block;
-    height: 100vh;
+    min-height: 100vh!important;
     display: flex;
     flex-direction: column;
 }

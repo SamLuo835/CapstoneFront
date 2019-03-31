@@ -42,3 +42,20 @@ mat-expansion-panel-header{
   background-color:#dadada;
 }
 
+.show{
+  -webkit-animation: show 2s forwards;
+  animation: show 2s forwards;
+}
+
+@-webkit-keyframes show {
+  from {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
+

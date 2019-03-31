@@ -9,11 +9,16 @@ export class BikeInventoryComponent implements OnInit {
 
   constructor(private _core :CoreService) { }
 
-  displayText : String; 
+  displayText : String = ""; 
   showSpinner : boolean = true
 
   ngOnInit() {
+    if(this.displayText != ""){
+      this.showSpinner = false
+    }
+    else{
     setTimeout(()=>{console.log("timeout");this._core.test().subscribe(res=>{ this.showSpinner = false; this.displayText=res['body']['text'] })},3000);
+    }
   }
 
 }

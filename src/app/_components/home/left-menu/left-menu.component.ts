@@ -1,5 +1,5 @@
 import { Component, OnInit,Output, EventEmitter } from '@angular/core';
-
+import {DataShareService} from '../../../_service/data-share.service';
 
 @Component({
   selector: 'app-left-menu',
@@ -8,19 +8,35 @@ import { Component, OnInit,Output, EventEmitter } from '@angular/core';
 })
 export class LeftMenuComponent implements OnInit {
 
+  formDisplay:boolean
+
+  formRequire : Array<any>
+
   panelOpenState = true;
   
   @Output() messageEvent = new EventEmitter<number>();
 
-
   compoentIndex;
 
-  constructor() { }
+  constructor(private _dataShare :DataShareService) { }
 
   ngOnInit() {
     this.compoentIndex = 1
     this.messageEvent.emit(this.compoentIndex);
+    this._dataShare.currentMessage.subscribe(message => this.formDisplay = message)
 
+    this._dataShare.currentForm.subscribe(message => {this.formRequire = message})
+
+  }
+
+
+  checkFormRequire(){
+    for(var i in this.formRequire){
+      if(this.formRequire[i]){
+        return true
+      }
+    }
+    return false
   }
 
   buttonClick(_component){
@@ -42,6 +58,10 @@ export class LeftMenuComponent implements OnInit {
         break;
       case 'user':
         this.compoentIndex = 6
+        break;
+      case 'new':
+        this.compoentIndex = 7
+        break;
     }
 
     this.messageEvent.emit(this.compoentIndex);
@@ -52,6 +72,17 @@ export class LeftMenuComponent implements OnInit {
     else{
       this.panelOpenState = false;
     }
+    this.formDisplay = false;
+    this._dataShare.changeShowForm(this.formDisplay);
+  }
+
+  cancel(){
+    this.formDisplay = false;
+    this._dataShare.changeShowForm(this.formDisplay);
+  }
+
+  submit(){
+    this._dataShare.changeSubmit(true);
   }
 
 }

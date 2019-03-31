@@ -1,0 +1,134 @@
+<app-loading-spinner *ngIf="showSpinner" ></app-loading-spinner>
+<div class="row" *ngIf="!showSpinner && !showForm">
+    <div class="col-md-6 mx-auto">
+<div class="container">
+  <div class="card rounded-10">
+    <div class="card-header">
+      <h3 class="mb-0">Enter Sheridan ID</h3>
+    </div>
+    <div class="card-body">
+      <form class="form">
+        <div class="form-group">  
+        <mat-form-field class="full-width">
+              <input matInput placeholder="Sheridan ID" [formControl]="idFormControl"
+                     [errorStateMatcher]="matcher" name="sheridanId" [(ngModel)]="sheridanId"  >
+             
+              <mat-error *ngIf="idFormControl.hasError('required')">
+                Sheridan ID is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <span class="error" >{{errorMsg}}</span>
+        <button type="button" (click)="submitId()" [disabled]="idFormControl.hasError('required')" class="btn btn-success float-right">Submit</button>
+      </form>
+    </div>
+    <!--/card-block-->
+  </div>
+  <!-- /form card login -->
+
+</div>
+</div>
+</div>
+<div class="row" *ngIf="!showSpinner && showForm">
+    <div class="col-md-12 ">
+        <div class="container">
+            <form class="form">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Full Name" [errorStateMatcher]="matcher" name="name"  (change)="onChange(0)" [formControl]="nameFormControl"  [(ngModel)]="resultUserData['name']">
+                  <mat-error *ngIf="nameFormControl.hasError('required')">
+                      Full name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Sheridan ID"  disabled  name="sheridanId" [(ngModel)]="resultUserData['sheridanId']">
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Sheridan Email" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(1)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                          Sheridan Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('email')">
+                            Sheridan Email is <strong>invalid</strong>
+                    </mat-error>
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Personal Email" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(2)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
+                    <mat-error *ngIf="pEmailFormControl.hasError('required')">
+                        Personal Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="pEmailFormControl.hasError('email')">
+                          Personal Email is <strong>invalid</strong>
+                    </mat-error> 
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                    <input  matInput placeholder="Phone" [errorStateMatcher]="matcher" name="phone" (change)="onChange(3)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
+                    <mat-error *ngIf="phoneFormControl.hasError('required')">
+                        Phone is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field><br><br>
+
+                <!--<table class="full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="full-width">
+                    <input matInput placeholder="First name">
+                  </mat-form-field></td>
+                  <td><mat-form-field class="full-width">
+                    <input matInput placeholder="Long Last Name That Will Be Truncated">
+                  </mat-form-field></td>
+                </tr></table>-->
+                
+                <!--<mat-form-field>
+                    <input matInput [matDatepickerFilter]="dayFilter" [matDatepicker]="picker" placeholder="Return Date"
+                           (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>-->
+
+
+
+                <!--<p>
+                  <mat-form-field class="full-width">
+                    <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <textarea matInput placeholder="Address 2"></textarea>
+                  </mat-form-field>
+                </p>-->
+
+                <!--<label id="radio-group-label"></label>
+                <mat-radio-group
+                  aria-labelledby="example-radio-group-label"
+                  class="example-radio-group"
+                  [(ngModel)]="favoriteSeason">
+                  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                    {{season}}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <div>Your favorite season is: {{favoriteSeason}}</div>-->
+
+
+                <mat-form-field class="full-width">
+                    <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="comment"></textarea>
+
+                </mat-form-field>
+
+                           
+                
+              
+                <!--<table class="full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="full-width">
+                    <input matInput placeholder="City">
+                  </mat-form-field></td>
+                  <td><mat-form-field class="full-width">
+                    <input matInput placeholder="State">
+                  </mat-form-field></td>
+                  <td><mat-form-field class="full-width">
+                    <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+                    <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                  </mat-form-field></td>
+                </tr></table>-->
+              </form>
+              
+        </div>
+    </div>
+</div>

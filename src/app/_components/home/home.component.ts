@@ -10,6 +10,9 @@ export class HomeComponent implements OnInit {
   
   compoentIndex;
 
+  formDisplay:Boolean = false;
+  
+
   constructor(private _auth :AuthService) { }
 
   ngOnInit() {
@@ -21,7 +24,6 @@ export class HomeComponent implements OnInit {
 
   receiveMessage($event){
     this.compoentIndex = $event;
-    console.log(this.compoentIndex);
-  }
+    }
   
 }
