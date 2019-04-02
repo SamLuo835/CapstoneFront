@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {AuthService} from '../app/_service/auth.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {DataShareService} from '../app/_service/data-share.service'
+import {DataShareService} from '../app/_service/data-share.service';
 
 @Component({
   selector: 'app-root',
@@ -79,11 +79,11 @@ export class AppComponent {
 export class TimeoutDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<TimeoutDialog>,private _router :Router) {
+    public dialogRef: MatDialogRef<TimeoutDialog>,private _router :Router,private ngZone :NgZone) {
     }
   onClick(): void {
     this.dialogRef.close();
-    this._router.navigate(['/']);
+    this.ngZone.run(()=> this._router.navigate(['/']));
   }
 
 }

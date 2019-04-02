@@ -12,6 +12,9 @@ export class CoreService {
 
   returnObj = {name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'}
 
+  bikeObj = [{bikeId:1,bikeType:"Mountain",avaliable:true,imagePath:"1.jpg"},{bikeId:2,bikeType:"City",avaliable:true,imagePath:"2.jpg"},{bikeId:3,bikeType:"Touring",avaliable:false,imagePath:"1.jpg"}
+,{bikeId:4,bikeType:"Road",avaliable:true,imagePath:"2.jpg"},{bikeId:5,bikeType:"Mountain",avaliable:true,imagePath:"1.jpg"},{bikeId:6,bikeType:"Mountain",avaliable:false,imagePath:"2.jpg"}];
+
   idQuery(id):Observable<any>{
     if(id != this.returnObj['sheridanId']){
       return of(new HttpResponse({ body: {message:"newUser"}, status: 200 }));
@@ -24,5 +27,9 @@ export class CoreService {
 
   test():Observable<any>{
      return  of(new HttpResponse({ body: {text:"it work!"}, status: 200 }));
+  }
+
+  testBike():Observable<any>{
+    return of(new HttpResponse({body:{bikes:this.bikeObj},status:200}))
   }
 }

@@ -1,8 +1,8 @@
 <app-loading-spinner *ngIf="showSpinner" ></app-loading-spinner>
 <div class="row" *ngIf="!showSpinner && !showForm">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-5 mx-auto">
 <div class="container">
-  <div class="card rounded-10">
+  <div class="card rounded-5">
     <div class="card-header">
       <h3 class="mb-0">Enter Sheridan ID</h3>
     </div>
@@ -35,16 +35,16 @@
         <div class="container">
             <form class="form">
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="Full Name" [errorStateMatcher]="matcher" name="name"  (change)="onChange(0)" [formControl]="nameFormControl"  [(ngModel)]="resultUserData['name']">
+                  <input matInput placeholder="Full Name *" [errorStateMatcher]="matcher" name="name"  (change)="onChange(0)" [formControl]="nameFormControl"  [(ngModel)]="resultUserData['name']">
                   <mat-error *ngIf="nameFormControl.hasError('required')">
                       Full name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Sheridan ID"  disabled  name="sheridanId" [(ngModel)]="resultUserData['sheridanId']">
+                    <input matInput placeholder="Sheridan ID *"  disabled  name="sheridanId" [(ngModel)]="resultUserData['sheridanId']">
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Sheridan Email" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(1)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
+                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(1)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
                     <mat-error *ngIf="emailFormControl.hasError('required')">
                           Sheridan Email is <strong>required</strong>
                     </mat-error>
@@ -53,7 +53,7 @@
                     </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Personal Email" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(2)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
+                    <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(2)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
                     <mat-error *ngIf="pEmailFormControl.hasError('required')">
                         Personal Email is <strong>required</strong>
                     </mat-error>
@@ -62,7 +62,7 @@
                     </mat-error> 
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input  matInput placeholder="Phone" [errorStateMatcher]="matcher" name="phone" (change)="onChange(3)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
+                    <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(3)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
                     <mat-error *ngIf="phoneFormControl.hasError('required')">
                         Phone is <strong>required</strong>
                     </mat-error>

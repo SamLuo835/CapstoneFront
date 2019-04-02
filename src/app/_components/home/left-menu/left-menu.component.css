@@ -47,14 +47,7 @@ mat-expansion-panel-header{
   animation: show 2s forwards;
 }
 
-@-webkit-keyframes show {
-  from {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+
 
 
 

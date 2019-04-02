@@ -1,10 +1,10 @@
 <header>
-<div class="container header">
-  <div>
+<div class=" header headerFlex">
+  <div class="imageBox">
   <img src="{{imgSrc}}">
   </div>
   <div class="menuflexbox">
-  <h1>Sheridan Bike Rental System</h1>
+  <h1 class="headerTitle">Sheridan Bike Rental System</h1>
   <div class="menu">
   <span><a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a>|
   <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a>|
@@ -15,7 +15,7 @@
   </div>
 </div>
 </header>
-<div class="container app">
+<div class="app">
   <router-outlet></router-outlet>            
 </div>
 

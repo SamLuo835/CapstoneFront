@@ -1,11 +1,11 @@
-<div class="py-5">
+<div class="py-5 home">
 <div class="row">
-<div class="col-lg-2.5">
+<div class="col-lg-2">
       <app-left-menu (messageEvent)="receiveMessage($event)">
   </app-left-menu>
 </div>
 
-<div class="col-lg-9 ">
+<div class="col-lg-10 ">
   <app-bike-inventory *ngIf="compoentIndex === 1"></app-bike-inventory>
   <app-lock *ngIf="compoentIndex === 2"></app-lock>
   <app-repair-tool *ngIf="compoentIndex === 3"></app-repair-tool>
