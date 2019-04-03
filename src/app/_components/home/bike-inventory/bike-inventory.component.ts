@@ -17,8 +17,8 @@ export class BikeInventoryComponent implements OnInit {
       this.showSpinner = false
     }
     else{
-    setTimeout(()=>{this._core.testBike().subscribe(res=>{ this.showSpinner = false; this.bikes=res['body']['bikes'] })},3000);
+      this._core.getBikeList().subscribe(res=>{ this.showSpinner = false; this.bikes = res})
+     }
     }
   }
 
-}

@@ -4,10 +4,10 @@
         <div *ngFor="let item of bikes; let i = index">
             <div class="col-lg">
                 <div class="card">
-                    <div class="card-header">Bike ID: {{item.bikeId}}</div>
+                    <div class="card-header">Bike ID: {{item.id}}</div>
                     <img class="card-img-top" src="../../../../assets/images/{{item.imagePath}}" alt="Card image cap">
                     <div class="card-body">
-                        <p class="card-text" [ngClass]="{'text-danger':!item.avaliable,'text-success':item.avaliable}">{{item.avaliable?"Avaliable":"Unavaliable"}}</p>
+                        <p class="card-text" [ngClass]="{'text-danger':!item.avaliable,'text-success':item.avaliable}">{{item.avaliable?"Available":"Unavailable"}}</p>
                         <p  class="card-text">Type: {{item.bikeType}}</p>
                         <div style="display: flex;justify-content: space-between">
                         <a href="#" class="btn btn-outline-dark">See Records</a>
