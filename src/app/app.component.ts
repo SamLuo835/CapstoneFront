@@ -15,7 +15,7 @@ import {DataShareService} from '../app/_service/data-share.service';
 })
 export class AppComponent {
   title = 'Capstonefront';
-  imgSrc='../assets/images/logo.png'
+  imgSrc='./assets/images/logo.png'
   lastPing?: Date = null;
 
 
@@ -27,7 +27,7 @@ export class AppComponent {
     this._dataShare.changeShowForm(false);
   }
 
-  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,private _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
+  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
      // sets an idle timeout of 5 seconds, for testing purposes.
      idle.setIdle(600);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
@@ -36,7 +36,7 @@ export class AppComponent {
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     idle.onTimeout.subscribe(() => {
-      if(_auth.loggedIn()){
+      if(this._auth.loggedIn()){
         this.openDialog();
         localStorage.removeItem("token");
       }

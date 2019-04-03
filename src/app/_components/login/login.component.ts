@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   
   errorMsg:String;
   checkedBox:Boolean = false;
-  loginUserData = {}
+  loginUserData = {email:'',password:''}
 
   constructor(private _auth: AuthService,private _router:Router) { }
 
