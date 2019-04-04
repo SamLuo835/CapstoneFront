@@ -38,6 +38,7 @@ export class AppComponent {
     idle.onTimeout.subscribe(() => {
       if(this._auth.loggedIn()){
         this.openDialog();
+        this._dataShare.changeShowForm(false);
         localStorage.removeItem("token");
       }
       else{

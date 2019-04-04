@@ -61,12 +61,27 @@
                           Personal Email is <strong>invalid</strong>
                     </mat-error> 
                 </mat-form-field><br><br>
-                <mat-form-field class="full-width">
+                
+                <table class="full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="full-width">
                     <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(3)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
                     <mat-error *ngIf="phoneFormControl.hasError('required')">
                         Phone is <strong>required</strong>
                     </mat-error>
-                </mat-form-field><br><br>
+                </mat-form-field></td>
+                <td> <mat-form-field class="full-width">
+                  <mat-label>Pick a Bike *</mat-label>
+                  <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange(4)" [formControl]="bikeFormControl">
+                    <mat-option *ngFor="let bike of bikeList" [disabled]="!bike.available" [value]="bike.id ">
+                      Bike #{{bike.id}}, <span [ngClass]="{'text-danger':!bike.available,'text-success':bike.available}">{{bike.available?"Available":"Unavailable"}}</span>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="bikeFormControl.hasError('required')">
+                    Bike is <strong>required</strong>
+                </mat-error>
+                </mat-form-field></td>
+              </tr></table>
+                <br><br>
 
                 <!--<table class="full-width" cellspacing="0"><tr>
                   <td><mat-form-field class="full-width">
@@ -105,7 +120,7 @@
                   </mat-radio-button>
                 </mat-radio-group>
                 <div>Your favorite season is: {{favoriteSeason}}</div>-->
-
+                
 
                 <mat-form-field class="full-width">
                     <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="comment"></textarea>

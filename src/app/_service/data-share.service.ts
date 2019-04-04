@@ -18,16 +18,36 @@ export class DataShareService {
 
   currentFormSubmit = this.formSubmit.asObservable();
 
+  private bikeList = new BehaviorSubject([]);
+
+  currentBikeList = this.bikeList.asObservable();
+
+  //setBikeList(newList){
+   // this.bikeList = newList;
+  //}
+
+  //getBikeList(){
+  //  return this.bikeList;
+  //}
+
   constructor() { }
 
+
+  changeBikeList(message : Array<any>){
+    this.bikeList.next(message);
+  }
+
+  //toggle to show the rental form or not
   changeShowForm(message: boolean) {
     this.showFormSource.next(message)
   }
 
+  //form required field observe
   changeForm(message : Array<any>){
     this.FromRequiredSource.next(message)
   }
 
+  //submit button event emit
   changeSubmit(message : boolean){
     this.formSubmit.next(message);
   }

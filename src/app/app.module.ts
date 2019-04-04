@@ -34,6 +34,8 @@ import { LoadingSpinnerComponent } from './_utility/loading-spinner/loading-spin
 import {CoreService} from './_service/core.service';
 import { NewRentalComponent } from './_components/home/new-rental/new-rental.component';
 import {DataShareService} from './_service/data-share.service';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import {DataShareService} from './_service/data-share.service';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule
   ],
   entryComponents:[TimeoutDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},MatNativeDateModule,DataShareService],
