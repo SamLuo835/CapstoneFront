@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
@@ -14,7 +14,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-new-rental',
   templateUrl: './new-rental.component.html',
-  styleUrls: ['./new-rental.component.css']
+  styleUrls: ['./new-rental.component.css'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class NewRentalComponent implements OnInit {
 
@@ -22,8 +24,9 @@ export class NewRentalComponent implements OnInit {
   errorMsg:String;
   hasResult:Boolean
   showSpinner:Boolean = false;
-  comment:String;
-  resultUserData:Object
+  comment:String = "";
+  bikeSelected:String = "";
+  resultUserData:Object = {};
   showForm:boolean =false;
 
   formData;
@@ -33,12 +36,16 @@ export class NewRentalComponent implements OnInit {
   pEmailFormControl;
   nameFormControl;
   phoneFormControl;
+  bikeFormControl;
+
+  bikeList = [];
 
   constructor(private _coreService:CoreService,private _dataShare:DataShareService) { }
 
   ngOnInit() {
     this._dataShare.currentMessage.subscribe(message => this.showForm = message)
     this._dataShare.currentForm.subscribe(message => this.formRequire = message)
+    this._dataShare.currentBikeList.subscribe(message => this.bikeList = message)
     this._dataShare.currentFormSubmit.subscribe(message => {if(message){
       console.log("sending via core service");
       //only send the id and comment back 
@@ -51,6 +58,7 @@ export class NewRentalComponent implements OnInit {
         this.formData = this.resultUserData;
         this.formData['newUser'] = true;
       }
+      this.formData['bikeId'] = this.bikeSelected
       this.formData['comment'] = this.comment
       console.log(this.formData);
       this.showForm = false;
@@ -58,7 +66,6 @@ export class NewRentalComponent implements OnInit {
       this._dataShare.changeSubmit(false);
     }
   })
-
   }
 
   idFormControl = new FormControl('', [
@@ -84,6 +91,10 @@ export class NewRentalComponent implements OnInit {
     this.phoneFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
       Validators.required
     ]);
+
+    this.bikeFormControl = new FormControl('', [
+      Validators.required
+    ]);
   }
   
 
@@ -101,6 +112,8 @@ export class NewRentalComponent implements OnInit {
       break;
       case 3: this.formRequire[3] = this.phoneFormControl.hasError('required');
       break;
+      case 4: this.formRequire[4] = this.bikeFormControl.hasError('required');
+      break;
     }
     console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
@@ -116,15 +129,17 @@ export class NewRentalComponent implements OnInit {
     .subscribe(res=>{ 
       if(res['body']['message']== 'newUser'){
         this.hasResult = false;
-        this.resultUserData = {name:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}    
-        this._dataShare.changeForm([true,true,true,true]);
+        this.resultUserData = {name:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
+        this._dataShare.changeForm([true,true,true,true,true]);
       }
       else{
         this.resultUserData = res['body'];
-        console.log(this.resultUserData)
-        this.hasResult = true
-        this._dataShare.changeForm([false,false,false,false]);
+        console.log(this.resultUserData);
+        this.hasResult = true; 
+        this._dataShare.changeForm([false,false,false,false,true]);
       }
+      this.comment = "";
+      this.bikeSelected = ""; 
       this.createFormControl()
       this.showForm = true;
       this.showSpinner = false; 

@@ -25,10 +25,11 @@
 <hr>
 <button mat-button  [ngClass]="{'hightLight':compoentIndex == 6}" class="menuButton" (click)="buttonClick('user')">Users</button>
   <br> <br><br><br>
- 
-  <button class="btn btn-success " style="width:100%" (click)="buttonClick('new')" *ngIf="!formDisplay"> New Rental</button>
+
+  <button class="btn btn-success " style="width:100%" (click)="buttonClick('new')" [disabled]="noAvailableBike"  *ngIf="!formDisplay"> New Rental</button>
+  <span *ngIf="noAvailableBike" class="text-danger" style="font-size: 0.7rem">No bike is available at this moment</span>
   <button class="btn btn-danger " style="width:100%" (click)="cancel()" *ngIf="formDisplay">Cancel Rental</button>
   <br><br>
   <button class="btn btn-success " style="width:100%" [disabled]="checkFormRequire()" *ngIf="formDisplay" (click)="submit()"> Save Rental</button>
-
+  <span *ngIf="checkFormRequire() && formDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
 

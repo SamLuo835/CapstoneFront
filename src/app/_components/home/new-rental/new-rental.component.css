@@ -29,3 +29,9 @@
   form{
       margin:auto;
   }
+
+  .selectdropdown{
+    opacity: 0.9!important;
+    border-radius: 5px!important;
+    overflow: scroll!important;
+  }

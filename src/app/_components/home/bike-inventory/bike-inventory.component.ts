@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
+import { DataShareService } from 'src/app/_service/data-share.service';
 @Component({
   selector: 'app-bike-inventory',
   templateUrl: './bike-inventory.component.html',
@@ -7,9 +8,9 @@ import { CoreService } from '../../../_service/core.service';
 })
 export class BikeInventoryComponent implements OnInit {
 
-  constructor(private _core :CoreService) { }
+  constructor(private _core :CoreService,private _dataShare:DataShareService) { }
 
-  bikes:Object; 
+  bikes:any; 
   showSpinner : boolean = true
 
   ngOnInit() {
@@ -17,7 +18,7 @@ export class BikeInventoryComponent implements OnInit {
       this.showSpinner = false
     }
     else{
-      this._core.getBikeList().subscribe(res=>{ this.showSpinner = false; this.bikes = res})
+      this._core.getBikeList().subscribe(res=>{ this.showSpinner = false; this.bikes = res;this._dataShare.changeBikeList(this.bikes)})
      }
     }
   }

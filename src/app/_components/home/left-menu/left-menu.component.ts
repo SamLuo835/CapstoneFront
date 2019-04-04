@@ -13,6 +13,10 @@ export class LeftMenuComponent implements OnInit {
   formRequire : Array<any>
 
   panelOpenState = true;
+
+  noAvailableBike:Boolean;
+
+  bikeList = [];
   
   @Output() messageEvent = new EventEmitter<number>();
 
@@ -26,8 +30,21 @@ export class LeftMenuComponent implements OnInit {
     this._dataShare.currentMessage.subscribe(message => this.formDisplay = message)
 
     this._dataShare.currentForm.subscribe(message => {this.formRequire = message})
+    this._dataShare.currentBikeList.subscribe(message =>{ this.bikeList = message;this.checkAvailableBike()});
 
   }
+
+
+  checkAvailableBike(){
+      for( var i in this.bikeList){
+        if(this.bikeList[i]['available']){
+          this.noAvailableBike = false;
+          return; 
+        }
+      }
+      this.noAvailableBike = true;
+    }
+  
 
 
   checkFormRequire(){

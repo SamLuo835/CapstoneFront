@@ -369,6 +369,10 @@ MIT
 
 @angular/material/checkbox
 
+@angular/material/core
+
+@angular/material/select
+
 @angular/material/expansion
 
 @angular/material/button
