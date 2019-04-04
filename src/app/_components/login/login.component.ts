@@ -53,16 +53,32 @@ export class LoginComponent implements OnInit {
   loginUser(){
     this._auth.loginUser(this.loginUserData).subscribe(
       res=>{
-        localStorage.setItem('token',res['body']['token']);
-        localStorage.setItem('role',res['body']['role']);
-        if(this.checkedBox){
-          localStorage.setItem("rememberEmail",this.loginUserData['email']);
+        console.log(res);
+        if(res.valid) {
+          localStorage.setItem('token',res['token']);
+          localStorage.setItem('role',res['role']);
+          if(this.checkedBox){
+            localStorage.setItem("rememberEmail",this.loginUserData['email']);
+          }
+          else{
+            localStorage.removeItem("rememberEmail");
+          }
+          this._router.navigate(['/home'])
+        } else {
+          this.errorMsg = "Email or password are incorrect"
         }
-        else{
-          localStorage.removeItem("rememberEmail");
-        }
-        this._router.navigate(['/home'])
-    },
+
+          // if(user.email != this.user1.email){
+          //   return  throwError(new HttpResponse({ body: { error: "This email is not registered" }, status: 403,statusText:'Not Found' }));
+          // }
+          // else if(user.password != this.user1.password){
+          //   return  throwError(new HttpResponse({ body: { error: "The password is incorrect" }, status: 401 ,statusText:"Unauthorized"}));
+          // }
+          // else  return  of(new HttpResponse({ body: {email:'hardcode@test.com',role:'Admin',token:'fakeToken'}, status: 200 }));
+
+        
+        
+      },
       err=>{
         this.errorMsg = err['body']['error']
         console.log(err)

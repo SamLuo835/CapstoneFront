@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, TimeoutDialog} from './app.component';
 import { LoginComponent } from './_components/login/login.component';
 import { HomeComponent } from './_components/home/home.component';
+import { Observable} from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -32,7 +33,7 @@ import { LockComponent } from './_components/home/lock/lock.component';
 import { LoadingSpinnerComponent } from './_utility/loading-spinner/loading-spinner.component';
 import {CoreService} from './_service/core.service';
 import { NewRentalComponent } from './_components/home/new-rental/new-rental.component';
-import {DataShareService} from './_service/data-share.service'
+import {DataShareService} from './_service/data-share.service';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,7 @@ import {DataShareService} from './_service/data-share.service'
     NgIdleKeepaliveModule.forRoot(),
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   entryComponents:[TimeoutDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},MatNativeDateModule,DataShareService],

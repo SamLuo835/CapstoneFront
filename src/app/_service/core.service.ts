@@ -10,7 +10,8 @@ export class CoreService {
 
   constructor(private http:HttpClient) { }
 
-  private bikeListUrl: string = "http://localhost:8082/getBikes";
+  // private bikeListUrl: string = "http://localhost:8082/getBikes";
+  private bikeListUrl: string = "http://bike-rental-hmc.herokuapp.com/getBikes";
 
   customerObj = {name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'}
 

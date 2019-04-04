@@ -12,15 +12,11 @@ export class AuthService {
   constructor(private http:HttpClient,private router:Router) { }
 
   user1 = {email:'hardcode@test.com',password:'12345',role:'Admin'};
+  // url = 'http://localhost:8082/login';
+  url = 'https://bike-rental-hmc.herokuapp.com/login';
 
   loginUser(user):Observable<any> {
-    if(user.email != this.user1.email){
-      return  throwError(new HttpResponse({ body: { error: "This email is not registered" }, status: 403,statusText:'Not Found' }));
-    }
-    else if(user.password != this.user1.password){
-      return  throwError(new HttpResponse({ body: { error: "The password is incorrect" }, status: 401 ,statusText:"Unauthorized"}));
-    }
-    else  return  of(new HttpResponse({ body: {email:'hardcode@test.com',role:'Admin',token:'fakeToken'}, status: 200 }));
+    return this.http.post(this.url, {"email": user.email, "password": user.password});
   }
 
   loggedIn(){
