@@ -14,7 +14,7 @@ export class LockComponent implements OnInit {
   showSpinner : boolean = true
 
   ngOnInit() {
-    setTimeout(()=>{console.log("timeout");this._core.test().subscribe(res=>{ this.showSpinner = false; this.displayText=res['body']['text'] })},3000);
+    setTimeout(()=>{this._core.test().subscribe(res=>{ this.showSpinner = false; this.displayText=res['body']['text'] })},3000);
   }
 
 }

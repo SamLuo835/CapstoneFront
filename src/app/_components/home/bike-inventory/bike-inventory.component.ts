@@ -10,16 +10,19 @@ export class BikeInventoryComponent implements OnInit {
 
   constructor(private _core :CoreService,private _dataShare:DataShareService) { }
 
-  bikes:any; 
+  bikes:Array<any>; 
   showSpinner : boolean = true
 
   ngOnInit() {
-    if(this.bikes){
-      this.showSpinner = false
+      if(!this.bikes){
+        this.getBikeList();
+      }
     }
-    else{
-      this._core.getBikeList().subscribe(res=>{ this.showSpinner = false; this.bikes = res;this._dataShare.changeBikeList(this.bikes)})
-     }
+
+
+
+  getBikeList(){
+    this._core.getBikeList().subscribe(res=>{ this.showSpinner = false;this.bikes = JSON.parse(res) ;this._dataShare.changeBikeList(this.bikes)})
     }
   }
 

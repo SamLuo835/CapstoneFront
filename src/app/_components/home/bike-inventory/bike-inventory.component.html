@@ -5,7 +5,7 @@
             <div class="col-lg">
                 <div class="card">
                     <div class="card-header">Bike ID: {{item.id}}</div>
-                    <img class="card-img-top" src="./assets/images/{{item.imagePath}}" alt="Card image cap">
+                    <img class="card-img-top" src="./assets/images/{{item.imgPath}}" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text" [ngClass]="{'text-danger':!item.available,'text-success':item.available}">{{item.available?"Available":"Unavailable"}}</p>
                         <p  class="card-text">Type: {{item.bikeType}}</p>

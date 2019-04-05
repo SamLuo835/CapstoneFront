@@ -22,14 +22,6 @@ export class DataShareService {
 
   currentBikeList = this.bikeList.asObservable();
 
-  //setBikeList(newList){
-   // this.bikeList = newList;
-  //}
-
-  //getBikeList(){
-  //  return this.bikeList;
-  //}
-
   constructor() { }
 
 

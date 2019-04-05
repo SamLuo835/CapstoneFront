@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
         
       },
       err=>{
-        this.errorMsg = err['body']['error']
+       // this.errorMsg = err['body']['error']
         console.log(err)
       }
     );
