@@ -45,5 +45,11 @@ export class DataShareService {
   }
 
 
+  //get the bikelist not via subscribing to the oberservable, 
+  getBikeList(){
+    return this.bikeList.getValue();
+  }
+
+
 
 }
