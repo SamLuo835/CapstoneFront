@@ -34,12 +34,12 @@
   <table class="full-width" cellspacing="0">
     <tr>
         <td><mat-form-field class="full-width">
-            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="data.signOutDate">
+            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="signOutDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field></td>
           <td><mat-form-field class="full-width">
-              <input matInput  [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'late'?true:false" placeholder="Due Date" [value]="data.duedate">
+              <input matInput  [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'Late'?true:false" placeholder="Due Date" [value]="dueDate">
              
               <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
               <mat-datepicker #duepicker></mat-datepicker>
@@ -54,13 +54,8 @@
   </mat-form-field>
   </div>
   </div>
-<<<<<<< HEAD
  <mat-dialog-actions class="activeRentalDialog">
-  <button class="btn btn-warning" (click)="closeCase()">Close Case</button>
-=======
- <mat-dialog-actions >
   <button class="btn btn-warning" (click)="closeCase()">Return Bike</button>
->>>>>>> 81e4d1276f70c82788dab40c99a704f372bfcd20
 
   <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
 

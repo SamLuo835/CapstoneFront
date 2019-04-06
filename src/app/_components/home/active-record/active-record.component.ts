@@ -23,6 +23,8 @@ export class ActiveRecordComponent implements OnInit {
   dataSource : MatTableDataSource<any>;
   displayedColumns: string[] = ['id', 'signoutdate', 'duedate', 'status','manage'];
 
+  tableDetail:Object = {};
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -30,7 +32,8 @@ export class ActiveRecordComponent implements OnInit {
   ngOnInit() {
         setTimeout(()=>{this._core.tableDataCall().subscribe(res=>{ 
         this.showSpinner = false;
-        this.dataSource = new MatTableDataSource(res);
+        this.tableData = res['body']['table']
+        this.dataSource = new MatTableDataSource(this.tableData);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       })},3000);
@@ -40,25 +43,15 @@ export class ActiveRecordComponent implements OnInit {
 
 //table button on click(only required in active rental table)
   showMore(element){
-    this.dialogSpinner = true;
-    this.openDialog(element);
+    //this.dialogSpinner = true;
+    this.tableDetail = element;
+    this.openDialog();
   }
 
-  openDialog(element): void {
-    
-
-    setTimeout(()=>{this._core.tableDetailCall().subscribe(res=>{
-       let shareData = res['body'];
-       shareData['rentalId']=element.id;
-       shareData['signoutdate']=element.signoutdate;
-       shareData['duedate']=element.duedate;
-       shareData['comment']=element.comment;
-       shareData['status']=element.status;
-       shareData['bikeId']=element.bikeId;
-       shareData['sharidanId']=element.sheridanId;
-       this.dialogSpinner = false;
+  openDialog(): void { 
+       //this.dialogSpinner = false;
        const dialogRef = this._modal.open(DetailDialog, {
-        data: shareData,
+        data: this.tableDetail,
         height: '600px',
         width: '600px',
         autoFocus:false,
@@ -66,10 +59,9 @@ export class ActiveRecordComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-
-        //this is removing the class scope variable tableData's element (need to wrap in inside the back end call)
+        // removing the class scope variable tableData's element (need to wrap it inside the back end call)
         for(let i in this.tableData){
-          if(this.tableData[i]['id'] == result){
+          if(this.tableData[i]['rentalId'] == result){
             this.tableData.splice(Number(i),1);
             this.dataSource = new MatTableDataSource(this.tableData);
             this.dataSource.sort = this.sort;
@@ -78,20 +70,12 @@ export class ActiveRecordComponent implements OnInit {
               this._core.getBikeList().subscribe(res=>{
               //calling this will trigger the subscribe event that listening on bike list in other component
                 this._dataShare.changeBikeList( JSON.parse(res));
-                console.log(res);
               }
             )
             break;
           }
         }
-       
-
-
-      });
-    })},3000);
-    ;
-
-    
+      }); 
   }
 }
 
@@ -105,14 +89,18 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 })
 export class DetailDialog {
   
+  //convert to moment formatted date string
+  signOutDate:string;
+  dueDate:string;
+
   constructor(
     public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     
     ngOnInit(){
-      this.data.signoutdate = _moment(this.data.signoutdate).format();
-      this.data.duedate = _moment(this.data.duedate).format();
+      this.signOutDate = _moment(this.data.signOutDate).format();
+      this.dueDate = _moment(this.data.dueDate).format();
     }
 
 
@@ -126,7 +114,7 @@ export class DetailDialog {
     saveChanges(){
       //call service with modified fields
       console.log(this.data.comment)
-      console.log(this.data.duedate);
+      console.log(this.dueDate);
       console.log(this.data.rentalId)
 
     }
