@@ -38,8 +38,8 @@ export class AppComponent {
     idle.onTimeout.subscribe(() => {
       if(this._auth.loggedIn()){
         this.openDialog();
-        this._dataShare.changeShowForm(false);
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
       }
       else{
         this.reset();
@@ -80,11 +80,13 @@ export class AppComponent {
 export class TimeoutDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<TimeoutDialog>,private _router :Router,private ngZone :NgZone) {
+    public dialogRef: MatDialogRef<TimeoutDialog>,private _router :Router,private ngZone :NgZone,private _dataShare :DataShareService) {
     }
   onClick(): void {
     this.dialogRef.close();
-    this.ngZone.run(()=> this._router.navigate(['/']));
+
+    this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);
+  });
   }
 
 }

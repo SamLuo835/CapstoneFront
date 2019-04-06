@@ -133,6 +133,6 @@ export class DetailDialog {
 
   
     onClick(): void {
-      this.dialogRef.close(this.data.rentalId);
+      this.dialogRef.close();
     }
 }

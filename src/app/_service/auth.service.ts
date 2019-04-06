@@ -4,13 +4,14 @@ import { Observable,throwError} from 'rxjs';
 import { catchError,retry} from 'rxjs/operators';
 
 import {Router} from '@angular/router';
+import { DataShareService } from './data-share.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient,private router:Router) { }
+  constructor(private http:HttpClient,private router:Router,private _dataShare:DataShareService) { }
 
   //user1 = {email:'hardcode@test.com',password:'12345',role:'Admin'};
   url:string = 'https://bike-rental-hmc.herokuapp.com/login';
@@ -28,6 +29,7 @@ export class AuthService {
   logoutUser(){
     localStorage.removeItem('role');
     localStorage.removeItem('token');
+    this._dataShare.changeShowForm(false);
     this.router.navigate(['/login']);
   }
 

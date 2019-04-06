@@ -30,17 +30,17 @@ export class DataShareService {
     this.bikeList.next(message);
   }
 
-  //toggle to show the rental form or not
+  //toggle to show the rental form or not, controls the left menu 'cancel rental' and 'submit rental' buttons visibility as well
   changeShowForm(message: boolean) {
     this.showFormSource.next(message)
   }
 
-  //form required field observe
+  //form required observable, disable the submit button and display error text when required field missing
   changeForm(message : Array<any>){
     this.FromRequiredSource.next(message)
   }
 
-  //submit button event emit
+  //submit button event emit, as the submit button and the rental form are in different component
   changeSubmit(message : boolean){
     this.formSubmit.next(message);
   }
