@@ -3,6 +3,39 @@ import {HttpClient,HttpResponse} from '@angular/common/http';
 import { Observable, of ,throwError} from 'rxjs';
 import { ObserversModule } from '@angular/cdk/observers';
 
+
+const ACTIVE_TABLE_DATA: Object[] = [
+  {id: 1, signoutdate: '2019-02-28', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 2, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 3, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 4, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 5, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 6, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:'abc'},
+  {id: 7, signoutdate: '2019-03-11', duedate: '2019-03-12', status: 'late',comment:'abc'},
+  {id: 8, signoutdate: '2019-03-11', duedate: '2019-03-12', status: 'late',comment:''},
+  {id: 9, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 10, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 11, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 12, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 13, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 14, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 15, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 16, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'late',comment:''},
+  {id: 17, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'late',comment:''},
+  {id: 18, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 19, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 20, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 21, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+  {id: 22, signoutdate: '2019-03-11', duedate: '2019-03-13', status: 'active',comment:''},
+];
+
+const ACTIVE_TABLE_DETAIL_DATA: Object= {
+  name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789',
+  staff:'',bikeId:1
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +60,15 @@ export class CoreService {
 
   test():Observable<any>{
      return  of(new HttpResponse({ body: {text:"it work!"}, status: 200 }));
+  }
+
+  tableDataCall():Observable<any>{
+    return  of(new HttpResponse({ body: {table:ACTIVE_TABLE_DATA}, status: 200 }));
+  }
+
+  tableDetailCall():Observable<any>{
+    return  of(new HttpResponse({ body: ACTIVE_TABLE_DETAIL_DATA, status: 200 }));
+
   }
 
 

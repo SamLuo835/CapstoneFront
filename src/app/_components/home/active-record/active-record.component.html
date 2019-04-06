@@ -1,4 +1,45 @@
+<div>
+<div [ngClass]="dialogSpinner? 'overlay':'underlay'">
+    <mat-spinner  diameter='40'></mat-spinner>
+</div>
 <div >
-    <app-loading-spinner *ngIf="showSpinner" ></app-loading-spinner>
-    <h1 style="text-align: center">{{displayText}}</h1>
-    </div>
+    <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
+    <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rental Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <!-- sign out date Column -->
+        <ng-container matColumnDef="signoutdate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Sign out Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.signoutdate}} </td>
+        </ng-container>
+      
+        <!-- due date Column -->
+        <ng-container matColumnDef="duedate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.duedate}} </td>
+        </ng-container>
+      
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="element.status == 'active'? 'text-success':'text-danger'"> {{element.status}} </td>
+        </ng-container>
+
+         <!-- manage button -->
+         <ng-container matColumnDef="manage">
+                <th mat-header-cell *matHeaderCellDef > Detail & More Action </th>
+                <td mat-cell *matCellDef="let element" > <button mat-button (click)="showMore(element)"> Manage</button></td>
+              </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [ngClass]='dataSource!==undefined ? "visible":"hide"' [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      
+</div>
+</div>

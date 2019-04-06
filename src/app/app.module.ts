@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, TimeoutDialog} from './app.component';
 import { LoginComponent } from './_components/login/login.component';
@@ -10,7 +9,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatNativeDateModule, MatTab} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthService} from './_service/auth.service';
@@ -25,16 +25,20 @@ import { AboutComponent } from './_components/about/about.component';
 import { PasswordRecoverComponent } from './_components/password-recover/password-recover.component';
 import { LeftMenuComponent } from './_components/home/left-menu/left-menu.component';
 import { BikeInventoryComponent } from './_components/home/bike-inventory/bike-inventory.component';
-import { ActiveRecordComponent } from './_components/home/active-record/active-record.component';
+import { ActiveRecordComponent,DetailDialog } from './_components/home/active-record/active-record.component';
 import { UserComponent } from './_components/home/user/user.component';
 import { ArchiveRecordComponent } from './_components/home/archive-record/archive-record.component';
 import { RepairToolComponent } from './_components/home/repair-tool/repair-tool.component';
 import { LockComponent } from './_components/home/lock/lock.component';
-import { LoadingSpinnerComponent } from './_utility/loading-spinner/loading-spinner.component';
 import {CoreService} from './_service/core.service';
 import { NewRentalComponent } from './_components/home/new-rental/new-rental.component';
 import {DataShareService} from './_service/data-share.service';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/';
+import {MatPaginatorModule} from '@angular/material/';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 @NgModule({
@@ -52,8 +56,8 @@ import {MatSelectModule} from '@angular/material/select';
     ArchiveRecordComponent,
     RepairToolComponent,
     LockComponent,
-    LoadingSpinnerComponent,
-    NewRentalComponent
+    NewRentalComponent,
+    DetailDialog
   ],
   imports: [
     BrowserAnimationsModule,
@@ -70,9 +74,13 @@ import {MatSelectModule} from '@angular/material/select';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
-  entryComponents:[TimeoutDialog],
+  entryComponents:[TimeoutDialog,DetailDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},MatNativeDateModule,DataShareService],
   bootstrap: [AppComponent]
 })

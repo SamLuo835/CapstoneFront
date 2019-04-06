@@ -22,6 +22,7 @@ export class DataShareService {
 
   currentBikeList = this.bikeList.asObservable();
 
+
   constructor() { }
 
 
@@ -49,7 +50,5 @@ export class DataShareService {
   getBikeList(){
     return this.bikeList.getValue();
   }
-
-
 
 }

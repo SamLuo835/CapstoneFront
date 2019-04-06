@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>Rental ID: {{data.rentalId}}<button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button></h1>
+<hr>
+<div mat-dialog-content>
+    <table class="full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="full-width">
+          <input matInput placeholder="Customer Name" disabled [(ngModel)]="data.name">
+        </mat-form-field></td>
+        <td><mat-form-field class="full-width">
+          <input matInput placeholder="Sheridan ID" disabled [(ngModel)]="data.sheridanId">
+        </mat-form-field></td>
+        <td><mat-form-field class="full-width">
+            <input matInput placeholder="Bike ID" disabled [(ngModel)]="data.bikeId">
+          </mat-form-field></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <table class="full-width" cellspacing="0">
+    <tr>
+        <td><mat-form-field class="full-width">
+            <input matInput placeholder="Sheridan Email" disabled [(ngModel)]="data.sheridanEmail">
+          </mat-form-field></td>
+          <td><mat-form-field class="full-width">
+              <input matInput placeholder="Personal Email" disabled [(ngModel)]="data.personalEmail">
+            </mat-form-field></td>
+    </tr>
+  </table>
+  
+  <br>
+  
+  <table class="full-width" cellspacing="0">
+    <tr>
+        <td><mat-form-field class="full-width">
+            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="data.signoutdate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field></td>
+          <td><mat-form-field class="full-width">
+              <input matInput  [matDatepicker]="duepicker" [disabled]="data.status == 'late'?true:false" placeholder="Due Date" [value]="data.duedate">
+              <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
+              <mat-datepicker #duepicker></mat-datepicker>
+            </mat-form-field></td>
+    </tr>
+  </table>
+  
+  <br>
+  <div class="container">
+  <mat-form-field class="full-width">
+      <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>
+  </div>
+  </div>
+ <mat-dialog-actions >
+  <button class="btn btn-warning" (click)="closeCase()">Close Case</button>
+
+  <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
+
+</mat-dialog-actions>
+
