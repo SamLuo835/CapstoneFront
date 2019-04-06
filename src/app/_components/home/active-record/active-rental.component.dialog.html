@@ -39,7 +39,8 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field></td>
           <td><mat-form-field class="full-width">
-              <input matInput  [matDatepicker]="duepicker" [disabled]="data.status == 'late'?true:false" placeholder="Due Date" [value]="data.duedate">
+              <input matInput  [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'late'?true:false" placeholder="Due Date" [value]="data.duedate">
+             
               <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
               <mat-datepicker #duepicker></mat-datepicker>
             </mat-form-field></td>
