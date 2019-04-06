@@ -29,9 +29,8 @@ export class ActiveRecordComponent implements OnInit {
   
   ngOnInit() {
         setTimeout(()=>{this._core.tableDataCall().subscribe(res=>{ 
-        this.showSpinner = false; 
-        this.tableData=res['body']['table'];
-        this.dataSource = new MatTableDataSource(this.tableData);
+        this.showSpinner = false;
+        this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       })},3000);
