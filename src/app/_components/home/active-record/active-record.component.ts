@@ -28,10 +28,9 @@ export class ActiveRecordComponent implements OnInit {
 
   
   ngOnInit() {
-        setTimeout(()=>{this._core.tableDataCall().subscribe(res=>{ 
-        this.showSpinner = false; 
-        this.tableData=res['body']['table'];
-        this.dataSource = new MatTableDataSource(this.tableData);
+        setTimeout(()=>{this._core.activeRentalDataCall().subscribe(res=>{ 
+        this.showSpinner = false;
+        this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       })},3000);
@@ -48,13 +47,8 @@ export class ActiveRecordComponent implements OnInit {
   openDialog(element): void {
     
 
-    setTimeout(()=>{this._core.tableDetailCall().subscribe(res=>{
-       let shareData = res['body'];
-       shareData['rentalId']=element.id;
-       shareData['signoutdate']=element.signoutdate;
-       shareData['duedate']=element.duedate;
-       shareData['comment']=element.comment;
-       shareData['status']=element.status
+    setTimeout(()=>{this._core.activeRentalDetailDataCall(element.id).subscribe(res=>{
+       let shareData = res;
        this.dialogSpinner = false;
        const dialogRef = this._modal.open(DetailDialog, {
         data: shareData,

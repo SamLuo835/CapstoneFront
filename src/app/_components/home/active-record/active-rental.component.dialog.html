@@ -5,7 +5,7 @@
 <div mat-dialog-content>
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
-          <input matInput placeholder="Customer Name" disabled [(ngModel)]="data.name">
+          <input matInput placeholder="Customer Name" disabled [(ngModel)]="data.customerName">
         </mat-form-field></td>
         <td><mat-form-field class="full-width">
           <input matInput placeholder="Sheridan ID" disabled [(ngModel)]="data.sheridanId">
@@ -34,7 +34,7 @@
   <table class="full-width" cellspacing="0">
     <tr>
         <td><mat-form-field class="full-width">
-            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="data.signoutdate">
+            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="data.signOutDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field></td>
@@ -55,7 +55,7 @@
   </div>
   </div>
  <mat-dialog-actions >
-  <button class="btn btn-warning" (click)="closeCase()">Close Case</button>
+  <button class="btn btn-warning" (click)="closeCase()">Return Bike</button>
 
   <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
 
