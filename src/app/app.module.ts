@@ -38,6 +38,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/';
 import {MatPaginatorModule} from '@angular/material/';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ReportsComponent } from './_components/reports/reports.component';
 
 
 
@@ -57,7 +58,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     RepairToolComponent,
     LockComponent,
     NewRentalComponent,
-    DetailDialog
+    DetailDialog,
+    ReportsComponent
   ],
   imports: [
     BrowserAnimationsModule,

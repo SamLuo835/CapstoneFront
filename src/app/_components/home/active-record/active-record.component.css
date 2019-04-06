@@ -46,7 +46,7 @@ mat-paginator{
     width:90%;
 }
 
-mat-dialog-actions{
+.activeRentalDialog{
     display:flex;
     justify-content: space-between;
     position: relative;

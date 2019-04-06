@@ -52,6 +52,11 @@ h1{
     display: inline;
 }
 
+.verticalLine{
+    position: initial;
+    top:0!important;
+}
+
 
 .menu .active{
     color:#00b2ce;

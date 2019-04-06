@@ -80,9 +80,10 @@ export class AppComponent {
 export class TimeoutDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<TimeoutDialog>,private _router :Router,private ngZone :NgZone,private _dataShare :DataShareService) {
+    public dialogRef: MatDialogRef<TimeoutDialog>,private dialog:MatDialog,private _router :Router,private ngZone :NgZone,private _dataShare :DataShareService) {
     }
   onClick(): void {
+    this.dialog.closeAll();
     this.dialogRef.close();
 
     this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);

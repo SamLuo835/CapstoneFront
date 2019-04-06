@@ -6,8 +6,10 @@
   <div class="menuflexbox">
   <h1 class="headerTitle">Sheridan Bike Rental System</h1>
   <div class="menu">
-  <span><a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a>|
-  <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a>|
+  <span>
+  <a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a><span class="verticalLine">|</span>
+  <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a><span class="verticalLine">|</span>
+  <a class="nav-link" [ngClass]="getClass('/report')" routerLink="/report" *ngIf="_auth.loggedIn()"  (click)="goToPage()">Reports </a><span  *ngIf="_auth.loggedIn()" class="verticalLine">|</span>
   <a class="nav-link" [ngClass]="getClass('/password-recover')" *ngIf="!_auth.loggedIn()" routerLink="/password-recover" >Forget Password</a>
   <a class="nav-link"  routerLink="" *ngIf="_auth.loggedIn()" (click)="_auth.logoutUser()" >Logout</a>
 </span>

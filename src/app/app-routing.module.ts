@@ -6,6 +6,7 @@ import { AuthGuard } from './auth.guard';
 import { RootGuard } from './root.guard';
 import { AboutComponent } from './_components/about/about.component';
 import { PasswordRecoverComponent } from './_components/password-recover/password-recover.component';
+import { ReportsComponent } from './_components/reports/reports.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path:'about',
     component:AboutComponent
+  },
+  {
+    path:'report',
+    component:ReportsComponent
   },
   {
     path:'password-recover',

@@ -54,7 +54,9 @@ export class ActiveRecordComponent implements OnInit {
        shareData['signoutdate']=element.signoutdate;
        shareData['duedate']=element.duedate;
        shareData['comment']=element.comment;
-       shareData['status']=element.status
+       shareData['status']=element.status;
+       shareData['bikeId']=element.bikeId;
+       shareData['sharidanId']=element.sheridanId;
        this.dialogSpinner = false;
        const dialogRef = this._modal.open(DetailDialog, {
         data: shareData,
