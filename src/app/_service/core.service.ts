@@ -61,7 +61,7 @@ export class CoreService {
      return  of(new HttpResponse({ body: {text:"it work!"}, status: 200 }));
   }
 
-  activeRentalDataCall():Observable<any> {
+  activeRentalsDataCall():Observable<any> {
     return this.http.get(this.activeRentalsUrl).pipe(
       catchError(this.handleError));
   }

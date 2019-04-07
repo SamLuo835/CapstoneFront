@@ -30,9 +30,9 @@ export class ActiveRecordComponent implements OnInit {
 
   
   ngOnInit() {
-        setTimeout(()=>{this._core.tableDataCall().subscribe(res=>{ 
+        setTimeout(()=>{this._core.activeRentalsDataCall().subscribe(res=>{ 
         this.showSpinner = false;
-        this.tableData = res['body']['table']
+        this.tableData = res;
         this.dataSource = new MatTableDataSource(this.tableData);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -80,8 +80,8 @@ export class ActiveRecordComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         break;
-        }
       }
+    }
   }
 
 
