@@ -59,25 +59,55 @@ export class ActiveRecordComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
+        if(result['action']=='return'){
         // removing the class scope variable tableData's element (need to wrap it inside the back end call)
-        for(let i in this.tableData){
-          if(this.tableData[i]['rentalId'] == result){
-            this.tableData.splice(Number(i),1);
-            this.dataSource = new MatTableDataSource(this.tableData);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            //refresh the data share's bikelist
-              this._core.getBikeList().subscribe(res=>{
-              //calling this will trigger the subscribe event that listening on bike list in other component
-                this._dataShare.changeBikeList( JSON.parse(res));
-              }
-            )
-            break;
-          }
+          this.removeTableCell(result);
         }
+        else if(result['action']=='change'){
+          //update the class scope variable tableData's element (need to wrap it inside the back end call)
+          this.changeTableCell(result);
+        }
+
       }); 
   }
+
+  changeTableCell(result){
+    for(let i in this.tableData){
+      if(this.tableData[i]['rentalId'] == result['rentalId']){
+        this.tableData[i]['comment'] = result['comment'];
+        this.tableData[i]['dueDate'] = result['dueDate'];
+        this.dataSource = new MatTableDataSource(this.tableData);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        break;
+        }
+      }
+  }
+
+
+  removeTableCell(result){
+    for(let i in this.tableData){
+      if(this.tableData[i]['rentalId'] == result['rentalId']){
+        this.tableData.splice(Number(i),1);
+        this.dataSource = new MatTableDataSource(this.tableData);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        //refresh the data share's bikelist since the back end update one bike availablity
+          this._core.getBikeList().subscribe(res=>{
+          //calling this will trigger the subscribe event that listening on bike list in other component
+            this._dataShare.changeBikeList( JSON.parse(res));
+            }
+          )
+          break;
+        }
+      }
+  }
+
+
 }
+
+
+
 
 //dialog class
 import * as _moment from 'moment';
@@ -88,6 +118,12 @@ import { DataShareService } from 'src/app/_service/data-share.service';
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
+
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  }
   
   //convert to moment formatted date string
   signOutDate:string;
@@ -107,7 +143,7 @@ export class DetailDialog {
     closeCase(){
       //call service with rental id
       console.log(this.data.rentalId) 
-      this.dialogRef.close(this.data.rentalId);
+      this.dialogRef.close({rentalId:this.data.rentalId,action:'return'});
 
     }
 
@@ -116,12 +152,14 @@ export class DetailDialog {
       console.log(this.data.comment)
       console.log(this.dueDate);
       console.log(this.data.rentalId)
+      this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:this.dueDate});
+
 
     }
 
 
   
     onClick(): void {
-      this.dialogRef.close();
+      this.dialogRef.close({action:'cancel'});
     }
 }
