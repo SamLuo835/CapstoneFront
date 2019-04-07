@@ -29,7 +29,8 @@ const routes: Routes = [
   },
   {
     path:'report',
-    component:ReportsComponent
+    component:ReportsComponent,
+    canActivate:[AuthGuard]
   },
   {
     path:'password-recover',
