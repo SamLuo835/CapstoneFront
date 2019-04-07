@@ -7,19 +7,19 @@
     <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- id Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="rentalId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Rental Id </th>
           <td mat-cell *matCellDef="let element"> {{element.rentalId}} </td>
         </ng-container>
       
         <!-- sign out date Column -->
-        <ng-container matColumnDef="signoutdate">
+        <ng-container matColumnDef="signOutDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Sign out Date </th>
           <td mat-cell *matCellDef="let element"> {{element.signOutDate | date}} </td>
         </ng-container>
       
         <!-- due date Column -->
-        <ng-container matColumnDef="duedate">
+        <ng-container matColumnDef="dueDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
           <td mat-cell *matCellDef="let element"> {{element.dueDate | date}} </td>
         </ng-container>

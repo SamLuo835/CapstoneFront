@@ -21,7 +21,7 @@ export class ActiveRecordComponent implements OnInit {
   showSpinner : boolean = true;
   dialogSpinner : boolean = false;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['id', 'signoutdate', 'duedate', 'status','manage'];
+  displayedColumns: string[] = ['rentalId', 'signOutDate', 'dueDate', 'status','manage'];
 
   tableDetail:Object = {};
 
