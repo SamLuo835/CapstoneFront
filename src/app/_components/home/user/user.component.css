@@ -1,0 +1,49 @@
+table {
+    width:95%;
+    text-align: center
+}
+
+th{
+    text-align: center!important
+}
+
+.mat-sort-header-container{
+    display:flex;
+    justify-content: center!important
+}
+mat-paginator{
+    width: 95%;
+}
+
+.visible{
+    visibility: visible;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+.underlay{
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+}
+
+.full-width{
+    width:90%;
+}
+
+button:focus{outline: none!important}
