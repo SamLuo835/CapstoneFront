@@ -8,7 +8,6 @@
                     <img class="card-img-top" src="./assets/images/{{item.imgPath}}" alt="Card image cap">
                     <div class="card-body">
                         <p class="card-text" [ngClass]="{'text-danger':!item.available,'text-success':item.available}">{{item.available?"Available":"Unavailable"}}</p>
-                        <p  class="card-text">Type: {{item.bikeType}}</p>
                         <div style="display: flex;justify-content: space-between">
                         <a href="#" class="btn btn-outline-dark">See Records</a>
                         <a href="#" class="btn btn-warning">Retire</a>
