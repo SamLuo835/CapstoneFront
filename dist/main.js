@@ -728,7 +728,7 @@ module.exports = ".home{\r\n    width: 90%;\r\n    margin:auto;\r\n}\r\n\r\n.row
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"py-5 home\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-2\">\r\n      <app-left-menu (messageEvent)=\"receiveMessage($event)\">\r\n  </app-left-menu>\r\n</div>\r\n\r\n<div class=\"col-lg-10 \">\r\n  <app-bike-inventory *ngIf=\"compoentIndex === 1\"></app-bike-inventory>\r\n  <app-lock *ngIf=\"compoentIndex === 2\"></app-lock>\r\n  <app-repair-tool *ngIf=\"compoentIndex === 3\"></app-repair-tool>\r\n  <app-active-record *ngIf=\"compoentIndex === 4\"></app-active-record>\r\n  <app-archive-record *ngIf=\"compoentIndex === 5\"></app-archive-record>\r\n  <app-user *ngIf=\"compoentIndex === 6\"></app-user>\r\n  <app-new-rental  *ngIf=\"compoentIndex === 7\" ></app-new-rental>\r\n\r\n</div>\r\n</div>"
+module.exports = "<div class=\"py-5 home\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-2\">\r\n      <app-left-menu (messageEvent)=\"receiveMessage($event)\">\r\n  </app-left-menu>\r\n</div>\r\n\r\n<div class=\"col-lg-10 \">\r\n  <app-bike-inventory *ngIf=\"componentIndex === 1\"></app-bike-inventory>\r\n  <app-lock *ngIf=\"componentIndex === 2\"></app-lock>\r\n  <app-repair-tool *ngIf=\"componentIndex === 3\"></app-repair-tool>\r\n  <app-active-record *ngIf=\"componentIndex === 4\"></app-active-record>\r\n  <app-archive-record *ngIf=\"componentIndex === 5\"></app-archive-record>\r\n  <app-user *ngIf=\"componentIndex === 6\"></app-user>\r\n  <app-new-rental  *ngIf=\"componentIndex === 7\" ></app-new-rental>\r\n\r\n</div>\r\n</div>"
 
 /***/ }),
 
@@ -759,7 +759,7 @@ var HomeComponent = /** @class */ (function () {
         this._auth.logoutUser();
     };
     HomeComponent.prototype.receiveMessage = function ($event) {
-        this.compoentIndex = $event;
+        this.componentIndex = $event;
     };
     HomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -794,7 +794,7 @@ module.exports = "\r\nmat-expansion-panel-header:hover{\r\n  background-color:#d
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = " \r\n    <mat-expansion-panel [expanded]=\"panelOpenState === true\" (opened)=\"panelOpenState = true\"\r\n                         (closed)=\"panelOpenState = false\" hideToggle=\"true\" >\r\n      <mat-expansion-panel-header [ngClass]=\"{'backgoundBlack':panelOpenState}\">\r\n        <mat-panel-title [ngClass]=\"{'backgoundBlack':panelOpenState}\">\r\n          Inventory\r\n        </mat-panel-title>\r\n        <div class=\"mat-expansion-indicator\" [ngClass]=\"{'spin-animation':panelOpenState}\"></div>\r\n      </mat-expansion-panel-header>\r\n      \r\n\r\n      <button mat-button [ngClass]=\"{'hightLight':compoentIndex == 1}\" class=\"zeroTop menuButton\" (click)=\"buttonClick('bike')\" >Bikes</button>\r\n\r\n      <hr>\r\n      <button mat-button [ngClass]=\"{'hightLight':compoentIndex == 2}\" class=\"menuButton\" (click)=\"buttonClick('lock')\" >Locks</button>\r\n      <hr>\r\n      <button mat-button [ngClass]=\"{'hightLight':compoentIndex == 3}\" class=\"menuButton\" (click)=\"buttonClick('repair')\" >Repair Tools</button>\r\n      <hr>\r\n    </mat-expansion-panel>\r\n    <hr>\r\n\r\n<button mat-button [ngClass]=\"{'hightLight':compoentIndex == 4}\" class=\"menuButton\" (click)=\"buttonClick('active')\">Active Rental Records</button>\r\n<hr>\r\n<button mat-button [ngClass]=\"{'hightLight':compoentIndex == 5}\" class=\"menuButton\" (click)=\"buttonClick('archive')\">Archive Rental Records</button>\r\n<hr>\r\n<button mat-button  [ngClass]=\"{'hightLight':compoentIndex == 6}\" class=\"menuButton\" (click)=\"buttonClick('user')\">Users</button>\r\n  <br> <br><br><br>\r\n\r\n  <button class=\"btn btn-success \" style=\"width:100%\" (click)=\"buttonClick('new')\" [disabled]=\"noAvailableBike\"  *ngIf=\"!formDisplay\"> New Rental</button>\r\n  <span *ngIf=\"noAvailableBike\" class=\"text-danger\" style=\"font-size: 0.7rem\">No bike is available at this moment</span>\r\n  <button class=\"btn btn-danger \" style=\"width:100%\" (click)=\"cancel()\" *ngIf=\"formDisplay\">Cancel Rental</button>\r\n  <br><br>\r\n  <button class=\"btn btn-success \" style=\"width:100%\" [disabled]=\"checkFormRequire()\" *ngIf=\"formDisplay\" (click)=\"submit()\"> Save Rental</button>\r\n  <span *ngIf=\"checkFormRequire() && formDisplay\" class=\"text-danger\" style=\"font-size: 0.7rem\">Missing one or more require fields</span>\r\n\r\n"
+module.exports = " \r\n    <mat-expansion-panel [expanded]=\"panelOpenState === true\" (opened)=\"panelOpenState = true\"\r\n                         (closed)=\"panelOpenState = false\" hideToggle=\"true\" >\r\n      <mat-expansion-panel-header [ngClass]=\"{'backgoundBlack':panelOpenState}\">\r\n        <mat-panel-title [ngClass]=\"{'backgoundBlack':panelOpenState}\">\r\n          Inventory\r\n        </mat-panel-title>\r\n        <div class=\"mat-expansion-indicator\" [ngClass]=\"{'spin-animation':panelOpenState}\"></div>\r\n      </mat-expansion-panel-header>\r\n      \r\n\r\n      <button mat-button [ngClass]=\"{'hightLight':componentIndex == 1}\" class=\"zeroTop menuButton\" (click)=\"buttonClick('bike')\" >Bikes</button>\r\n\r\n      <hr>\r\n      <button mat-button [ngClass]=\"{'hightLight':componentIndex == 2}\" class=\"menuButton\" (click)=\"buttonClick('lock')\" >Locks</button>\r\n      <hr>\r\n      <button mat-button [ngClass]=\"{'hightLight':componentIndex == 3}\" class=\"menuButton\" (click)=\"buttonClick('repair')\" >Repair Tools</button>\r\n      <hr>\r\n    </mat-expansion-panel>\r\n    <hr>\r\n\r\n<button mat-button [ngClass]=\"{'hightLight':componentIndex == 4}\" class=\"menuButton\" (click)=\"buttonClick('active')\">Active Rental Records</button>\r\n<hr>\r\n<button mat-button [ngClass]=\"{'hightLight':componentIndex == 5}\" class=\"menuButton\" (click)=\"buttonClick('archive')\">Archive Rental Records</button>\r\n<hr>\r\n<button mat-button  [ngClass]=\"{'hightLight':componentIndex == 6}\" class=\"menuButton\" (click)=\"buttonClick('user')\">Users</button>\r\n  <br> <br><br><br>\r\n\r\n  <button class=\"btn btn-success \" style=\"width:100%\" (click)=\"buttonClick('new')\" [disabled]=\"noAvailableBike\"  *ngIf=\"!formDisplay\"> New Rental</button>\r\n  <span *ngIf=\"noAvailableBike\" class=\"text-danger\" style=\"font-size: 0.7rem\">No bike is available at this moment</span>\r\n  <button class=\"btn btn-danger \" style=\"width:100%\" (click)=\"cancel()\" *ngIf=\"formDisplay\">Cancel Rental</button>\r\n  <br><br>\r\n  <button class=\"btn btn-success \" style=\"width:100%\" [disabled]=\"checkFormRequire()\" *ngIf=\"formDisplay\" (click)=\"submit()\"> Save Rental</button>\r\n  <span *ngIf=\"checkFormRequire() && formDisplay\" class=\"text-danger\" style=\"font-size: 0.7rem\">Missing one or more require fields</span>\r\n\r\n"
 
 /***/ }),
 
@@ -823,8 +823,8 @@ var LeftMenuComponent = /** @class */ (function () {
     }
     LeftMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.compoentIndex = 1;
-        this.messageEvent.emit(this.compoentIndex);
+        this.componentIndex = 1;
+        this.messageEvent.emit(this.componentIndex);
         this._dataShare.currentMessage.subscribe(function (message) { return _this.formDisplay = message; });
         this._dataShare.currentForm.subscribe(function (message) { _this.formRequire = message; });
         this._dataShare.currentBikeList.subscribe(function (message) { _this.bikeList = message; _this.checkAvailableBike(); });
@@ -849,29 +849,29 @@ var LeftMenuComponent = /** @class */ (function () {
     LeftMenuComponent.prototype.buttonClick = function (_component) {
         switch (_component) {
             case 'bike':
-                this.compoentIndex = 1;
+                this.componentIndex = 1;
                 break;
             case 'lock':
-                this.compoentIndex = 2;
+                this.componentIndex = 2;
                 break;
             case 'repair':
-                this.compoentIndex = 3;
+                this.componentIndex = 3;
                 break;
             case 'active':
-                this.compoentIndex = 4;
+                this.componentIndex = 4;
                 break;
             case 'archive':
-                this.compoentIndex = 5;
+                this.componentIndex = 5;
                 break;
             case 'user':
-                this.compoentIndex = 6;
+                this.componentIndex = 6;
                 break;
             case 'new':
-                this.compoentIndex = 7;
+                this.componentIndex = 7;
                 break;
         }
-        this.messageEvent.emit(this.compoentIndex);
-        if (this.compoentIndex === 1 || this.compoentIndex === 2 || this.compoentIndex === 3) {
+        this.messageEvent.emit(this.componentIndex);
+        if (this.componentIndex === 1 || this.componentIndex === 2 || this.componentIndex === 3) {
             this.panelOpenState = true;
         }
         else {

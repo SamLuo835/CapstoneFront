@@ -20,13 +20,13 @@ export class LeftMenuComponent implements OnInit {
   
   @Output() messageEvent = new EventEmitter<number>();
 
-  compoentIndex;
+  componentIndex;
 
   constructor(private _dataShare :DataShareService) { }
 
   ngOnInit() {
-    this.compoentIndex = 1
-    this.messageEvent.emit(this.compoentIndex);
+    this.componentIndex = 1
+    this.messageEvent.emit(this.componentIndex);
     this._dataShare.currentMessage.subscribe(message => this.formDisplay = message)
 
     this._dataShare.currentForm.subscribe(message => {this.formRequire = message})
@@ -59,31 +59,31 @@ export class LeftMenuComponent implements OnInit {
   buttonClick(_component){
     switch (_component){
       case 'bike': 
-        this.compoentIndex = 1
+        this.componentIndex = 1
         break;
       case 'lock':
-        this.compoentIndex = 2
+        this.componentIndex = 2
         break;
       case 'repair':
-        this.compoentIndex = 3
+        this.componentIndex = 3
         break;
       case 'active':
-        this.compoentIndex = 4
+        this.componentIndex = 4
         break;
       case 'archive':
-        this.compoentIndex = 5
+        this.componentIndex = 5
         break;
-      case 'user':
-        this.compoentIndex = 6
+      case 'customer':
+        this.componentIndex = 6
         break;
       case 'new':
-        this.compoentIndex = 7
+        this.componentIndex = 7
         break;
     }
 
-    this.messageEvent.emit(this.compoentIndex);
+    this.messageEvent.emit(this.componentIndex);
 
-    if(this.compoentIndex === 1 || this.compoentIndex === 2 || this.compoentIndex === 3){
+    if(this.componentIndex === 1 || this.componentIndex === 2 || this.componentIndex === 3){
       this.panelOpenState = true;
     } 
     else{

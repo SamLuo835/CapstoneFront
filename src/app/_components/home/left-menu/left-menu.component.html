@@ -9,21 +9,19 @@
       </mat-expansion-panel-header>
       
 
-      <button mat-button [ngClass]="{'hightLight':compoentIndex == 1}" class="zeroTop menuButton" (click)="buttonClick('bike')" >Bikes</button>
+      <button mat-button [ngClass]="{'hightLight':componentIndex == 1}" class="zeroTop menuButton" (click)="buttonClick('bike')" >Bikes</button>
 
       <hr>
-      <button mat-button [ngClass]="{'hightLight':compoentIndex == 2}" class="menuButton" (click)="buttonClick('lock')" >Locks</button>
-      <hr>
-      <button mat-button [ngClass]="{'hightLight':compoentIndex == 3}" class="menuButton" (click)="buttonClick('repair')" >Repair Tools</button>
+      <button mat-button [ngClass]="{'hightLight':componentIndex == 2}" class="menuButton" (click)="buttonClick('lock')" >Locks</button>
       <hr>
     </mat-expansion-panel>
     <hr>
 
-<button mat-button [ngClass]="{'hightLight':compoentIndex == 4}" class="menuButton" (click)="buttonClick('active')">Active Rental Records</button>
+<button mat-button [ngClass]="{'hightLight':componentIndex == 4}" class="menuButton" (click)="buttonClick('active')">Active Rental Records</button>
 <hr>
-<button mat-button [ngClass]="{'hightLight':compoentIndex == 5}" class="menuButton" (click)="buttonClick('archive')">Archive Rental Records</button>
+<button mat-button [ngClass]="{'hightLight':componentIndex == 5}" class="menuButton" (click)="buttonClick('archive')">Archive Rental Records</button>
 <hr>
-<button mat-button  [ngClass]="{'hightLight':compoentIndex == 6}" class="menuButton" (click)="buttonClick('user')">Users</button>
+<button mat-button  [ngClass]="{'hightLight':componentIndex == 6}" class="menuButton" (click)="buttonClick('customer')">Customers</button>
   <br> <br><br><br>
 
   <button class="btn btn-success " style="width:100%" (click)="buttonClick('new')" [disabled]="noAvailableBike"  *ngIf="!formDisplay"> New Rental</button>

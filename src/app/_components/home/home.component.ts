@@ -8,7 +8,7 @@ import {AuthService} from '../../_service/auth.service'
 })
 export class HomeComponent implements OnInit {
   
-  compoentIndex;
+  componentIndex;
 
   formDisplay:Boolean = false;
   
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
   receiveMessage($event){
-    this.compoentIndex = $event;
+    this.componentIndex = $event;
     }
   
 }
