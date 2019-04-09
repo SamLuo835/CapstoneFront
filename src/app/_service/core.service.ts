@@ -60,7 +60,7 @@ export class CoreService {
 
 
   test():Observable<any>{
-     return  of(new HttpResponse({ body: {text:"it work!"}, status: 200 }));
+     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
   }
 
   activeRentalsDataCall():Observable<any> {
