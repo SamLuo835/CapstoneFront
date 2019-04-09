@@ -44,6 +44,7 @@ export class CoreService {
   private activeRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getActiveRentals";
   private activeRentalDetailUrl: string = "http://bike-rental-hmc.herokuapp.com/getActiveRental/";
   private customersUrl: string = "http://bike-rental-hmc.herokuapp.com/getCustomers/";
+  private archivedRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getArchivedRentals";
   
   customerObj = {name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'}
 
@@ -79,6 +80,11 @@ export class CoreService {
   
   customersDataCall():Observable<any> {
     return this.http.get(this.customersUrl).pipe(
+      catchError(this.handleError));
+  }
+
+  archivedRentalsDataCall():Observable<any> {
+    return this.http.get(this.archivedRentalsUrl).pipe(
       catchError(this.handleError));
   }
 
