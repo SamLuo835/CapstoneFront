@@ -20,7 +20,7 @@ export class LeftMenuComponent implements OnInit {
   
   @Output() messageEvent = new EventEmitter<number>();
 
-  componentIndex;
+  componentIndex:any;
 
   constructor(private _dataShare :DataShareService) { }
 
@@ -64,26 +64,23 @@ export class LeftMenuComponent implements OnInit {
       case 'lock':
         this.componentIndex = 2
         break;
-      case 'repair':
+      case 'active':
         this.componentIndex = 3
         break;
-      case 'active':
+      case 'archive':
         this.componentIndex = 4
         break;
-      case 'archive':
+      case 'customer':
         this.componentIndex = 5
         break;
-      case 'customer':
-        this.componentIndex = 6
-        break;
       case 'new':
-        this.componentIndex = 7
+        this.componentIndex = 6
         break;
     }
 
     this.messageEvent.emit(this.componentIndex);
 
-    if(this.componentIndex === 1 || this.componentIndex === 2 || this.componentIndex === 3){
+    if(this.componentIndex === 1 || this.componentIndex === 2 ){
       this.panelOpenState = true;
     } 
     else{

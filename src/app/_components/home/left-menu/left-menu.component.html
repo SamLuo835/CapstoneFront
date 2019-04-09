@@ -17,11 +17,11 @@
     </mat-expansion-panel>
     <hr>
 
-<button mat-button [ngClass]="{'hightLight':componentIndex == 4}" class="menuButton" (click)="buttonClick('active')">Active Rental Records</button>
+<button mat-button [ngClass]="{'hightLight':componentIndex == 3}" class="menuButton" (click)="buttonClick('active')">Active Rental Records</button>
 <hr>
-<button mat-button [ngClass]="{'hightLight':compoentIndex == 5}" class="menuButton" (click)="buttonClick('archive')">Archived Rental Records</button>
+<button mat-button [ngClass]="{'hightLight':componentIndex == 4}" class="menuButton" (click)="buttonClick('archive')">Archived Rental Records</button>
 <hr>
-<button mat-button  [ngClass]="{'hightLight':componentIndex == 6}" class="menuButton" (click)="buttonClick('customer')">Customers</button>
+<button mat-button  [ngClass]="{'hightLight':componentIndex == 5}" class="menuButton" (click)="buttonClick('customer')">Customers</button>
   <br> <br><br><br>
 
   <button class="btn btn-success " style="width:100%" (click)="buttonClick('new')" [disabled]="noAvailableBike"  *ngIf="!formDisplay"> New Rental</button>
