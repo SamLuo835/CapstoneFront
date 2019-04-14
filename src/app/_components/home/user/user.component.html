@@ -3,13 +3,14 @@
   <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <!-- Sheridan Id Column -->
-      <ng-container matColumnDef="seridanId">
+      <ng-container matColumnDef="sheridanId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Sheridan Id </th>
         <td mat-cell *matCellDef="let element"> {{element.sheridanId}} </td>
       </ng-container>
     
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <!--column def need to match one of the element property, otherwise sorting not working-->
+      <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
       </ng-container>

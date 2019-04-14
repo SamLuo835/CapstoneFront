@@ -23,6 +23,11 @@ app-root{
         margin: 25vh auto;
     }
 
+.mat-sort-header-container{
+        display:flex;
+        justify-content: center!important;
+}
+
 .close{
     position: relative;
     left:5px;

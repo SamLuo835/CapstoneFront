@@ -5,7 +5,8 @@ import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserComponent implements OnInit {
 
@@ -14,7 +15,7 @@ export class UserComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['seridanId', 'name', 'sheridanEmail', 'type', 'isBlackListed'];
+  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail', 'type', 'isBlackListed'];
 
   tableDetail:Object = {};
 

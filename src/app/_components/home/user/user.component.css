@@ -7,10 +7,7 @@ th{
     text-align: center!important
 }
 
-.mat-sort-header-container{
-    display:flex;
-    justify-content: center!important
-}
+
 mat-paginator{
     width: 95%;
 }

@@ -5,7 +5,9 @@ import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
 @Component({
   selector: 'app-archive-record',
   templateUrl: './archive-record.component.html',
-  styleUrls: ['./archive-record.component.css']
+  styleUrls: ['./archive-record.component.css'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class ArchiveRecordComponent implements OnInit {
 
