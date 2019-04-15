@@ -1,36 +1,14 @@
 import { Injectable } from '@angular/core';
-import {HttpClient,HttpResponse,HttpErrorResponse} from '@angular/common/http';
+import {HttpClient,HttpResponse,HttpErrorResponse,HttpHeaders} from '@angular/common/http';
 import { Observable, of ,throwError} from 'rxjs';
-import { ObserversModule } from '@angular/cdk/observers';
-import { catchError,retry} from 'rxjs/operators';
+import { catchError} from 'rxjs/operators';
 
 
-const ACTIVE_TABLE_DATA: Object[] = [
-  {rentalId: 1, signOutDate: '2019-02-28 21:08:59.701', dueDate: '2019-03-13', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 2, signOutDate: '2019-03-11', dueDate: '2019-03-13 21:08:59.701', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 3, signOutDate: '2019-03-11', dueDate: '2019-03-13 21:08:59.701', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 4, signOutDate: '2019-03-11', dueDate: '2019-03-13 21:08:59.701', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 5, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 6, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 7, signOutDate: '2019-03-11', dueDate: '2019-03-12', status: 'Late',comment:'abc',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 8, signOutDate: '2019-03-11', dueDate: '2019-03-12', status: 'Late',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 9, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 10, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 11, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 12, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 13, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 14, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 15, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 16, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Late',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 17, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Late',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 18, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 19, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 20, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 21, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-  {rentalId: 22, signOutDate: '2019-03-11', dueDate: '2019-03-13', status: 'Active',comment:'',bikeId:1,sheridanId:'991417298',customerName:'testUser',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'},
-];
-
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 
 
 @Injectable({
@@ -46,6 +24,13 @@ export class CoreService {
   private customersUrl: string = "http://bike-rental-hmc.herokuapp.com/getCustomers/";
   private archivedRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getArchivedRentals";
   
+  //TODO 
+  private returnBikeUrl:string = "";
+  private editRentalUrl:string = "";
+  private queryCustomerUrl:string = "";
+  private newCustomerUrl:string = "";
+  private newRentalUrl:string = "";
+
   customerObj = {name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'}
 
   
@@ -58,10 +43,32 @@ export class CoreService {
     }
   }
 
-
   test():Observable<any>{
-     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
+    return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
+ }
+
+
+  returnBike():Observable<any>{
+    return this.http.patch(this.returnBikeUrl,{},httpOptions).pipe(catchError(this.handleError));
   }
+
+  editRental():Observable<any>{
+    return this.http.patch(this.editRentalUrl,{},httpOptions).pipe(catchError(this.handleError));
+  }
+
+  getCustomerById(id):Observable<any>{
+      //@PATHVARIABLE in spring
+    return this.http.get(this.queryCustomerUrl+"/"+id).pipe(catchError(this.handleError));
+  }
+
+  newCustomer():Observable<any>{
+    return this.http.post(this.newCustomerUrl,{},httpOptions).pipe(catchError(this.handleError));
+  }
+
+  newRental():Observable<any>{
+    return this.http.post(this.newRentalUrl,{},httpOptions).pipe(catchError(this.handleError));
+  }
+
 
   activeRentalsDataCall():Observable<any> {
     return this.http.get(this.activeRentalsUrl).pipe(
@@ -72,11 +79,6 @@ export class CoreService {
     return this.http.get(this.activeRentalDetailUrl + id).pipe(
       catchError(this.handleError));
   }
-
-  tableDataCall():Observable<any>{
-    return  of(new HttpResponse({ body: {table:ACTIVE_TABLE_DATA}, status: 200 }));
-  }
-
   
   customersDataCall():Observable<any> {
     return this.http.get(this.customersUrl).pipe(
@@ -89,7 +91,8 @@ export class CoreService {
   }
 
   getBikeList(){
-    return this.http.get(this.bikeListUrl,{responseType:'text'});
+    return this.http.get(this.bikeListUrl,{responseType:'text'}).pipe(
+      catchError(this.handleError));;
   }
   
   private handleError(error: HttpErrorResponse) {
