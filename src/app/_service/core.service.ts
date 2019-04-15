@@ -25,48 +25,38 @@ export class CoreService {
   private archivedRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getArchivedRentals";
   
   //TODO 
-  private returnBikeUrl:string = "";
-  private editRentalUrl:string = "";
-  private queryCustomerUrl:string = "";
+  private returnBikeUrl:string = "https://bike-rental-hmc.herokuapp.com/returnRental";
+  private editRentalUrl:string = "https://bike-rental-hmc.herokuapp.com/editRental";
+  private queryCustomerUrl:string = "https://bike-rental-hmc.herokuapp.com/getCustomer";
   private newCustomerUrl:string = "";
   private newRentalUrl:string = "";
-
-  customerObj = {name:'testUser',sheridanId:'991417298',sheridanEmail:'testing@gmail.com',personalEmail:'personal@gmail.com',phone:'123456789'}
-
-  
-  idQuery(id):Observable<any>{
-    if(id != this.customerObj['sheridanId']){
-      return of(new HttpResponse({ body: {message:"newUser"}, status: 200 }));
-    }
-    else{
-      return of(new HttpResponse({ body: this.customerObj, status: 200 }));
-    }
-  }
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
  }
 
 
-  returnBike():Observable<any>{
-    return this.http.patch(this.returnBikeUrl,{},httpOptions).pipe(catchError(this.handleError));
+  returnBike(id,comment):Observable<any>{
+    let requestBody = {"id":id,"comment":comment};
+    return this.http.patch(this.returnBikeUrl,requestBody,httpOptions).pipe(catchError(this.handleError));
   }
 
-  editRental():Observable<any>{
-    return this.http.patch(this.editRentalUrl,{},httpOptions).pipe(catchError(this.handleError));
+  editRental(id,comment,dueDate):Observable<any>{
+    let requestBody = {"id":id,"comment":comment,"dueDate":dueDate};
+    return this.http.patch(this.editRentalUrl,requestBody,httpOptions).pipe(catchError(this.handleError));
   }
 
   getCustomerById(id):Observable<any>{
       //@PATHVARIABLE in spring
-    return this.http.get(this.queryCustomerUrl+"/"+id).pipe(catchError(this.handleError));
+    return this.http.get(this.queryCustomerUrl+"/"+id,{ observe: 'response' }).pipe(catchError(this.handleError));
   }
 
-  newCustomer():Observable<any>{
-    return this.http.post(this.newCustomerUrl,{},httpOptions).pipe(catchError(this.handleError));
+  newCustomer(newCustomer):Observable<any>{
+    return this.http.post(this.newCustomerUrl,newCustomer,httpOptions).pipe(catchError(this.handleError));
   }
 
-  newRental():Observable<any>{
-    return this.http.post(this.newRentalUrl,{},httpOptions).pipe(catchError(this.handleError));
+  newRental(newRental):Observable<any>{
+    return this.http.post(this.newRentalUrl,newRental,httpOptions).pipe(catchError(this.handleError));
   }
 
 

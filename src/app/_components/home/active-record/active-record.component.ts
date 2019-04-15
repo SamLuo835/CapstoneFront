@@ -60,14 +60,17 @@ export class ActiveRecordComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         if(result['action']=='return'){
-        // removing the class scope variable tableData's element (need to wrap it inside the back end call)
-          this.removeTableCell(result);
+          this._core.returnBike(result['rentalId'],result['comment']).subscribe(res=>{
+              console.log(res);
+              //this.removeTableCell(result);
+          }) 
         }
         else if(result['action']=='change'){
-          //update the class scope variable tableData's element (need to wrap it inside the back end call)
-          this.changeTableCell(result);
+          this._core.editRental(result['rentalId'],result['comment'],result['dueDate']).subscribe(res=>{
+            console.log(res);
+            this.changeTableCell(result);
+          }) 
         }
-
       }); 
   }
 
@@ -141,9 +144,8 @@ export class DetailDialog {
 
 
     closeCase(){
-      //call service with rental id
       console.log(this.data.rentalId) 
-      this.dialogRef.close({rentalId:this.data.rentalId,action:'return'});
+      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'return'});
 
     }
 

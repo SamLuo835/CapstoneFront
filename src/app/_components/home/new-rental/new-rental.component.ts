@@ -29,12 +29,13 @@ export class NewRentalComponent implements OnInit {
   resultUserData:Object = {};
   showForm:boolean =false;
 
-  formData;
-
+  newCustomerData={};
+  newRentalData={};
   
   emailFormControl;
   pEmailFormControl;
-  nameFormControl;
+  firstNameFormControl;
+  lastNameFormControl
   phoneFormControl;
   bikeFormControl;
 
@@ -47,20 +48,33 @@ export class NewRentalComponent implements OnInit {
     this._dataShare.currentForm.subscribe(message => this.formRequire = message)
     this._dataShare.currentBikeList.subscribe(message => this.bikeList = message)
     this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      console.log("sending via core service");
-      //only send the id and comment back 
+      // send the ids and comment back to create a new rental
       if(this.hasResult){
-        this.formData = {sheridanId:this.resultUserData['sheridanId']};
-        this.formData['newUser'] = false;
+        this.newRentalData['comment'] = this.comment
+        this.newRentalData['bikeId'] = this.bikeSelected
+        this.newRentalData['sheridanId'] = this.resultUserData['sheridanId'];
+
+        console.log(this.newRentalData)
+        //this._coreService.newRental(this.newRentalData).subscribe(res=>{
+
+        //})
       }
-      //send the user data back as this is a new user
+      //send the user data back and rental in two request to create new customer and new rental
       else{
-        this.formData = this.resultUserData;
-        this.formData['newUser'] = true;
+        this.newCustomerData = this.resultUserData;
+        //this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
+
+        //})
+        console.log(this.newCustomerData);
+
+        this.newRentalData['bikeId'] = this.bikeSelected
+        this.newRentalData['comment'] = this.comment
+        this.newRentalData['sheridanId'] = this.resultUserData['sheridanId'];
+        console.log(this.newRentalData)
+
+
       }
-      this.formData['bikeId'] = this.bikeSelected
-      this.formData['comment'] = this.comment
-      console.log(this.formData);
+     
       this.showForm = false;
       this._dataShare.changeShowForm(this.showForm);
       this._dataShare.changeSubmit(false);
@@ -84,7 +98,11 @@ export class NewRentalComponent implements OnInit {
       Validators.email
     ]);
   
-    this.nameFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.firstNameFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+      Validators.required
+    ]);
+
+    this.lastNameFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
       Validators.required
     ]);
   
@@ -104,15 +122,17 @@ export class NewRentalComponent implements OnInit {
     //this.formRequire[index] = flag
 
     switch (index) {
-      case 0 : this.formRequire[0] = this.nameFormControl.hasError('required');
+      case 0 : this.formRequire[0] = this.firstNameFormControl.hasError('required');
       break;
-      case 1: this.formRequire[1] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email');
+      case 1 : this.formRequire[1] = this.lastNameFormControl.hasError('required');
+      break;
+      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email');
       break; 
-      case 2: this.formRequire[2] = this.pEmailFormControl.hasError('required') || this.pEmailFormControl.hasError('email');
+      case 3: this.formRequire[3] = this.pEmailFormControl.hasError('required') || this.pEmailFormControl.hasError('email');
       break;
-      case 3: this.formRequire[3] = this.phoneFormControl.hasError('required');
+      case 4: this.formRequire[4] = this.phoneFormControl.hasError('required');
       break;
-      case 4: this.formRequire[4] = this.bikeFormControl.hasError('required');
+      case 5: this.formRequire[5] = this.bikeFormControl.hasError('required');
       break;
     }
     console.log(this.formRequire)
@@ -125,18 +145,18 @@ export class NewRentalComponent implements OnInit {
   submitId(){
 
     this.showSpinner = true;
-    setTimeout(()=>{this._coreService.idQuery(this.sheridanId)
-    .subscribe(res=>{ 
-      if(res['body']['message']== 'newUser'){
-        this.hasResult = false;
-        this.resultUserData = {name:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
-        this._dataShare.changeForm([true,true,true,true,true]);
-      }
-      else{
-        this.resultUserData = res['body'];
+    setTimeout(()=>{this._coreService.getCustomerById(this.sheridanId)
+    .subscribe(response=>{
+      if(response.status == 200){
+        this.resultUserData = response['body'];
         console.log(this.resultUserData);
         this.hasResult = true; 
-        this._dataShare.changeForm([false,false,false,false,true]);
+        this._dataShare.changeForm([false,false,false,false,false,true]);
+      }
+      else if(response.status == 204){
+        this.hasResult = false;
+        this.resultUserData = {firstName:'',lastName:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
+        this._dataShare.changeForm([true,true,true,true,true,true]);
       }
       this.comment = "";
       this.bikeSelected = ""; 
@@ -145,7 +165,7 @@ export class NewRentalComponent implements OnInit {
       this.showSpinner = false; 
       this._dataShare.changeShowForm(this.showForm);
     })
-    },3000);
+    },1000);
   }
 
 }

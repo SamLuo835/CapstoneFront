@@ -35,16 +35,22 @@
         <div class="container">
             <form class="form">
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="Full Name *" [errorStateMatcher]="matcher" name="name"  (change)="onChange(0)" [formControl]="nameFormControl"  [(ngModel)]="resultUserData['name']">
-                  <mat-error *ngIf="nameFormControl.hasError('required')">
-                      Full name is <strong>required</strong>
+                  <input matInput placeholder="First Name *" [errorStateMatcher]="matcher" name="firstname"  (change)="onChange(0)" [formControl]="firstNameFormControl"  [(ngModel)]="resultUserData['firstName']">
+                  <mat-error *ngIf="firstNameFormControl.hasError('required')">
+                      First name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Last Name *" [errorStateMatcher]="matcher" name="lastname"  (change)="onChange(1)" [formControl]="lastNameFormControl"  [(ngModel)]="resultUserData['lastName']">
+                  <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                      Last name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
                     <input matInput placeholder="Sheridan ID *"  disabled  name="sheridanId" [(ngModel)]="resultUserData['sheridanId']">
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(1)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
+                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(2)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
                     <mat-error *ngIf="emailFormControl.hasError('required')">
                           Sheridan Email is <strong>required</strong>
                     </mat-error>
@@ -53,7 +59,7 @@
                     </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(2)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
+                    <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(3)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
                     <mat-error *ngIf="pEmailFormControl.hasError('required')">
                         Personal Email is <strong>required</strong>
                     </mat-error>
@@ -64,14 +70,14 @@
                 
                 <table class="full-width" cellspacing="0"><tr>
                   <td><mat-form-field class="full-width">
-                    <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(3)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
+                    <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(4)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
                     <mat-error *ngIf="phoneFormControl.hasError('required')">
                         Phone is <strong>required</strong>
                     </mat-error>
                 </mat-form-field></td>
                 <td> <mat-form-field class="full-width">
                   <mat-label>Pick a Bike *</mat-label>
-                  <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange(4)" [formControl]="bikeFormControl">
+                  <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange(5)" [formControl]="bikeFormControl">
                     <mat-option *ngFor="let bike of bikeList" [disabled]="!bike.available" [value]="bike.id ">
                       Bike #{{bike.id}}, <span [ngClass]="{'text-danger':!bike.available,'text-success':bike.available}">{{bike.available?"Available":"Unavailable"}}</span>
                     </mat-option>
