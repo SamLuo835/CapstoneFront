@@ -17,6 +17,8 @@ export class LeftMenuComponent implements OnInit {
   noAvailableBike:Boolean;
 
   bikeList = [];
+
+  subscriptions = [];
   
   @Output() messageEvent = new EventEmitter<number>();
 
@@ -24,13 +26,19 @@ export class LeftMenuComponent implements OnInit {
 
   constructor(private _dataShare :DataShareService) { }
 
+  ngOnDestroy(){
+    this.subscriptions.forEach( s => s.unsubscribe());
+  }
+
   ngOnInit() {
     this.componentIndex = 1
+    //output emit is for child component to parent component(for left menu to home)
     this.messageEvent.emit(this.componentIndex);
-    this._dataShare.currentMessage.subscribe(message => this.formDisplay = message)
 
-    this._dataShare.currentForm.subscribe(message => {this.formRequire = message})
-    this._dataShare.currentBikeList.subscribe(message =>{ this.bikeList = message;this.checkAvailableBike()});
+    //for sibling or no relation components, share data with observables
+    this.subscriptions.push(this._dataShare.currentMessage.subscribe(message => this.formDisplay = message))
+    this.subscriptions.push(this._dataShare.currentForm.subscribe(message => {this.formRequire = message}))
+    this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message =>{this.bikeList = message;this.checkAvailableBike()}));
 
   }
 

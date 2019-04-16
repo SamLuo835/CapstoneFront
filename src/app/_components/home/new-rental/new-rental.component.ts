@@ -3,7 +3,8 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
 import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
-
+import 'rxjs/add/operator/take'
+import { Subscription } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -42,56 +43,63 @@ export class NewRentalComponent implements OnInit {
 
   bikeList = [];
 
+  subsctiptions = [];
+
   constructor(private _coreService:CoreService,private _dataShare:DataShareService) { }
 
+  ngOnDestroy(){
+    this.subsctiptions.forEach( s => s.unsubscribe());
+  }
+
   ngOnInit() {
-    this._dataShare.currentMessage.subscribe(message => this.showForm = message)
-    this._dataShare.currentForm.subscribe(message => this.formRequire = message)
-    this._dataShare.currentBikeList.subscribe(message => this.bikeList = message)
-    this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      // send the ids and comment back to create a new rental
-      console.log(this.hasResult);
-      if(this.hasResult){
-        this.newRentalData['comment'] = this.comment
-        this.newRentalData['bike']['id'] = this.bikeSelected
-        this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
-        console.log(this.newRentalData)
-        this._coreService.newRental(this.newRentalData).subscribe(res=>{
-          console.log(res);
-          //refresh the data share's bikelist since the back end update one bike availablity
-          this._coreService.getBikeList().subscribe(res=>{
-            //calling this will trigger the subscribe event that listening on bike list in other component
-              this._dataShare.changeBikeList( JSON.parse(res));
-              }
-            )
-        },error=>{console.log(error)})
-      }
-      //send the user data back and rental in two request to create new customer and new rental
-      else{
-        this.newCustomerData = this.resultUserData;
-        console.log(this.newCustomerData)
-        this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
-          console.log(res);
-          this.newRentalData['bike']['id'] = this.bikeSelected
-          this.newRentalData['comment'] = this.comment
-          this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
-          this._coreService.newRental(this.newRentalData).subscribe(res =>{
-            console.log(res);
-            //refresh the data share's bikelist since the back end update one bike availablity
-              this._coreService.getBikeList().subscribe(res=>{
-            //calling this will trigger the subscribe event that listening on bike list in other component
-              this._dataShare.changeBikeList( JSON.parse(res));
-              }
-            )
-          })
-        })
-      }
-     
+    this.subsctiptions.push(this._dataShare.currentMessage.subscribe(message => this.showForm = message));
+    this.subsctiptions.push(this._dataShare.currentForm.subscribe(message => this.formRequire = message));
+    this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
+    this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
+      this._dataShare.changeSubmit(false);
       this.showForm = false;
       this._dataShare.changeShowForm(this.showForm);
-      this._dataShare.changeSubmit(false);
+      this.createCustomerRental();
     }
-  })
+  }));
+  }
+
+
+
+  createCustomerRental(){
+    if(this.hasResult){
+      this.newRentalData['comment'] = this.comment
+      this.newRentalData['bike']['id'] = this.bikeSelected
+      this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
+      this._coreService.newRental(this.newRentalData).subscribe(res=>{
+        console.log(res);
+        //refresh the data share's bikelist since the back end update one bike availablity
+        this._coreService.getBikeList().subscribe(res=>{
+          //calling this will trigger the subscribe event that listening on bike list in other component
+            this._dataShare.changeBikeList( JSON.parse(res));
+            }
+          )
+      },error=>{console.log(error)})
+    }
+    //send the user data back and rental in two request to create new customer and new rental
+    else if(!this.hasResult){
+      this.newCustomerData = this.resultUserData;
+      this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
+        console.log(res);
+        this.newRentalData['bike']['id'] = this.bikeSelected
+        this.newRentalData['comment'] = this.comment
+        this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
+        this._coreService.newRental(this.newRentalData).subscribe(res =>{
+          console.log(res);
+          //refresh the data share's bikelist since the back end update one bike availablity
+            this._coreService.getBikeList().subscribe(res=>{
+          //calling this will trigger the subscribe event that listening on bike list in other component
+            this._dataShare.changeBikeList( JSON.parse(res));
+            }
+          )
+        })
+      })
+    }
   }
 
   idFormControl = new FormControl('', [
