@@ -62,14 +62,14 @@ export class ActiveRecordComponent implements OnInit {
         if(result['action']=='return'){
           this._core.returnBike(result['rentalId'],result['comment']).subscribe(res=>{
               console.log(res);
-              //this.removeTableCell(result);
+              this.removeTableCell(result);
           }) 
         }
         else if(result['action']=='change'){
           this._core.editRental(result['rentalId'],result['comment'],result['dueDate']).subscribe(res=>{
             console.log(res);
             this.changeTableCell(result);
-          }) 
+          },error=>{console.log(error)}) 
         }
       }); 
   }
@@ -99,6 +99,7 @@ export class ActiveRecordComponent implements OnInit {
           this._core.getBikeList().subscribe(res=>{
           //calling this will trigger the subscribe event that listening on bike list in other component
             this._dataShare.changeBikeList( JSON.parse(res));
+            console.log(JSON.parse(res));
             }
           )
           break;
@@ -140,6 +141,7 @@ export class DetailDialog {
     ngOnInit(){
       this.signOutDate = _moment(this.data.signOutDate).format();
       this.dueDate = _moment(this.data.dueDate).format();
+      
     }
 
 
@@ -152,9 +154,9 @@ export class DetailDialog {
     saveChanges(){
       //call service with modified fields
       console.log(this.data.comment)
-      console.log(this.dueDate);
+      console.log(_moment(this.dueDate).format('YYYY-MM-DD'));
       console.log(this.data.rentalId)
-      this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:this.dueDate});
+      this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
 
 
     }

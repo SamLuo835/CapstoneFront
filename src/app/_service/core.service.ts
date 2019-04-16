@@ -28,8 +28,8 @@ export class CoreService {
   private returnBikeUrl:string = "https://bike-rental-hmc.herokuapp.com/returnRental";
   private editRentalUrl:string = "https://bike-rental-hmc.herokuapp.com/editRental";
   private queryCustomerUrl:string = "https://bike-rental-hmc.herokuapp.com/getCustomer";
-  private newCustomerUrl:string = "";
-  private newRentalUrl:string = "";
+  private newCustomerUrl:string = "https://bike-rental-hmc.herokuapp.com/newCustomer";
+  private newRentalUrl:string = "https://bike-rental-hmc.herokuapp.com/newRental";
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
@@ -43,7 +43,7 @@ export class CoreService {
 
   editRental(id,comment,dueDate):Observable<any>{
     let requestBody = {"id":id,"comment":comment,"dueDate":dueDate};
-    return this.http.patch(this.editRentalUrl,requestBody,httpOptions).pipe(catchError(this.handleError));
+    return this.http.patch(this.editRentalUrl,requestBody,httpOptions);
   }
 
   getCustomerById(id):Observable<any>{
@@ -56,7 +56,7 @@ export class CoreService {
   }
 
   newRental(newRental):Observable<any>{
-    return this.http.post(this.newRentalUrl,newRental,httpOptions).pipe(catchError(this.handleError));
+    return this.http.post(this.newRentalUrl,newRental,httpOptions);
   }
 
 

@@ -30,7 +30,7 @@ export class NewRentalComponent implements OnInit {
   showForm:boolean =false;
 
   newCustomerData={};
-  newRentalData={};
+  newRentalData={"comment":null,"customer":{},"bike":{}};
   
   emailFormControl;
   pEmailFormControl;
@@ -38,6 +38,7 @@ export class NewRentalComponent implements OnInit {
   lastNameFormControl
   phoneFormControl;
   bikeFormControl;
+  custTypeFormControl;
 
   bikeList = [];
 
@@ -49,30 +50,41 @@ export class NewRentalComponent implements OnInit {
     this._dataShare.currentBikeList.subscribe(message => this.bikeList = message)
     this._dataShare.currentFormSubmit.subscribe(message => {if(message){
       // send the ids and comment back to create a new rental
+      console.log(this.hasResult);
       if(this.hasResult){
         this.newRentalData['comment'] = this.comment
-        this.newRentalData['bikeId'] = this.bikeSelected
-        this.newRentalData['sheridanId'] = this.resultUserData['sheridanId'];
-
+        this.newRentalData['bike']['id'] = this.bikeSelected
+        this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
         console.log(this.newRentalData)
-        //this._coreService.newRental(this.newRentalData).subscribe(res=>{
-
-        //})
+        this._coreService.newRental(this.newRentalData).subscribe(res=>{
+          console.log(res);
+          //refresh the data share's bikelist since the back end update one bike availablity
+          this._coreService.getBikeList().subscribe(res=>{
+            //calling this will trigger the subscribe event that listening on bike list in other component
+              this._dataShare.changeBikeList( JSON.parse(res));
+              }
+            )
+        },error=>{console.log(error)})
       }
       //send the user data back and rental in two request to create new customer and new rental
       else{
         this.newCustomerData = this.resultUserData;
-        //this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
-
-        //})
-        console.log(this.newCustomerData);
-
-        this.newRentalData['bikeId'] = this.bikeSelected
-        this.newRentalData['comment'] = this.comment
-        this.newRentalData['sheridanId'] = this.resultUserData['sheridanId'];
-        console.log(this.newRentalData)
-
-
+        console.log(this.newCustomerData)
+        this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
+          console.log(res);
+          this.newRentalData['bike']['id'] = this.bikeSelected
+          this.newRentalData['comment'] = this.comment
+          this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
+          this._coreService.newRental(this.newRentalData).subscribe(res =>{
+            console.log(res);
+            //refresh the data share's bikelist since the back end update one bike availablity
+              this._coreService.getBikeList().subscribe(res=>{
+            //calling this will trigger the subscribe event that listening on bike list in other component
+              this._dataShare.changeBikeList( JSON.parse(res));
+              }
+            )
+          })
+        })
       }
      
       this.showForm = false;
@@ -113,6 +125,10 @@ export class NewRentalComponent implements OnInit {
     this.bikeFormControl = new FormControl('', [
       Validators.required
     ]);
+
+    this.custTypeFormControl= new FormControl({value:'',disabled:this.hasResult}, [
+      Validators.required
+    ]);
   }
   
 
@@ -132,8 +148,11 @@ export class NewRentalComponent implements OnInit {
       break;
       case 4: this.formRequire[4] = this.phoneFormControl.hasError('required');
       break;
-      case 5: this.formRequire[5] = this.bikeFormControl.hasError('required');
+      case 5: this.formRequire[5] = this.custTypeFormControl.hasError('required');
       break;
+      case 6: this.formRequire[6] = this.bikeFormControl.hasError('required');
+      break;
+      
     }
     console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
@@ -151,12 +170,12 @@ export class NewRentalComponent implements OnInit {
         this.resultUserData = response['body'];
         console.log(this.resultUserData);
         this.hasResult = true; 
-        this._dataShare.changeForm([false,false,false,false,false,true]);
+        this._dataShare.changeForm([false,false,false,false,false,false,true]);
       }
       else if(response.status == 204){
         this.hasResult = false;
-        this.resultUserData = {firstName:'',lastName:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
-        this._dataShare.changeForm([true,true,true,true,true,true]);
+        this.resultUserData = {firstName:'',lastName:'',type:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
+        this._dataShare.changeForm([true,true,true,true,true,true,true]);
       }
       this.comment = "";
       this.bikeSelected = ""; 
