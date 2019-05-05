@@ -12,7 +12,7 @@
     font-weight: 600;
 }
 
-img{
+.card img{
     margin-top:10px;
 }
 
@@ -27,3 +27,16 @@ img{
 .green{
     color:#28a745;
 }
+
+.rented .mat-select-value{
+    color: red !important;
+}
+
+.available .mat-select-value{
+    color: #28a745 !important;
+}
+
+.repair .mat-select-value{
+    color: #6c757d !important;
+}
+

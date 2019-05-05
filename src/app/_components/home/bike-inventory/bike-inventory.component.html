@@ -7,7 +7,21 @@
                     <div class="card-header">Bike ID: {{item.id}}</div>
                     <img class="card-img-top" src="./assets/images/{{item.imgPath}}" alt="Card image cap">
                     <div class="card-body">
-                        <p class="card-text" [ngClass]="{'text-danger':!item.available,'text-success':item.available}">{{item.available?"Available":"Unavailable"}}</p>
+                            <mat-form-field class="full-width">
+                                        <mat-label>Change Bike Status</mat-label>
+                                        <!--add one more class to show repair needed  -->
+                                        <mat-select [disabled]="item.available == 'false'" [(value)]="item.available" [ngClass]="{'rented':bikes[i].available == 'false','available':bikes[i].available == 'true','repair':bikes[i].available == 'repair'}" (selectionChange)="changeStatus(i)">
+                                            <mat-option  value="true">
+                                                <span class="text-success">Available</span>
+                                            </mat-option>
+                                            <mat-option disabled value="false">
+                                                <span class="text-danger">Rented</span>
+                                            </mat-option>
+                                            <mat-option  value="repair">
+                                                <span class="text-secondary">Repaired Needed</span>
+                                            </mat-option>
+                                        </mat-select>
+                            </mat-form-field>
                         <div style="display: flex;justify-content: center">
                         <a href="#" style="width:90%!important;border-radius:25px" class="btn btn-info">More Details</a>
                         </div>
