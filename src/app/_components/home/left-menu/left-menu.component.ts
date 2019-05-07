@@ -124,7 +124,10 @@ export class LeftMenuComponent implements OnInit {
       this.panelOpenState = false;
     }
     this.formDisplay = false;
+    this.customerFormDisplay = false;
     this._dataShare.changeShowForm(this.formDisplay);
+    this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
+
   }
 
   cancel(form){
