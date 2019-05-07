@@ -43,7 +43,6 @@ export class BikeInventoryComponent implements OnInit {
       }
     //calling this will trigger the subscribe event that listening on bike list in other component
       this._dataShare.changeBikeList(this.bikes)
-      console.log(this.bikes)
     })
 
      

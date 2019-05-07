@@ -8,15 +8,27 @@ export class DataShareService {
 
   private showFormSource = new BehaviorSubject(false);
   
-  currentMessage = this.showFormSource.asObservable();
+  currentRetnalForm = this.showFormSource.asObservable();
+
+  private showCustomerFormSource = new BehaviorSubject(false);
+
+  currentCustomerForm = this.showCustomerFormSource.asObservable();
 
   private FromRequiredSource = new BehaviorSubject([]);
 
-  currentForm = this.FromRequiredSource.asObservable();
+  currentFormRequire = this.FromRequiredSource.asObservable();
+
+  private customerFormRequiredSource = new BehaviorSubject([]);
+
+  currentCustomerFormRequire = this.customerFormRequiredSource.asObservable();
 
   private formSubmit = new BehaviorSubject(false);
 
   currentFormSubmit = this.formSubmit.asObservable();
+
+  private customerFormSubmit = new BehaviorSubject(false);
+
+  currentCustomerFormSubmit = this.customerFormSubmit.asObservable();
 
   private bikeList = new BehaviorSubject([]);
 
@@ -35,14 +47,28 @@ export class DataShareService {
     this.showFormSource.next(message)
   }
 
+  changeCustomerShowForm(message:boolean){
+    this.showCustomerFormSource.next(message)
+  }
+
+
+
   //form required observable, disable the submit button and display error text when required field missing
   changeForm(message : Array<any>){
     this.FromRequiredSource.next(message)
   }
 
+  changeCustomerForm(message : Array<any>){
+    this.customerFormRequiredSource.next(message)
+  }
+
   //submit button event emit, as the submit button and the rental form are in different component
   changeSubmit(message : boolean){
     this.formSubmit.next(message);
+  }
+
+  changeCustomerSubmit(message : boolean){
+    this.customerFormSubmit.next(message);
   }
 
 

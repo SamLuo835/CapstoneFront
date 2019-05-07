@@ -1,0 +1,118 @@
+<div class="row" *ngIf="!showForm">
+    <div class="col-md-12 ">
+        <div class="container" >
+          <h3 style="text-align: center">Terms And Conditions</h3>
+          <p>The Sheridan Bike Hub provides free services to members of the Sheridan Community. Anyone who abuses the program will be banned from accessing Sheridan Bike Hub services. 
+              Renting a bike is a privilege, not a right; please treat the program with respect. 
+              Sheridan Bike Hub equipment includes: bikes, lock, key, basket as well as all tools owned by Sheridan Office for Sustainability.
+          </p>
+          <ul>
+            <li>Renters must provide their Sheridan information, read and sign a waiver before signing out any equipment. </li>
+            <li><u>Renters can <strong>only</strong> rent equipment for their own</u> use using their OneCard. Do not share rental equipment with others.</li>
+            <li>Bike rentals are for a one-week period and must be returned afterwards. There are no renewals of the same bike.</li>
+            <li>All equipment must be returned during the Sheridan Bike Hub hours of operation on their due date to avoid late penalties. If for any reason you cannot return it on time, you must e-mail the Sheridan Bike Hub before your due date and request to have the bike returned the next business day. </li>
+          </ul>
+          <h5>Fines</h5>
+          <ul>
+            <li> Late penalty: <strong>$5 a day</strong> up to a maximum of two weeks after which the bike will be reported missing to the Peel Police</li>
+            <li> <strong>$5</strong> loss/damage to bike lights</li>
+            <li> <strong>$20</strong> loss/damage to the key</li>
+            <li> <strong>$40</strong> loss/damage to the basket</li>
+            <li> <strong>$60</strong> loss/damage to a lock</li>
+          </ul>
+          <h5>Renting privileges will be suspended until all fines are paid in full.</h5>
+          <ul>
+            <li>Fines are charged by the Sheridan Bike Hub Staff. You will be given a slip that states the charges on your account. Payment of the charges should be made at the Office of the Registrar desk by Debit. Return the slip to the Sheridan Bike Hub Staff once the charges have been paid in order to restore the rental privileges. </li>
+            <li>Sheridan has the right to (a) withhold official transcripts; (b) deny further registration; (c) administrate encumbrance; (d) apply financial penalty to the student account where fees are left unpaid. </li>
+            <li>Renters will be held financially responsible for any loss or damage to any equipment (bike, lock, basket, etc.) while they are signed out. </li>
+            <li>Renters are responsible for knowing and obeying all traffic laws and taking safety precautions. Do not rent a bike if you are unsure of your riding ability. The Sheridan Bike Hub and its affiliates will not be responsible for any damages to yourself, others or property that may have occurred while using the Sheridan Bike Hub equipment. </li>
+            <li>Sheridan Bike Hub Staff have the right to refuse rental of a bike to any person(s). </li>
+          </ul>
+          <br><br>
+          <div style="display: flex">
+            <button style="margin:auto;border-radius:4px" class="btn-secondary" (click)="accept()">I accept the Terms and Conditions.</button>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="showForm">
+    <div class="col-md-12 ">
+        <div class="container">
+            <form class="form">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="First Name *" [errorStateMatcher]="matcher" name="firstname"  (change)="onChange(0)" [formControl]="firstNameFormControl"  [(ngModel)]="customerData['firstName']">
+                  <mat-error *ngIf="firstNameFormControl.hasError('required')">
+                      First name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Last Name *" [errorStateMatcher]="matcher" name="lastname"  (change)="onChange(1)" [formControl]="lastNameFormControl"  [(ngModel)]="customerData['lastName']">
+                  <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                      Last name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field><br><br>
+                <table class="full-width" cellspacing="0"><tr>
+                <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Sheridan ID *"   name="sheridanId" [formControl]='idFormControl' (change)="onChange(6)" [(ngModel)]="customerData['sheridanId']">
+                    <mat-error *ngIf="idFormControl.hasError('required')">
+                        Sheridan ID is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="full-width">
+                    <mat-label>Select customer type *</mat-label>
+                    <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" name="type" [(ngModel)]="customerData['type']" (selectionChange)="onChange(5)" [formControl]="custTypeFormControl">
+                      <mat-option  value="STUDENT">
+                        Student
+                      </mat-option>
+                      <mat-option value="STAFF">
+                          Staff
+                      </mat-option>
+                      <mat-option value="FACULTY">
+                          Faculty
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="custTypeFormControl.hasError('required')">
+                      Type is <strong>required</strong>
+                  </mat-error>
+                  </mat-form-field>
+                </td>    
+                </tr>
+                </table>           
+                
+                <br><br>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(2)" [formControl]="emailFormControl" [(ngModel)]="customerData['sheridanEmail']">
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                          Sheridan Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('email')">
+                            Sheridan Email is <strong>invalid</strong>
+                    </mat-error>
+                </mat-form-field><br><br>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(3)" [formControl]="pEmailFormControl"   [(ngModel)]="customerData['personalEmail']">
+                    <mat-error *ngIf="pEmailFormControl.hasError('required')">
+                        Personal Email is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="pEmailFormControl.hasError('email')">
+                          Personal Email is <strong>invalid</strong>
+                    </mat-error> 
+                </mat-form-field><br><br>
+                
+                <table class="full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="full-width">
+                    <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(4)" [formControl]="phoneFormControl" [(ngModel)]="customerData['phone']">
+                    <mat-error *ngIf="phoneFormControl.hasError('required')">
+                        Phone is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field></td>
+              </tr></table>
+                <br><br>
+              </form>
+              
+        </div>
+    </div>
+</div>

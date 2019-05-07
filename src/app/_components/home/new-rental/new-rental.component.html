@@ -103,8 +103,8 @@
                 <td> <mat-form-field class="full-width">
                   <mat-label>Pick a Bike *</mat-label>
                   <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange(6)" [formControl]="bikeFormControl">
-                    <mat-option *ngFor="let bike of bikeList" [disabled]="!bike.available" [value]="bike.id ">
-                      Bike #{{bike.id}}, <span [ngClass]="{'text-danger':!bike.available,'text-success':bike.available}">{{bike.available?"Available":"Unavailable"}}</span>
+                    <mat-option *ngFor="let bike of bikeList" [disabled]="bike.available == 'false' " [value]="bike.id ">
+                      Bike #{{bike.id}}, <span [ngClass]="{'text-danger':bike.available == 'false','text-success':bike.available == 'true'}">{{bike.available == 'true' ?"Available":"Unavailable"}}</span>
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="bikeFormControl.hasError('required')">

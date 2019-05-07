@@ -4,7 +4,6 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
-import { Subscription } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,7 +22,6 @@ export class NewRentalComponent implements OnInit {
 
   sheridanId:String;
   errorMsg:String;
-  hasResult:Boolean
   showSpinner:Boolean = false;
   comment:String = "";
   bikeSelected:String = "";
@@ -52,8 +50,8 @@ export class NewRentalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subsctiptions.push(this._dataShare.currentMessage.subscribe(message => this.showForm = message));
-    this.subsctiptions.push(this._dataShare.currentForm.subscribe(message => this.formRequire = message));
+    this.subsctiptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
+    this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
     this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
       this._dataShare.changeSubmit(false);
@@ -67,12 +65,12 @@ export class NewRentalComponent implements OnInit {
 
 
   createCustomerRental(){
-    if(this.hasResult){
       this.newRentalData['comment'] = this.comment
       this.newRentalData['bike']['id'] = this.bikeSelected
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       this._coreService.newRental(this.newRentalData).subscribe(res=>{
         console.log(res);
+        alert("New rental created.")
         //refresh the data share's bikelist since the back end update one bike availablity
         this._coreService.getBikeList().subscribe(res=>{
           //calling this will trigger the subscribe event that listening on bike list in other component
@@ -80,9 +78,9 @@ export class NewRentalComponent implements OnInit {
             }
           )
       },error=>{console.log(error)})
-    }
+    
     //send the user data back and rental in two request to create new customer and new rental
-    else if(!this.hasResult){
+    /*else if(!this.hasResult){
       this.newCustomerData = this.resultUserData;
       this._coreService.newCustomer(this.newCustomerData).subscribe(res => {
         console.log(res);
@@ -99,7 +97,7 @@ export class NewRentalComponent implements OnInit {
           )
         })
       })
-    }
+    }*/
   }
 
   idFormControl = new FormControl('', [
@@ -108,25 +106,25 @@ export class NewRentalComponent implements OnInit {
 
   createFormControl(){ 
   
-    this.emailFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.emailFormControl  = new FormControl({value:'',disabled:true}, [
       Validators.required,
       Validators.email
     ]);
   
-    this.pEmailFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.pEmailFormControl  = new FormControl({value:'',disabled:true}, [
       Validators.required,
       Validators.email
     ]);
   
-    this.firstNameFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.firstNameFormControl  = new FormControl({value:'',disabled:true}, [
       Validators.required
     ]);
 
-    this.lastNameFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.lastNameFormControl  = new FormControl({value:'',disabled:true}, [
       Validators.required
     ]);
   
-    this.phoneFormControl  = new FormControl({value:'',disabled:this.hasResult}, [
+    this.phoneFormControl  = new FormControl({value:'',disabled:true}, [
       Validators.required
     ]);
 
@@ -134,7 +132,7 @@ export class NewRentalComponent implements OnInit {
       Validators.required
     ]);
 
-    this.custTypeFormControl= new FormControl({value:'',disabled:this.hasResult}, [
+    this.custTypeFormControl= new FormControl({value:'',disabled:true}, [
       Validators.required
     ]);
   }
@@ -177,20 +175,21 @@ export class NewRentalComponent implements OnInit {
       if(response.status == 200){
         this.resultUserData = response['body'];
         console.log(this.resultUserData);
-        this.hasResult = true; 
         this._dataShare.changeForm([false,false,false,false,false,false,true]);
+        this.comment = "";
+        this.bikeSelected = ""; 
+        this.createFormControl()
+        this.showForm = true;
+        this.showSpinner = false;
+        this._dataShare.changeShowForm(this.showForm);
       }
       else if(response.status == 204){
-        this.hasResult = false;
-        this.resultUserData = {firstName:'',lastName:'',type:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
-        this._dataShare.changeForm([true,true,true,true,true,true,true]);
+        this.showForm = false;
+        this.showSpinner = false;
+        this.errorMsg = "Customer not found, please register first."
+        //this.resultUserData = {firstName:'',lastName:'',type:'',sheridanId:this.sheridanId,sheridanEmail:'',personalEmail:'',phone:''}   
+        //this._dataShare.changeForm([true,true,true,true,true,true,true]);
       }
-      this.comment = "";
-      this.bikeSelected = ""; 
-      this.createFormControl()
-      this.showForm = true;
-      this.showSpinner = false; 
-      this._dataShare.changeShowForm(this.showForm);
     })
     },1000);
   }

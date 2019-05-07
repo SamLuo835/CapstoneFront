@@ -8,9 +8,13 @@ import {DataShareService} from '../../../_service/data-share.service';
 })
 export class LeftMenuComponent implements OnInit {
 
-  formDisplay:boolean
+  formDisplay:boolean = false
+
+  customerFormDisplay:boolean =false;
 
   formRequire : Array<any>
+
+  customerFormRequire : Array<any>
 
   panelOpenState = true;
 
@@ -36,8 +40,10 @@ export class LeftMenuComponent implements OnInit {
     this.messageEvent.emit(this.componentIndex);
 
     //for sibling or no relation components, share data with observables
-    this.subscriptions.push(this._dataShare.currentMessage.subscribe(message => this.formDisplay = message))
-    this.subscriptions.push(this._dataShare.currentForm.subscribe(message => {this.formRequire = message}))
+    this.subscriptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.formDisplay = message))
+    this.subscriptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.customerFormDisplay = message))
+    this.subscriptions.push(this._dataShare.currentFormRequire.subscribe(message => {this.formRequire = message}))
+    this.subscriptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => {this.customerFormRequire = message}))
     this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message =>{this.bikeList = message;this.checkAvailableBike()}));
 
   }
@@ -55,13 +61,23 @@ export class LeftMenuComponent implements OnInit {
   
 
 
-  checkFormRequire(){
-    for(var i in this.formRequire){
-      if(this.formRequire[i]){
-        return true
+  checkFormRequire(form){
+    if(form == 'rental'){
+      for(var i in this.formRequire){
+        if(this.formRequire[i]){
+            return true
+          }
+        }
+        return false
       }
+    if(form == 'customer'){
+      for(var i in this.customerFormRequire){
+        if(this.customerFormRequire[i]){
+            return true
+          }
+        }
+        return false
     }
-    return false
   }
 
   buttonClick(_component){
@@ -81,8 +97,13 @@ export class LeftMenuComponent implements OnInit {
       case 'customer':
         this.componentIndex = 5
         break;
-      case 'new':
+      case 'newRental':
         this.componentIndex = 6
+        window.location.href = "#";
+        break;
+      case 'newCustomer':
+        this.componentIndex = 7
+        window.location.href = "#";
         break;
     }
 
@@ -98,13 +119,27 @@ export class LeftMenuComponent implements OnInit {
     this._dataShare.changeShowForm(this.formDisplay);
   }
 
-  cancel(){
-    this.formDisplay = false;
-    this._dataShare.changeShowForm(this.formDisplay);
+  cancel(form){
+    if(form == 'rental'){
+      this.formDisplay = false;
+      this._dataShare.changeShowForm(this.formDisplay);
+    }
+    if(form == 'customer'){
+      this.customerFormDisplay = false;
+      this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
+      this.componentIndex = 1;
+      this.messageEvent.emit(this.componentIndex);
+      this.panelOpenState = true;
+    }
   }
 
-  submit(){
-    this._dataShare.changeSubmit(true);
+  submit(form){
+    if(form == 'rental')
+      this._dataShare.changeSubmit(true);
+    if(form == 'customer'){
+      console.log('customer submit')
+      this._dataShare.changeCustomerSubmit(true);
+    }
   }
 
 }

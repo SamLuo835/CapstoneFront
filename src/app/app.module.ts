@@ -39,6 +39,7 @@ import {MatSortModule} from '@angular/material/';
 import {MatPaginatorModule} from '@angular/material/';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReportsComponent } from './_components/reports/reports.component';
+import { NewCustomerComponent } from './_components/home/new-customer/new-customer.component';
 
 
 
@@ -59,7 +60,8 @@ import { ReportsComponent } from './_components/reports/reports.component';
     LockComponent,
     NewRentalComponent,
     DetailDialog,
-    ReportsComponent
+    ReportsComponent,
+    NewCustomerComponent
   ],
   imports: [
     BrowserAnimationsModule,
