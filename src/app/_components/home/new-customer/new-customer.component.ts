@@ -127,7 +127,11 @@ export class NewCustomerComponent implements OnInit {
   }
 
   accept(){
-    window.location.href = "#";
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });    
     this.showForm = true;
     this._dataShare.changeCustomerShowForm(this.showForm);
     this.formRequire = [true,true,true,true,true,true]

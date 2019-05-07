@@ -99,11 +99,19 @@ export class LeftMenuComponent implements OnInit {
         break;
       case 'newRental':
         this.componentIndex = 6
-        window.location.href = "#";
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
         break;
       case 'newCustomer':
         this.componentIndex = 7
-        window.location.href = "#";
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
         break;
     }
 
