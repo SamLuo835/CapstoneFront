@@ -20,16 +20,8 @@
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.red{
-    color:red;
-}
-
-.green{
-    color:#28a745;
-}
-
 .rented .mat-select-value{
-    color: red !important;
+    color: #dc3545 !important;
 }
 
 .available .mat-select-value{

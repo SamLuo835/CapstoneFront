@@ -35,16 +35,10 @@
         <div class="container">
             <form class="form">
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="First Name *" [errorStateMatcher]="matcher" name="firstname"  (change)="onChange(0)" [formControl]="firstNameFormControl"  [(ngModel)]="resultUserData['firstName']">
-                  <mat-error *ngIf="firstNameFormControl.hasError('required')">
-                      First name is <strong>required</strong>
-                  </mat-error>
+                  <input matInput placeholder="First Name *"  name="firstname"   disabled  [(ngModel)]="resultUserData['firstName']">
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                  <input matInput placeholder="Last Name *" [errorStateMatcher]="matcher" name="lastname"  (change)="onChange(1)" [formControl]="lastNameFormControl"  [(ngModel)]="resultUserData['lastName']">
-                  <mat-error *ngIf="lastNameFormControl.hasError('required')">
-                      Last name is <strong>required</strong>
-                  </mat-error>
+                  <input matInput placeholder="Last Name *" name="lastname"   disabled  [(ngModel)]="resultUserData['lastName']">
                 </mat-form-field><br><br>
                 <table class="full-width" cellspacing="0"><tr>
                 <td>
@@ -54,7 +48,7 @@
                 <td>
                     <mat-form-field class="full-width">
                     <mat-label>Select customer type *</mat-label>
-                    <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" name="type" [(ngModel)]="resultUserData['type']" (selectionChange)="onChange(5)" [formControl]="custTypeFormControl">
+                    <mat-select panelClass="selectdropdown"  name="type" [(ngModel)]="resultUserData['type']"  disabled>
                       <mat-option  value="STUDENT">
                         Student
                       </mat-option>
@@ -65,9 +59,6 @@
                           Faculty
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="custTypeFormControl.hasError('required')">
-                      Type is <strong>required</strong>
-                  </mat-error>
                   </mat-form-field>
                 </td>    
                 </tr>
@@ -75,34 +66,19 @@
                 
                 <br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(2)" [formControl]="emailFormControl" [(ngModel)]="resultUserData['sheridanEmail']">
-                    <mat-error *ngIf="emailFormControl.hasError('required')">
-                          Sheridan Email is <strong>required</strong>
-                    </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('email')">
-                            Sheridan Email is <strong>invalid</strong>
-                    </mat-error>
+                    <input matInput placeholder="Sheridan Email *"  name="sheridanEmail" disabled [(ngModel)]="resultUserData['sheridanEmail']">
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(3)" [formControl]="pEmailFormControl"   [(ngModel)]="resultUserData['personalEmail']">
-                    <mat-error *ngIf="pEmailFormControl.hasError('required')">
-                        Personal Email is <strong>required</strong>
-                    </mat-error>
-                    <mat-error *ngIf="pEmailFormControl.hasError('email')">
-                          Personal Email is <strong>invalid</strong>
-                    </mat-error> 
+                    <input matInput placeholder="Personal Email *"   name="personalEmail"  disabled   [(ngModel)]="resultUserData['personalEmail']">
                 </mat-form-field><br><br>
                 
                 <table class="full-width" cellspacing="0"><tr>
                   <td><mat-form-field class="full-width">
-                    <input  matInput placeholder="Phone *" [errorStateMatcher]="matcher" name="phone" (change)="onChange(4)" [formControl]="phoneFormControl" [(ngModel)]="resultUserData['phone']">
-                    <mat-error *ngIf="phoneFormControl.hasError('required')">
-                        Phone is <strong>required</strong>
-                    </mat-error>
+                    <input  matInput placeholder="Phone *"  name="phone"  disabled [(ngModel)]="resultUserData['phone']">
                 </mat-form-field></td>
                 <td> <mat-form-field class="full-width">
                   <mat-label>Pick a Bike *</mat-label>
-                  <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange(6)" [formControl]="bikeFormControl">
+                  <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                     <mat-option *ngFor="let bike of bikeList" [disabled]="bike.available == 'false' " [value]="bike.id ">
                       Bike #{{bike.id}}, <span [ngClass]="{'text-danger':bike.available == 'false','text-success':bike.available == 'true'}">{{bike.available == 'true' ?"Available":"Unavailable"}}</span>
                     </mat-option>
@@ -114,67 +90,11 @@
               </tr></table>
                 <br><br>
 
-                <!--<table class="full-width" cellspacing="0"><tr>
-                  <td><mat-form-field class="full-width">
-                    <input matInput placeholder="First name">
-                  </mat-form-field></td>
-                  <td><mat-form-field class="full-width">
-                    <input matInput placeholder="Long Last Name That Will Be Truncated">
-                  </mat-form-field></td>
-                </tr></table>-->
-                
-                <!--<mat-form-field>
-                    <input matInput [matDatepickerFilter]="dayFilter" [matDatepicker]="picker" placeholder="Return Date"
-                           (dateChange)="addEvent('change', $event)">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>-->
-
-
-
-                <!--<p>
-                  <mat-form-field class="full-width">
-                    <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
-                  </mat-form-field>
-                  <mat-form-field class="full-width">
-                    <textarea matInput placeholder="Address 2"></textarea>
-                  </mat-form-field>
-                </p>-->
-
-                <!--<label id="radio-group-label"></label>
-                <mat-radio-group
-                  aria-labelledby="example-radio-group-label"
-                  class="example-radio-group"
-                  [(ngModel)]="favoriteSeason">
-                  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                    {{season}}
-                  </mat-radio-button>
-                </mat-radio-group>
-                <div>Your favorite season is: {{favoriteSeason}}</div>-->
-                
-
                 <mat-form-field class="full-width">
                     <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="comment"></textarea>
 
                 </mat-form-field>
-
-                           
-                
-              
-                <!--<table class="full-width" cellspacing="0"><tr>
-                  <td><mat-form-field class="full-width">
-                    <input matInput placeholder="City">
-                  </mat-form-field></td>
-                  <td><mat-form-field class="full-width">
-                    <input matInput placeholder="State">
-                  </mat-form-field></td>
-                  <td><mat-form-field class="full-width">
-                    <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
-                    <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                  </mat-form-field></td>
-                </tr></table>-->
-              </form>
-              
+              </form>              
         </div>
     </div>
 </div>

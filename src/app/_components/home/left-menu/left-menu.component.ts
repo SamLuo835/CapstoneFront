@@ -142,6 +142,11 @@ export class LeftMenuComponent implements OnInit {
       this.messageEvent.emit(this.componentIndex);
       this.panelOpenState = true;
     }
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });   
   }
 
   submit(form){
