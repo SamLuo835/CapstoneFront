@@ -24,7 +24,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutComponent } from './_components/about/about.component';
 import { PasswordRecoverComponent } from './_components/password-recover/password-recover.component';
 import { LeftMenuComponent } from './_components/home/left-menu/left-menu.component';
-import { BikeInventoryComponent } from './_components/home/bike-inventory/bike-inventory.component';
+import { BikeInventoryComponent, BikeDialog } from './_components/home/bike-inventory/bike-inventory.component';
 import { ActiveRecordComponent,DetailDialog } from './_components/home/active-record/active-record.component';
 import { UserComponent } from './_components/home/user/user.component';
 import { ArchiveRecordComponent } from './_components/home/archive-record/archive-record.component';
@@ -40,7 +40,7 @@ import {MatPaginatorModule} from '@angular/material/';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReportsComponent } from './_components/reports/reports.component';
 import { NewCustomerComponent } from './_components/home/new-customer/new-customer.component';
-
+import { FileUploadModule } from "ng2-file-upload"
 
 
 @NgModule({
@@ -61,7 +61,8 @@ import { NewCustomerComponent } from './_components/home/new-customer/new-custom
     NewRentalComponent,
     DetailDialog,
     ReportsComponent,
-    NewCustomerComponent
+    NewCustomerComponent,
+    BikeDialog
   ],
   imports: [
     BrowserAnimationsModule,
@@ -82,10 +83,12 @@ import { NewCustomerComponent } from './_components/home/new-customer/new-custom
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FileUploadModule,
+    MatNativeDateModule
   ],
-  entryComponents:[TimeoutDialog,DetailDialog],
-  providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},MatNativeDateModule,DataShareService],
+  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog],
+  providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,Inject } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
 import { DataShareService } from 'src/app/_service/data-share.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 
 @Component({
   selector: 'app-bike-inventory',
@@ -11,7 +13,7 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 
 
 export class BikeInventoryComponent implements OnInit {
-  constructor(private _core :CoreService,private _dataShare:DataShareService) { }
+  constructor(private _core :CoreService,private _dataShare:DataShareService,private _modal: MatDialog) { }
 
   bikes:Array<any>; 
   showSpinner : boolean = true
@@ -43,11 +45,22 @@ export class BikeInventoryComponent implements OnInit {
       }
     //calling this will trigger the subscribe event that listening on bike list in other component
       this._dataShare.changeBikeList(this.bikes)
-    })
-
-     
+      })
     }
 
+
+    openDialog(index,action): void { 
+      const dialogRef = this._modal.open(BikeDialog, {
+       data: {bike:this.bikes[index],action:action},
+       height: '600px',
+       width: '600px',
+       autoFocus:false,
+       disableClose: true
+     });
+     dialogRef.afterClosed().subscribe(result => {
+       console.log('The dialog was closed');
+     }); 
+ }
 
   changeStatus(i){
       console.log(this.bikes[i]);
@@ -56,4 +69,45 @@ export class BikeInventoryComponent implements OnInit {
       //this._dataShare.changeBikeList(this.bikes)
     }
   }
+
+
+
+import { FileUploader } from 'ng2-file-upload';
+  //dialog class
+const URL = "http://luojianl.dev.fast.sheridanc.on.ca/capstone/assets/images/";
+@Component({
+  selector: 'BikeDialog',
+  templateUrl: 'bike-inventory.component.dialog.html'
+})
+export class BikeDialog {
+  public uploader:FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver:boolean = false;
+ 
+  public fileOverBase(e:any):void {
+    this.hasBaseDropZoneOver = e;
+  }
+ 
+
+
+  constructor(
+    public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
+    }
+
+    
+    ngOnInit(){
+      console.log(this.data)
+    }
+
+
+    
+
+    saveChanges(){
+    }
+
+
+  
+    onClick(): void {
+      this.dialogRef.close();
+    }
+}
 
