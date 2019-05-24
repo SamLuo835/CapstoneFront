@@ -38,6 +38,8 @@ export class NewRentalComponent implements OnInit {
   formRequire:Array<any> = [];
   subsctiptions:Array<any> = [];
 
+  submitting:boolean = false;
+
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
@@ -49,9 +51,7 @@ export class NewRentalComponent implements OnInit {
     this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
     this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      this._dataShare.changeSubmit(false);
-      this.showForm = false;
-      this._dataShare.changeShowForm(this.showForm);
+      this.submitting = true;
       this.createCustomerRental();
     }
   }));
@@ -64,7 +64,10 @@ export class NewRentalComponent implements OnInit {
       this.newRentalData['bike']['id'] = this.bikeSelected
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       this._coreService.newRental(this.newRentalData).subscribe(res=>{
-        console.log(res);
+        this.submitting = false;
+        this._dataShare.changeSubmit(false);
+        this.showForm = false;
+        this._dataShare.changeShowForm(this.showForm);
         this.notification.notify( 'success', 'New Rental Created.' );
         //refresh the data share's bikelist since the back end update one bike availablity
         this._coreService.getBikeList().subscribe(res=>{
@@ -72,7 +75,12 @@ export class NewRentalComponent implements OnInit {
             this._dataShare.changeBikeList( JSON.parse(res));
             }
           )
-      },error=>{console.log(error)})
+      },error=>{
+        this.submitting = false;
+        this._dataShare.changeSubmit(false);
+        this.showForm = false;
+        this._dataShare.changeShowForm(this.showForm);
+        console.log(error)})
   }
 
   idFormControl = new FormControl('', [
