@@ -4,6 +4,8 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
+import { NotifierService } from 'angular-notifier';
+
 
 export interface newCustomerData{
   firstName:String;
@@ -40,7 +42,7 @@ export class NewCustomerComponent implements OnInit {
 
 
 
-  constructor(private _coreService:CoreService,private _dataShare:DataShareService) { }
+  constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
     this.subsctiptions.forEach( s => s.unsubscribe());
@@ -59,12 +61,12 @@ export class NewCustomerComponent implements OnInit {
     this._coreService.getCustomerById(this.customerData.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
-        alert("Customer already registered.")
+        this.notification.notify( 'error', 'Customer Already Registered.' );
       }
       else if(response.status == 204){
           this._coreService.newCustomer(this.customerData).subscribe(res => {
-          alert("Customer created.");
-          this.showForm = false;
+            this.notification.notify( 'success', 'New Rental Created.' );
+            this.showForm = false;
           this._dataShare.changeCustomerShowForm(this.showForm);
         })
       }

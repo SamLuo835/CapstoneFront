@@ -4,6 +4,8 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
+import { NotifierService } from 'angular-notifier';
+
 import { Observable } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -36,7 +38,7 @@ export class NewRentalComponent implements OnInit {
   formRequire:Array<any> = [];
   subsctiptions:Array<any> = [];
 
-  constructor(private _coreService:CoreService,private _dataShare:DataShareService) { }
+  constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
     this.subsctiptions.forEach( s => s.unsubscribe());
@@ -63,7 +65,7 @@ export class NewRentalComponent implements OnInit {
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       this._coreService.newRental(this.newRentalData).subscribe(res=>{
         console.log(res);
-        alert("New rental created.")
+        this.notification.notify( 'success', 'New Rental Created.' );
         //refresh the data share's bikelist since the back end update one bike availablity
         this._coreService.getBikeList().subscribe(res=>{
           //calling this will trigger the subscribe event that listening on bike list in other component

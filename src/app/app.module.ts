@@ -40,7 +40,9 @@ import {MatPaginatorModule} from '@angular/material/';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReportsComponent } from './_components/reports/reports.component';
 import { NewCustomerComponent } from './_components/home/new-customer/new-customer.component';
-import { FileUploadModule } from "ng2-file-upload"
+import { FileUploadModule } from "ng2-file-upload";
+import { NotifierModule } from 'angular-notifier';
+
 
 
 @NgModule({
@@ -85,7 +87,9 @@ import { FileUploadModule } from "ng2-file-upload"
     MatPaginatorModule,
     MatProgressSpinnerModule,
     FileUploadModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000}
+    } )
   ],
   entryComponents:[TimeoutDialog,DetailDialog,BikeDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
