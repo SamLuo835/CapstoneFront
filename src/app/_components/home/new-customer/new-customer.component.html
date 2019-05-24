@@ -36,6 +36,8 @@
     </div>
 </div>
 <div class="row" *ngIf="showForm">
+    <mat-spinner  diameter='40' *ngIf="submitting" style="position: absolute;z-index: 10;"></mat-spinner>
+
     <div class="col-md-12 ">
         <div class="container">
             <form class="form">

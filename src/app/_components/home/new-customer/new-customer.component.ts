@@ -40,7 +40,7 @@ export class NewCustomerComponent implements OnInit {
 
   formRequire = [];
 
-
+  submitting :boolean = false;
 
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
@@ -58,18 +58,23 @@ export class NewCustomerComponent implements OnInit {
   }
 
   createCustomer(){
+    this.submitting = true;
     this._coreService.getCustomerById(this.customerData.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
+        this.submitting = false;
         this.notification.notify( 'error', 'Customer Already Registered.' );
       }
       else if(response.status == 204){
           this._coreService.newCustomer(this.customerData).subscribe(res => {
-            this.notification.notify( 'success', 'New Rental Created.' );
+            this.submitting = false;
+            this.notification.notify( 'success', 'New Customer Created.' );
             this.showForm = false;
           this._dataShare.changeCustomerShowForm(this.showForm);
-        })
+        },error=>{this.submitting = false;        
+      })
       }
+    },error=>{ this.submitting = false;
     })
   }
 

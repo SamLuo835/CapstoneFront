@@ -95,8 +95,9 @@ export class NewRentalComponent implements OnInit {
 
 
   submitId(){
+    this.errorMsg = null;
     this.showSpinner = true;
-    setTimeout(()=>{this._coreService.getCustomerById(this.sheridanId)
+    this._coreService.getCustomerById(this.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
         this.resultUserData = response['body'];
@@ -114,8 +115,9 @@ export class NewRentalComponent implements OnInit {
         this.showSpinner = false;
         this.errorMsg = "Customer not found, please register first."
       }
-    })
-    },1000);
+    },error=>{ 
+      this.showForm = false;
+      this.showSpinner = false;})
   }
 
 }

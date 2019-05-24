@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   errorMsg:String;
   checkedBox:Boolean = false;
   loginUserData = {email:'',password:''}
-
+  submitting:boolean = false;
   constructor(private _auth: AuthService,private _router:Router) { }
 
   ngOnInit() {
@@ -51,8 +51,11 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(){
+    this.errorMsg = null;
+    this.submitting = true;
     this._auth.loginUser(this.loginUserData).subscribe(
       res=>{
+        this.submitting = false;
         console.log(res);
         if(res.valid) {
           localStorage.setItem('token',res['token']);
@@ -65,7 +68,7 @@ export class LoginComponent implements OnInit {
           }
           this._router.navigate(['/home'])
         } else {
-          this.errorMsg = "Email or password are incorrect"
+          this.errorMsg = "Email or password incorrect"
         }
 
           // if(user.email != this.user1.email){
@@ -80,6 +83,7 @@ export class LoginComponent implements OnInit {
         
       },
       err=>{
+        this.submitting = false;
        // this.errorMsg = err['body']['error']
         console.log(err)
       }
