@@ -18,8 +18,6 @@ export class LeftMenuComponent implements OnInit {
 
   panelOpenState = true;
 
-  noAvailableBike:Boolean;
-
   bikeList = [];
 
   subscriptions = [];
@@ -50,13 +48,15 @@ export class LeftMenuComponent implements OnInit {
 
 
   checkAvailableBike(){
+    if(!this.customerFormDisplay){
       for( var i in this.bikeList){
         if(this.bikeList[i]['available']){
-          this.noAvailableBike = false;
-          return; 
+          return false; 
         }
       }
-      this.noAvailableBike = true;
+      return true;
+    }
+    else return false;
     }
   
 
