@@ -19,18 +19,21 @@ export class CoreService {
 
   constructor(private http:HttpClient,private notification :NotifierService) { }
 
-  private bikeListUrl: string = "http://bike-rental-hmc.herokuapp.com/getBikes";
-  private activeRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getActiveRentals";
-  private activeRentalDetailUrl: string = "http://bike-rental-hmc.herokuapp.com/getActiveRental/";
-  private customersUrl: string = "http://bike-rental-hmc.herokuapp.com/getCustomers/";
-  private archivedRentalsUrl: string = "http://bike-rental-hmc.herokuapp.com/getArchivedRentals";
+  // private baseServerAddress: string = "http://localhost:8082";
+  private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
+
+  private bikeListUrl: string = this.baseServerAddress + "/getBikes";
+  private activeRentalsUrl: string = this.baseServerAddress + "/getActiveRentals";
+  private activeRentalDetailUrl: string = this.baseServerAddress + "/getActiveRental/";
+  private customersUrl: string = this.baseServerAddress + "/getCustomers/";
+  private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
   
   //TODO 
-  private returnBikeUrl:string = "https://bike-rental-hmc.herokuapp.com/returnRental";
-  private editRentalUrl:string = "https://bike-rental-hmc.herokuapp.com/editRental";
-  private queryCustomerUrl:string = "https://bike-rental-hmc.herokuapp.com/getCustomer";
-  private newCustomerUrl:string = "https://bike-rental-hmc.herokuapp.com/newCustomer";
-  private newRentalUrl:string = "https://bike-rental-hmc.herokuapp.com/newRental";
+  private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
+  private editRentalUrl:string = this.baseServerAddress + "/editRental";
+  private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
+  private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
+  private newRentalUrl:string = this.baseServerAddress + "/newRental";
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
@@ -55,10 +58,12 @@ export class CoreService {
 
   getCustomerById(id):Observable<any>{
       //@PATHVARIABLE in spring
-    return this.http.get(this.queryCustomerUrl+"/"+id,{ observe: 'response' }).pipe(catchError(()=>{
-      this.notification.notify( 'error', 'Something bad happened, please try again later.' );
-      return throwError(
-      'Something bad happened; please try again later.');}))
+    return this.http.get(this.queryCustomerUrl+"/"+id,{ observe: 'response' }).pipe(catchError((httpError)=>{
+      // if there is an error message, display it. Otherwise display default message
+      let errorMessage = (httpError.error) ? httpError.error : 'Something bad happened, please try again later.';
+      this.notification.notify( 'error', errorMessage );
+      return throwError(errorMessage);
+    }));
   }
 
   newCustomer(newCustomer):Observable<any>{
