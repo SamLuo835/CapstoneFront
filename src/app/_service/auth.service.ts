@@ -34,6 +34,7 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('token');
     this._dataShare.changeShowForm(false);
+    this._dataShare.changeCustomerShowForm(false);
     this.router.navigate(['/login']);
   }
 

@@ -50,7 +50,7 @@ export class LeftMenuComponent implements OnInit {
   checkAvailableBike(){
     if(!this.customerFormDisplay){
       for( var i in this.bikeList){
-        if(this.bikeList[i]['available']){
+        if(this.bikeList[i]['bikeState'] == 'AVAILABLE'){
           return false; 
         }
       }

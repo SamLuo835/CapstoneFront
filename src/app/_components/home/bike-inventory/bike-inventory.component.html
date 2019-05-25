@@ -10,18 +10,24 @@
                             <mat-form-field class="full-width">
                                         <mat-label>Change Bike Status</mat-label>
                                         <!--add one more class to show repair needed  -->
-                                        <mat-select [disabled]="item.available == 'false'" [(value)]="item.available" [ngClass]="{'rented':bikes[i].available == 'false','available':bikes[i].available == 'true','repair':bikes[i].available == 'repair'}" (selectionChange)="changeStatus(i)">
-                                            <mat-option  value="true">
+                                        <mat-select [disabled]="item.bikeState == 'RENTED'" [(value)]="item.bikeState" [ngClass]="{'rented':bikes[i].bikeState == 'RENTED','available':bikes[i].bikeState == 'AVAILABLE','otherState':bikes[i].bikeState != 'RENTED' && bikes[i].bikeState != 'AVAILABLE'} " (selectionChange)="changeStatus(i)">
+                                            <mat-option  value="AVAILABLE">
                                                 <span class="text-success">Available</span>
                                             </mat-option>
-                                            <mat-option style="display:none" value="false">
+                                            <mat-option style="display:none" value="RENTED">
                                                 <span class="text-danger">Rented</span>
                                             </mat-option>
-                                            <mat-option  value="repair">
-                                                <span class="text-secondary">On Repair</span>
+                                            <mat-option  value="NEED_SERVICE_CHECK">
+                                                <span class="text-secondary">Need Service Check</span>
                                             </mat-option>
-                                            <mat-option  value="ofs">
-                                                    <span class="text-secondary">Out of Service</span>
+                                            <mat-option  value="OUT_OF_SERVICE">
+                                                <span class="text-secondary">Out of Service</span>
+                                            </mat-option>
+                                            <mat-option  value="IN_MAINTENANCE">
+                                                <span class="text-secondary">In Maintenance</span>
+                                            </mat-option>
+                                            <mat-option  value="MISSING">
+                                                    <span class="text-secondary">Missing</span>
                                                 </mat-option>
                                         </mat-select>
                             </mat-form-field>

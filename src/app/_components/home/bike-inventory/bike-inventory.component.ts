@@ -39,10 +39,7 @@ export class BikeInventoryComponent implements OnInit {
     this._core.getBikeList().subscribe(res=>{
       this.showSpinner = false;
       this.bikes = JSON.parse(res) ;
-    //TODO this need to be removed, as the back end need to return bike status as string 
-      for(var i in this.bikes){
-        this.bikes[i].available = this.bikes[i].available.toString()
-      }
+      console.log(this.bikes);
     //calling this will trigger the subscribe event that listening on bike list in other component
       this._dataShare.changeBikeList(this.bikes)
       })
