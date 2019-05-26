@@ -27,7 +27,7 @@ export class BikeInventoryComponent implements OnInit {
       }
       else{
         this.showSpinner = false;
-        this.bikes = this._dataShare.getBikeList()
+        this.bikes = this._dataShare.getBikeList().slice(0);
       }
     }
 
@@ -39,9 +39,8 @@ export class BikeInventoryComponent implements OnInit {
     this._core.getBikeList().subscribe(res=>{
       this.showSpinner = false;
       this.bikes = JSON.parse(res) ;
-      console.log(this.bikes);
     //calling this will trigger the subscribe event that listening on bike list in other component
-      this._dataShare.changeBikeList(this.bikes)
+      this._dataShare.changeBikeList(JSON.parse(res))
       })
     }
 
@@ -59,11 +58,16 @@ export class BikeInventoryComponent implements OnInit {
      }); 
  }
 
+
   changeStatus(i){
       console.log(this.bikes[i]);
+      console.log(this._dataShare.getBikeList());
+      console.log(this.bikes);
       //call back end service to change status of bike
-
-      //this._dataShare.changeBikeList(this.bikes)
+      //call get bikes again to use the response bike list and pass down to changeBikeList (passing local bikelist will 
+      //make data share bike list tie to local, making the next drop down selection alter the share bike list without 
+      //service side operation.
+      //this._dataShare.changeBikeList();
     }
   }
 
