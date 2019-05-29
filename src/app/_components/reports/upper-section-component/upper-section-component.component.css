@@ -1,0 +1,55 @@
+.summary_data
+{
+    display:flex;
+    justify-content: space-evenly
+}
+
+.dataBlock{
+    background-color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    color:#00b2ce;
+    width:15%;
+    height: 100px;
+    margin:20px 5px 40px 5px;
+}
+
+.block_header{
+    margin-top:5px;
+    text-align: center;
+}
+
+.block_number{
+    margin:10px;
+    color:#073063;
+    text-align: center;
+    font-size: 2.0em;
+    font-weight: 600;
+}
+.upper_title{
+    margin:20px 0px 0px 50px;
+    color:white;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.upper_header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.dateRange{
+    margin:20px 10px 10px 10px;
+    padding: 5px 10px;
+}
+.mat-form-field-underline{
+    display: none;
+}
+
+.mat-form-field-wrapper{
+    padding-bottom: 0!important;
+}
+
+.ngx-mat-drp-date-input{
+    color:white!important;
+}

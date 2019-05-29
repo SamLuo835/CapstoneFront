@@ -1,4 +1,10 @@
 .report-page {
-    background-color: #fff;
-    
+    width: 90%;
+    margin:auto;
 }
+
+.upper{
+    border-radius: 5px;
+    background-color: #00b2ce;
+}
+    

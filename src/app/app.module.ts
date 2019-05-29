@@ -42,6 +42,9 @@ import { ReportsComponent } from './_components/reports/reports.component';
 import { NewCustomerComponent } from './_components/home/new-customer/new-customer.component';
 import { FileUploadModule } from "ng2-file-upload";
 import { NotifierModule } from 'angular-notifier';
+import { UpperSectionComponentComponent } from './_components/reports/upper-section-component/upper-section-component.component';
+import { Ng2OdometerModule } from 'ng2-odometer';
+import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 
 
 
@@ -64,7 +67,8 @@ import { NotifierModule } from 'angular-notifier';
     DetailDialog,
     ReportsComponent,
     NewCustomerComponent,
-    BikeDialog
+    BikeDialog,
+    UpperSectionComponentComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -88,6 +92,8 @@ import { NotifierModule } from 'angular-notifier';
     MatProgressSpinnerModule,
     FileUploadModule,
     MatNativeDateModule,
+    NgxMatDrpModule,
+    Ng2OdometerModule.forRoot(),
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000}
     } )
   ],
