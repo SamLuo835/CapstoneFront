@@ -4,8 +4,8 @@
 </div>
 
 <div class="summary_data">
-  <div class="dataBlock"><div class="block_header">Total Renatls</div><div class="block_number"> <ng2-odometer [number]="total"></ng2-odometer></div></div>
-  <div class="dataBlock"><div class="block_header">Late Rentals</div><div class="block_number"> <ng2-odometer [number]="late"></ng2-odometer></div></div>
-  <div class="dataBlock"><div class="block_header">New Customers</div><div class="block_number"> <ng2-odometer [number]="user"></ng2-odometer></div></div>
-  <div class="dataBlock"><div class="block_header">Average Rent Days</div><div class="block_number"> <ng2-odometer [number]="average"></ng2-odometer></div></div>
+  <div class="dataBlock"><div class="block_header">Total Renatls</div><div [ngStyle]="{ 'visibility': displayNumber ? 'visible':'hidden' }" class="block_number"> <ng2-odometer [number]="total"></ng2-odometer></div></div>
+  <div class="dataBlock"><div class="block_header">Late Rentals</div><div [ngStyle]="{ 'visibility': displayNumber ? 'visible':'hidden' }"  class="block_number"> <ng2-odometer [number]="late"></ng2-odometer></div></div>
+  <div class="dataBlock"><div class="block_header">New Customers</div><div [ngStyle]="{ 'visibility': displayNumber ? 'visible':'hidden' }"  class="block_number"> <ng2-odometer [number]="user"></ng2-odometer></div></div>
+  <div class="dataBlock"><div class="block_header">Average Rent Days</div><div [ngStyle]="{ 'visibility': displayNumber ? 'visible':'hidden' }"  class="block_number"> <ng2-odometer [number]="average"></ng2-odometer></div></div>
 </div>

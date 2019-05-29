@@ -39,6 +39,10 @@ export class CoreService {
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
  }
 
+ testReport():Observable<any>{
+  return  of(new HttpResponse({ body: {total:100,user:120,late:20,average:50}, status: 200 }));
+}
+
 
   returnBike(id,comment):Observable<any>{
     let requestBody = {"id":id,"comment":comment};

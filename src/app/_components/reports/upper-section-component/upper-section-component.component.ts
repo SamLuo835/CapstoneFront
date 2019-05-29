@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgxDrpOptions, PresetItem, Range,PickerOverlayComponent } from 'ngx-mat-daterange-picker';
+import { NgxDrpOptions, PresetItem, Range } from 'ngx-mat-daterange-picker';
 import * as _moment from 'moment';
+import { NotifierService } from 'angular-notifier';
+import { CoreService } from 'src/app/_service/core.service';
 
 
 
@@ -12,22 +14,30 @@ import * as _moment from 'moment';
 })
 export class UpperSectionComponentComponent implements OnInit {
 
-  constructor() { 
+  constructor(private notification :NotifierService,private _core:CoreService) { 
   }
 
   @ViewChild('dateRangePicker') dateRangePicker;
 
   init: boolean = false;
-  total:Number = 100;
-  average:Number = 7.5;
-  user:Number = 100;
-  late:Number = 200;
+  total:Number;
+  average:Number;
+  user:Number;
+  late:Number;
+  displayNumber: boolean = false;
 
   range:Range = {fromDate:new Date(), toDate: new Date()};
   options:NgxDrpOptions;
   presets:Array<PresetItem> = [];
+  
   ngOnInit() {
-    
+  setTimeout(()=>{this._core.testReport().subscribe(res => {
+      this.displayNumber = true;
+      this.total = res['body'].total;
+      this.average = res['body'].average;
+      this.user = res['body'].user;
+      this.late = res['body'].late;
+    })},1000);
     const today = new Date();
     const lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
 
@@ -49,9 +59,24 @@ export class UpperSectionComponentComponent implements OnInit {
     updateRange(range: Range): void {
       // init will prevent the double call in the initialization
       if (this.init) {
-            this.range = range;
-            console.log(_moment(this.range.fromDate).format("YYYY-MM-DD"))
-            console.log(_moment(this.range.toDate).format("YYYY-MM-DD"))
+            if(_moment(range.fromDate).isAfter(range.toDate)){
+              this.notification.notify( 'error', 'From Date Is Aafter To Date.' );
+              const today = new Date();
+              const lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+              const resetRange = {fromDate:lastMonth,toDate:today}
+              this.dateRangePicker.resetDates(resetRange);
+            }
+            else{
+              this.range = range;
+              console.log(_moment(this.range.fromDate).format("YYYY-MM-DD"))
+              console.log(_moment(this.range.toDate).format("YYYY-MM-DD"))
+              setTimeout(()=>{this._core.testReport().subscribe(res => {
+                this.total = 200;
+                this.average = 22;
+                this.user = 99;
+                this.late = 54;
+              })},1000);
+            }
 
       }
       else {

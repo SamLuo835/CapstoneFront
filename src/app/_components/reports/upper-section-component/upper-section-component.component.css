@@ -53,3 +53,7 @@
 .ngx-mat-drp-date-input{
     color:white!important;
 }
+
+.ngx-mat-drp-date-input:hover{
+    cursor: pointer;
+}
