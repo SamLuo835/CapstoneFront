@@ -27,7 +27,7 @@ export class BikeInventoryComponent implements OnInit {
       }
       else{
         this.showSpinner = false;
-        this.bikes = this._dataShare.getBikeList().slice(0);
+        this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
       }
     }
 
