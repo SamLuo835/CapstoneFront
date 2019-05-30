@@ -17,7 +17,6 @@ export class UpperSectionComponentComponent implements OnInit {
   constructor(private notification :NotifierService,private _core:CoreService) { 
   }
 
-  @ViewChild('dateRangePicker') dateRangePicker;
 
   init: boolean = false;
   total:Number;
@@ -59,17 +58,13 @@ export class UpperSectionComponentComponent implements OnInit {
     }
   }
 
-  
   // handler function that receives the updated date range object
     updateRange(range: Range): void {
       // init will prevent the double call in the initialization
       if (this.init) {
             if(_moment(range.fromDate).isAfter(range.toDate)){
-              this.notification.notify( 'error', 'From Date Is Aafter To Date.' );
-              const today = new Date();
-              const lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
-              const resetRange = {fromDate:lastMonth,toDate:today}
-              this.dateRangePicker.resetDates(resetRange);
+              this.notification.notify( 'error', 'From Date Is After To Date.' );
+              return;
             }
             else{
               this.range = range;
