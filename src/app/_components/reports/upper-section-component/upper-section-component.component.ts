@@ -30,6 +30,11 @@ export class UpperSectionComponentComponent implements OnInit {
   options:NgxDrpOptions;
   presets:Array<PresetItem> = [];
   
+  odoConfig = {
+    format:'(,ddd).dd',
+    animation:'slide',
+  }
+
   ngOnInit() {
   setTimeout(()=>{this._core.testReport().subscribe(res => {
       this.displayNumber = true;
@@ -48,7 +53,7 @@ export class UpperSectionComponentComponent implements OnInit {
       applyLabel: "Submit",
       range: {fromDate:lastMonth, toDate: today},
       calendarOverlayConfig: {
-        shouldCloseOnBackdropClick: false,
+        shouldCloseOnBackdropClick: true,
         hasBackdrop: true
        }
     }

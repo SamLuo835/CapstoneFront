@@ -10,20 +10,21 @@
     border-radius: 5px;
     color:#00b2ce;
     width:15%;
-    height: 100px;
+    height: 140px;
     margin:20px 5px 40px 5px;
 }
 
 .block_header{
     margin-top:5px;
     text-align: center;
+    font-size: 1.1em;
 }
 
 .block_number{
     margin:10px;
-    color:#073063;
+    color:black;
     text-align: center;
-    font-size: 2.0em;
+    font-size: 3.0em;
     font-weight: 600;
 }
 .upper_title{
