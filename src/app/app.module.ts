@@ -45,6 +45,7 @@ import { NotifierModule } from 'angular-notifier';
 import { UpperSectionComponentComponent } from './_components/reports/upper-section-component/upper-section-component.component';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
+import { LowerSectionComponentComponent } from './_components/reports/lower-section-component/lower-section-component.component';
 
 
 
@@ -68,7 +69,8 @@ import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
     ReportsComponent,
     NewCustomerComponent,
     BikeDialog,
-    UpperSectionComponentComponent
+    UpperSectionComponentComponent,
+    LowerSectionComponentComponent
   ],
   imports: [
     BrowserAnimationsModule,

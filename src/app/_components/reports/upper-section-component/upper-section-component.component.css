@@ -42,18 +42,18 @@
     margin:20px 10px 10px 10px;
     padding: 5px 10px;
 }
-.mat-form-field-underline{
+.dateRange .mat-form-field-underline{
     display: none;
 }
 
-.mat-form-field-wrapper{
+.dateRange .mat-form-field-wrapper{
     padding-bottom: 0!important;
 }
 
-.ngx-mat-drp-date-input{
+.dateRange .ngx-mat-drp-date-input{
     color:white!important;
 }
 
-.ngx-mat-drp-date-input:hover{
+.dateRange .ngx-mat-drp-date-input:hover{
     cursor: pointer;
 }
