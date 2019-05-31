@@ -42,6 +42,9 @@
     justify-content: center;
 }
 
+.dataContainer .innerContainer{
+    width:100%;
+}
 
 
 .dataContainer .containerHeader{
