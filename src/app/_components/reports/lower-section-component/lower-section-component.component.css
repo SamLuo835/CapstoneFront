@@ -7,7 +7,7 @@
 .middle_block{
     border-right: 2px solid lightgray;
     border-left: 2px solid lightgray;
-    height: 115px;
+    height: 160px;
     display: flex;
     margin-bottom: 25px;
     width:33%;
@@ -15,7 +15,7 @@
 
 .left_block{
     width:33%;
-    height: 115px;
+    height: 160px;
     display: flex;
     margin-bottom: 25px;
 
@@ -23,7 +23,7 @@
 
 .right_block{
     width:33%;
-    height: 115px;
+    height: 160px;
     display: flex;
     margin-bottom: 25px;
 }
@@ -31,11 +31,18 @@
 .iconContainer{
     width: 40%;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dataContainer{
     width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+
 
 .dataContainer .containerHeader{
     color:gray;
