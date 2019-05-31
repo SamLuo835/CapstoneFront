@@ -58,3 +58,30 @@
 .dateRange .ngx-mat-drp-date-input:hover{
     cursor: pointer;
 }
+
+ .ngx-mat-drp-presets-list .ng-star-inserted{
+     border-radius: 8px;
+    color: #073063!important;
+}
+
+.ngx-mat-drp-presets-list .ng-star-inserted:hover{
+    background-color: #073063!important;
+    color:white!important;
+}
+
+.ng-star-inserted .mat-calendar-body-selected{
+    background-color:#073063!important;
+}
+
+.ngx-mat-drp-controls .mat-primary{
+    color:#073063;
+}
+
+.ngx-mat-drp-controls .mat-primary:hover{
+    color:white;
+    background-color: #073063;
+}
+
+.ngx-mat-drp-date-display{
+    min-width:240px!important;
+}
