@@ -18,6 +18,16 @@ export class AppComponent {
   imgSrc='./assets/images/logo.png'
   lastPing?: Date = null;
 
+  eventFire(el,etype){
+    if(el.fireEvent){
+      el.fireEvent('on'+etype);
+    }
+    else{
+      var evObj = document.createEvent('Events');
+    }
+      evObj.initEvent(etype,true,false);
+      el.dispatchEvent(evObj);
+  }
 
   getClass(path){
     return (this._location.path().substr(0, path.length) === path) ? 'active' : '';
@@ -30,7 +40,7 @@ export class AppComponent {
 
   constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
      // sets an idle timeout of 5 seconds, for testing purposes.
-     idle.setIdle(600);
+     idle.setIdle(5);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
      idle.setTimeout(5);
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
@@ -38,6 +48,9 @@ export class AppComponent {
 
     idle.onTimeout.subscribe(() => {
       if(this._auth.loggedIn()){
+        if(document.getElementsByClassName('mat-button-wrapper')[document.getElementsByClassName('mat-button-wrapper').length-1].innerHTML == 'Cancel'){
+          this.eventFire(document.getElementsByClassName('mat-button')[document.getElementsByClassName('mat-button').length-1],'click');
+        }
         this.openDialog();
         localStorage.removeItem("token");
         localStorage.removeItem("role");

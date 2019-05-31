@@ -109,4 +109,5 @@ export class UpperSectionComponentComponent implements OnInit {
     ]
   }
 
+  
 }
