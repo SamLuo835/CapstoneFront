@@ -1,109 +1,80 @@
-<h1 mat-dialog-title>Bike ID: {{data.bike.id}}<button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+<h1 mat-dialog-title>Bike ID: {{bike.id}}
+    <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button></h1>
-    <hr>
-    <div mat-dialog-content>
-        <div class="container">
-         
-            <div class="row">
-         
-                <div class="col-md-3">
-         
-                    <h3>Select files</h3>
-         
-                    <div ng2FileDrop
-                         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                         (fileOver)="fileOverBase($event)"
-                         [uploader]="uploader"
-                         class="well my-drop-zone">
-                        Base drop zone
-                    </div>
-         
-                    
-                    <!--Single
-                    <input type="file" ng2FileSelect [uploader]="uploader" />-->
-                </div>
-         
-                <div class="col-md-9" style="margin-bottom: 40px">
-         
-                    <h3>Upload queue</h3>
-                    <p>Queue length: {{ uploader?.queue?.length }}</p>
-         
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th width="50%">Name</th>
-                            <th>Size</th>
-                            <th>Progress</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let item of uploader.queue">
-                            <td><strong>{{ item?.file?.name }}</strong></td>
-                            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                            <td *ngIf="uploader.isHTML5">
-                                <div class="progress" style="margin-bottom: 0;">
-                                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                            </td>
-                            <td nowrap>
-                                <button type="button" class="btn btn-success btn-xs"
-                                        (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                                    <span class="glyphicon glyphicon-upload"></span> Upload
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs"
-                                        (click)="item.cancel()" [disabled]="!item.isUploading">
-                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                </button>
-                                <button type="button" class="btn btn-danger btn-xs"
-                                        (click)="item.remove()">
-                                    <span class="glyphicon glyphicon-trash"></span> Remove
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-         
-                    <div>
-                        <div>
-                            Queue progress:
-                            <div class="progress" >
-                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success btn-s"
-                                (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                            <span class="glyphicon glyphicon-upload"></span> Upload all
-                        </button>
-                        <button type="button" class="btn btn-warning btn-s"
-                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                        </button>
-                        <button type="button" class="btn btn-danger btn-s"
-                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                            <span class="glyphicon glyphicon-trash"></span> Remove all
-                        </button>
-                    </div>
-         
-                </div>
-         
-            </div>
-          </div>        
-
-    </div>
+    </button>
+</h1>
+<hr>
+<div mat-dialog-content>
+    <table class="full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Manufacturer" [(ngModel)]="bike.manufacturer">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Product Code" [(ngModel)]="bike.productCode">
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table class="full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Serial Number" [(ngModel)]="bike.serialNumber">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Bike Status</mat-label>
+                    <mat-select panelClass="selectdropdown" name="type" [(ngModel)]="bike.bikeState" (selectionChange)="onChange(5)">
+                        <mat-option  value="AVAILABLE">
+                            Available
+                        </mat-option>
+                        <mat-option value="RENTED">
+                            Rented
+                        </mat-option>
+                        <mat-option value="OUT_OF_SERVICE">
+                            Out of Service
+                        </mat-option>
+                        <mat-option value="NEEDS_SAFETY_CHECK">
+                            Needs Safety Check
+                        </mat-option>
+                        <mat-option value="MISSING">
+                            Missing
+                        </mat-option>
+                        <mat-option value="IN_MAINTENANCE">
+                            In Maintenance
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
         
-    
-     <mat-dialog-actions class="bikeDialog">
-    
-      <button class="btn btn-outline-dark" mat-dialog-close >Save Changes</button>
-    
+    <br>
+    <div class="container">
+        <mat-form-field class="full-width">
+            <textarea matInput placeholder="Additional Notes" name="notes" [(ngModel)]="bike.notes"></textarea>
+        </mat-form-field>
+    </div>
+
+    <br>
+    <div class="container">
+        <div class="full-width">
+            <img class="bike-image-dialog" src="./assets/images/{{bike.imgPath}}" alt="{{bike.id}} bike image">
+        </div>
+        <mat-dialog-actions class="full-width">
+            <button class="btn btn-outline-dark change-image-dialog" (click)="changeImage()">Change Image</button>
+        </mat-dialog-actions>
+    </div>
+
+    <mat-dialog-actions class="close-dialog">
+        <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
     </mat-dialog-actions>
+</div>
     
     

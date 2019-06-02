@@ -3,7 +3,6 @@ import { CoreService } from '../../../_service/core.service';
 import { DataShareService } from 'src/app/_service/data-share.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-
 @Component({
   selector: 'app-bike-inventory',
   templateUrl: './bike-inventory.component.html',
@@ -11,14 +10,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   encapsulation: ViewEncapsulation.None,
 })
 
-
 export class BikeInventoryComponent implements OnInit {
   constructor(private _core :CoreService,private _dataShare:DataShareService,private _modal: MatDialog) { }
 
   bikes:Array<any>; 
   showSpinner : boolean = true
-
-
 
   ngOnInit() {
     //check data share bikelist first
@@ -71,44 +67,73 @@ export class BikeInventoryComponent implements OnInit {
     }
   }
 
-
-
-import { FileUploader } from 'ng2-file-upload';
-  //dialog class
-const URL = "http://luojianl.dev.fast.sheridanc.on.ca/capstone/assets/images/";
+//dialog class
 @Component({
   selector: 'BikeDialog',
   templateUrl: 'bike-inventory.component.dialog.html'
 })
 export class BikeDialog {
-  public uploader:FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver:boolean = false;
- 
-  public fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
-  }
- 
 
+  bike:Object = this.data.bike;
 
   constructor(
     public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
-    
     ngOnInit(){
-      console.log(this.data)
     }
-
-
-    
 
     saveChanges(){
+      // TODO: IMPLEMENT SENDING REQUEST FOR EDIT TO BACKEND
+      // this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
     }
+
+    changeImage() {
+      // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
+    }
+
+    onClick(): void {
+      this.dialogRef.close({action:'cancel'});
+    }
+}
+
+  // TODO: IMPLEMENT UPLOAD IMAGE
+// import { FileUploader } from 'ng2-file-upload';
+//   //dialog class
+// const URL = "http://luojianl.dev.fast.sheridanc.on.ca/capstone/assets/images/";
+// @Component({
+//   selector: 'BikeDialog',
+//   templateUrl: 'bike-inventory.component.dialog.html'
+// })
+// export class BikeDialog {
+//   public uploader:FileUploader = new FileUploader({url: URL});
+//   public hasBaseDropZoneOver:boolean = false;
+ 
+//   public fileOverBase(e:any):void {
+//     this.hasBaseDropZoneOver = e;
+//   }
+ 
+
+
+//   constructor(
+//     public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
+//     }
+
+    
+//     ngOnInit(){
+//       console.log(this.data)
+//     }
+
+
+    
+
+//     saveChanges(){
+//     }
 
 
   
-    onClick(): void {
-      this.dialogRef.close();
-    }
-}
+//     onClick(): void {
+//       this.dialogRef.close();
+//     }
+// }
 
