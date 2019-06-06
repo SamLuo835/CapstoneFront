@@ -44,6 +44,17 @@
 
 }
 
+
+ .mat-dialog-container{
+    overflow: hidden!important;
+}
+
+
+.mat-dialog-content{
+   min-height:90%;
+   max-height:64vh!important;
+}
+
 .bike-image-dialog {
     width: 100%;
 }
