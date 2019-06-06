@@ -1,4 +1,9 @@
-<h1 mat-dialog-title>Bike ID: {{bike.id}}
+<h1 mat-dialog-title *ngIf="action == 'modify'">Bike ID: {{bike.id}}
+    <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</h1>
+<h1 mat-dialog-title *ngIf="action == 'create'">Add a New Bike
     <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

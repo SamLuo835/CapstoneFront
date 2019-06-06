@@ -6,3 +6,25 @@
 .row{
     margin-left:0; 
 }
+
+.addBike{
+    position: fixed;
+    top:90vh;
+    left:94vw;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #525251;
+    background-image: url(/assets/images/add.bb9363b8.svg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 28px;
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    font-size: 0;
+}
+
+.addBike:hover{
+    cursor: pointer;
+}

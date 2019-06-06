@@ -75,7 +75,7 @@ export class BikeInventoryComponent implements OnInit {
 export class BikeDialog {
 
   bike:Object = this.data.bike;
-
+  action:String = this.data.action;
   constructor(
     public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
     }
