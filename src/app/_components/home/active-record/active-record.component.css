@@ -47,7 +47,7 @@ mat-paginator{
     display:flex;
     justify-content: space-between;
     position: relative;
-    bottom: 50px;
+    top:80px;
 
 }
 
