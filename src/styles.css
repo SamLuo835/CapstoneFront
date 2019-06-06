@@ -29,11 +29,26 @@ app-root{
         justify-content: center!important;
 }
 
+
+.mat-dialog-container{
+    overflow: hidden!important;
+}
+
+
+.mat-dialog-content{
+   max-height:64vh!important;
+}
+
 .close{
     position: relative;
     left:5px;
     top:-20px;
     font-size: 2.0rem!important;
+}
+
+.close.focus, .close:focus {
+    outline: 0;
+    box-shadow: none!important;
 }
 
 

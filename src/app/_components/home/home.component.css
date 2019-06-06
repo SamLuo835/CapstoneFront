@@ -27,4 +27,19 @@
 
 .addBike:hover{
     cursor: pointer;
+    -webkit-animation:spin 250ms linear;
+    -moz-animation:spin 250ms linear;
+    animation:spin 250ms linear;
 }
+
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(90deg); } 
+  }
+  @-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(90deg); } 
+  }
+  @keyframes spin { 
+    100% { -webkit-transform: rotate(90deg); transform:rotate(90deg); } 
+  }
+  
