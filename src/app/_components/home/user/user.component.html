@@ -1,5 +1,28 @@
+
 <div class="table_div">
   <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
+  <div class="filter_container" [ngClass]='dataSource!==undefined ? "visible":"hide"'>
+      <div class="search_type">
+        <mat-form-field class="full-width">
+          <mat-label>Select search option</mat-label>
+          <mat-select  [(value)]="searchType" >
+              <mat-option  value="name">
+                  <span class="text-secondary">Name</span>
+              </mat-option>
+              <mat-option  value="email">
+                  <span class="text-secondary">Sheridan Email</span>
+              </mat-option>
+              <mat-option  value="ID">
+                  <span class="text-secondary">Sheridan ID</span>
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="search_input">
+        <div class="searchIcon"></div>
+        <input  placeholder="Search by {{searchType}}" #input>
+      </div>
+    </div>
   <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <!-- Sheridan Id Column -->
