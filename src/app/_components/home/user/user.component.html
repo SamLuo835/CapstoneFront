@@ -2,7 +2,9 @@
 <div class="table_div">
   <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
   <div class="filter_container" [ngClass]='dataSource!==undefined ? "visible":"hide"'>
-      <div class="search_type">
+    <div class="table_name">Customer Table</div>
+    <div class="search_box">  
+    <div class="search_type">
         <mat-form-field class="full-width">
           <mat-label>Select search option</mat-label>
           <mat-select  [(value)]="searchType" >
@@ -21,6 +23,8 @@
       <div class="search_input">
         <div class="searchIcon"></div>
         <input  placeholder="Search by {{searchType}}" #input>
+        <mat-spinner  diameter='20' style="margin:auto!important;right:13%" [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}" ></mat-spinner>
+      </div>
       </div>
     </div>
   <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">

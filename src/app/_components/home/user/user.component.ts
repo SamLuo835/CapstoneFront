@@ -14,7 +14,8 @@ export class UserComponent implements OnInit {
 
   constructor(private _core :CoreService) { }
 
-  searchType:String ='name';
+  $searching:boolean = false;
+  searchType:String = 'name';
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
@@ -27,13 +28,13 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    setTimeout(()=>{this._core.customersDataCall().subscribe(res=>{ 
+    this._core.customersDataCall().subscribe(res=>{ 
       this.showSpinner = false;
       this.tableData = res;
       this.dataSource = new MatTableDataSource(this.tableData);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-    })},3000);
+    })
   }
 
 
@@ -42,10 +43,17 @@ export class UserComponent implements OnInit {
     // server-side search
     fromEvent(this.input.nativeElement,'keyup')
         .pipe(
-            debounceTime(500),
+            debounceTime(800),
             distinctUntilChanged(),
             tap(() => {
-              console.log("fire")
+              this.$searching = true;
+              setTimeout(()=>{
+                this.dataSource = new MatTableDataSource([]);
+                this.paginator.pageIndex = 0;
+                this.paginator.length = 1;//size of return json
+                this.$searching = false;
+                console.log(this.input.nativeElement.value)
+              },1500); ; 
             })
         )
         .subscribe();
