@@ -48,8 +48,11 @@ export class AppComponent {
 
     idle.onTimeout.subscribe(() => {
       if(this._auth.loggedIn()){
-        if(document.getElementsByClassName('mat-button-wrapper')[document.getElementsByClassName('mat-button-wrapper').length-1].innerHTML == 'Cancel'){
-          this.eventFire(document.getElementsByClassName('mat-button')[document.getElementsByClassName('mat-button').length-1],'click');
+        let overLayElements = document.getElementsByClassName('mat-button-wrapper')
+        if(overLayElements.length != 0){
+         if(overLayElements[overLayElements.length-1].innerHTML == 'Cancel'){
+            this.eventFire(overLayElements[overLayElements.length-1],'click');
+          }
         }
         this.openDialog();
         localStorage.removeItem("token");
