@@ -44,3 +44,9 @@ mat-paginator{
 }
 
 button:focus{outline: none!important}
+
+.table_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -23,14 +23,16 @@ h1{
 }
 .menuflexbox{
     position: relative;
-    top:50px;
+    top:40px;
     display: flex;
     flex-direction: column;
     flex-grow: 2;
 }
 
 .headerTitle{
-    text-align: center;
+    position: relative;
+    right:12%;
+    text-align: right;
     font-family: 'Trocchi', serif;
 
 }

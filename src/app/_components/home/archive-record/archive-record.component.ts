@@ -24,13 +24,13 @@ export class ArchiveRecordComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    setTimeout(()=>{this._core.archivedRentalsDataCall().subscribe(res=>{ 
+    this._core.archivedRentalsDataCall().subscribe(res=>{ 
       this.showSpinner = false;
       this.tableData = res;
       this.dataSource = new MatTableDataSource(this.tableData);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-    })},3000);
+    });
   }
 
 }
