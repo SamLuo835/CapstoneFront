@@ -1,10 +1,12 @@
-import { Component, OnInit,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import {DataShareService} from '../../../_service/data-share.service';
 
 @Component({
   selector: 'app-left-menu',
   templateUrl: './left-menu.component.html',
-  styleUrls: ['./left-menu.component.css']
+  styleUrls: ['./left-menu.component.css'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class LeftMenuComponent implements OnInit {
 

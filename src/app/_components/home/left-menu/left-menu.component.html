@@ -1,8 +1,8 @@
  
     <mat-expansion-panel [expanded]="panelOpenState === true" (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false" hideToggle="true" >
-      <mat-expansion-panel-header [ngClass]="{'backgoundBlack':panelOpenState}">
-        <mat-panel-title [ngClass]="{'backgoundBlack':panelOpenState}">
+      <mat-expansion-panel-header [ngClass]="{'backgoundBlack':panelOpenState}"  [expandedHeight]="'40px'" [collapsedHeight]="'40px'">
+        <mat-panel-title style="color:#5f6368;font-weight: 500;font-family: Roboto,sans-serif;"[ngClass]="{'backgoundBlack':panelOpenState}">
           Inventory
         </mat-panel-title>
         <div class="mat-expansion-indicator" [ngClass]="{'spin-animation':panelOpenState}"></div>
@@ -13,9 +13,8 @@
 
       <hr>
       <button mat-button [ngClass]="{'hightLight':componentIndex == 2}" class="menuButton" (click)="buttonClick('lock')" >Locks</button>
-      <hr>
     </mat-expansion-panel>
-    <hr>
+    <hr >
 
 <button mat-button [ngClass]="{'hightLight':componentIndex == 3}" class="menuButton" (click)="buttonClick('active')">Active Rental Records</button>
 <hr>

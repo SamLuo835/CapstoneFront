@@ -1,9 +1,19 @@
 
 mat-expansion-panel-header:hover{
   background-color:#dadada!important;
+  
 }
+mat-panel-title:hover{
+  color:black!important
+}
+
+.mat-expansion-panel-body{
+  padding:0 0px 0 24px !important;
+}
+
 .mat-expansion-panel{
     box-shadow: unset!important;
+    background: unset!important
   }
 
 mat-expansion-panel-header{
@@ -29,14 +39,17 @@ mat-expansion-panel-header{
 }
 
 .menuButton{
-  font-weight: 400!important;
-  text-align: left;  
+ 
+  text-align: left!important;  
   width:100%;
+  color:#5f6368;
+  font-family: Roboto,sans-serif;
+  font-weight: 500;
 }
 
 .menuButton:focus{outline: none!important}
 
-.menuButton:hover{background-color: #dadada!important}
+.menuButton:hover{background-color: #dadada!important;color:black}
 
 .hightLight{
   background-color:#dadada;
@@ -46,6 +59,7 @@ mat-expansion-panel-header{
   -webkit-animation: show 2s forwards;
   animation: show 2s forwards;
 }
+
 
 
 
