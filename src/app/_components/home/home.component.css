@@ -16,7 +16,7 @@
     height: 50px;
     border-radius: 50%;
     background: #525251;
-    background-image: url(/assets/images/add.bb9363b8.svg);
+    background-image: url(~src/assets/images/add.bb9363b8.svg);
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: 28px;
@@ -35,7 +35,7 @@
       height: 50px;
       border-radius: 50%;
       background: #525251;
-      background-image: url(/assets/images/add.bb9363b8.svg);
+      background-image: url(~src/assets/images/add.bb9363b8.svg);
       background-repeat: no-repeat;
       background-position: 50%;
       background-size: 28px;

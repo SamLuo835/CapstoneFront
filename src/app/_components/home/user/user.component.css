@@ -65,7 +65,7 @@ button:focus{outline: none!important}
     border-radius: 20px;
     height:55%;
     margin:auto;
-    padding:0 15% 0 15%;
+    padding:0 15% 0 16%;
     border:1px solid lightgray;
     width:85%;
 }
@@ -84,7 +84,7 @@ button:focus{outline: none!important}
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: 28px;
-    background-image: url(/assets/images/baseline-search-24px.svg);
+    background-image: url(~src/assets/images/baseline-search-24px.svg);
 
 }
 
