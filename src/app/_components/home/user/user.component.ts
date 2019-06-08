@@ -27,6 +27,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+
   ngOnInit() {
     this._core.customersDataCall().subscribe(res=>{ 
       this.showSpinner = false;
@@ -46,13 +47,30 @@ export class UserComponent implements OnInit {
             debounceTime(800),
             distinctUntilChanged(),
             tap(() => {
+              console.log(this.input.nativeElement.value)
               this.$searching = true;
               setTimeout(()=>{
-                this.dataSource = new MatTableDataSource([]);
-                this.paginator.pageIndex = 0;
-                this.paginator.length = 1;//size of return json
+                if(this.input.nativeElement.value == ""){
+                  this._core.customersDataCall().subscribe(res=>{ 
+                    this.tableData = res;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource = new MatTableDataSource(this.tableData)
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource.paginator.length = this.tableData.length;
+                  })
+                }
+                else{
+                  this._core.testSearchCustomer().subscribe(res=>{
+                    this.tableData = res['body'];
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource = new MatTableDataSource(this.tableData)
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource.paginator.length = this.tableData.length;
+                  })
+                }
                 this.$searching = false;
-                console.log(this.input.nativeElement.value)
               },1500); ; 
             })
         )
