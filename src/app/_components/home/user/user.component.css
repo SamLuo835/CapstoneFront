@@ -68,6 +68,7 @@ button:focus{outline: none!important}
     padding:0 15% 0 16%;
     border:1px solid lightgray;
     width:85%;
+    font-size: 0.9em;
 }
 
 .search_input input:focus{

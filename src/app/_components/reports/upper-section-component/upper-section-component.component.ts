@@ -50,6 +50,7 @@ export class UpperSectionComponentComponent implements OnInit {
       presets: this.presets,
       format: 'mediumDate',
       applyLabel: "Submit",
+      placeholder: "Choose a Date Range",
       range: {fromDate:lastMonth, toDate: today},
       calendarOverlayConfig: {
         shouldCloseOnBackdropClick: true,

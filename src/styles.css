@@ -52,3 +52,63 @@ app-root{
 }
 
 
+.dateRange .mat-form-field-underline{
+    display: none;
+}
+
+.search_date .mat-form-field-underline{
+    display: none;
+}
+
+.dateRange .mat-form-field-wrapper{
+    padding-bottom: 0!important;
+}
+
+.search_date .mat-form-field-wrapper{
+    padding-bottom: 0!important;
+}
+
+.dateRange .ngx-mat-drp-date-input{
+    color:white!important;
+}
+
+.search_date .ngx-mat-drp-date-input{
+    color:black!important;
+}
+
+.dateRange .ngx-mat-drp-date-input:hover{
+    cursor: pointer;
+}
+
+.search_date .ngx-mat-drp-date-input:hover{
+    cursor: pointer;
+}
+
+ .ngx-mat-drp-presets-list .ng-star-inserted{
+     border-radius: 8px;
+    color: #073063!important;
+}
+
+.ngx-mat-drp-presets-list .ng-star-inserted:hover{
+    background-color: #073063!important;
+    color:white!important;
+}
+
+.ng-star-inserted .mat-calendar-body-selected{
+    background-color:#073063!important;
+}
+
+.ngx-mat-drp-controls .mat-primary{
+    color:#073063;
+}
+
+.ngx-mat-drp-controls .mat-primary:hover{
+    color:white;
+    background-color: #073063;
+}
+
+.ngx-mat-drp-date-display{
+    min-width:240px!important;
+}
+
+

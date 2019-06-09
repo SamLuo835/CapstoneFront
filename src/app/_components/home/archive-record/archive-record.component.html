@@ -1,6 +1,31 @@
 <div class="table_div">
 
   <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
+  <div class="filter_container" [ngClass]='dataSource!==undefined ? "visible":"hide"'>
+    <div class="table_name">Archived Rental Records</div>
+    <div class="search_box">  
+    <div class="search_type">
+        <mat-form-field class="full-width">
+          <mat-label>Select search option</mat-label>
+          <mat-select  [(value)]="searchType" >
+              <mat-option  value="signOut">
+                  <span class="text-secondary">Sign out Date</span>
+              </mat-option>
+              <mat-option  value="dueDate">
+                  <span class="text-secondary">Due Date</span>
+              </mat-option>
+              <mat-option  value="returnDate">
+                  <span class="text-secondary">Return Date</span>
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="search_date">
+        <ngx-mat-drp  (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker style="margin:10px 0 10px 10px;width:75%"></ngx-mat-drp>
+        <mat-spinner  diameter='20' class="tableSpinner" [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}" ></mat-spinner>
+      </div>
+      </div>
+    </div>
   <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- id Column -->

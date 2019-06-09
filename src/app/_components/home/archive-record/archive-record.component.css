@@ -57,3 +57,83 @@ button:focus{outline: none!important}
     flex-direction: column;
     align-items: center;
 }
+
+.filter_container{
+    background:white;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1px;
+    width:95%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.search_box{
+    display: flex;
+    width:46%;
+    justify-content: flex-end;
+}
+
+.search_type{
+    margin:0 0 0 10px;
+    padding-top:10px;
+}
+
+.search_date{
+    margin:0;
+    display: flex;
+    width:50%;
+}
+
+.search_date input{
+    height:55%;
+    margin:auto;
+    width:85%;
+    font-size: 0.9em;
+}
+
+.search_date input:focus{
+    outline:0;
+}
+
+.searchIcon{
+    position:relative;
+    top:28px;
+    left:14%;
+    display: block;
+    width: 23px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 28px;
+    background-image: url(~src/assets/images/baseline-search-24px.svg);
+
+}
+
+.mat-elevation-z8{
+    box-shadow: none;
+}
+
+.table_name{
+    margin:15px 0 0 5%;
+    font-weight: 600;
+    font-size: 1.9em;
+    color:#073063;
+    font-family: 'Roboto',sans-serif;
+}
+
+.tableSpinner{
+    margin:auto!important;
+}
+
+@media only screen and (min-width:1700px){
+    .tableSpinner{
+        right:5%;
+    }
+
+    .search_box{
+        width:38%;
+    }
+}
+
+
