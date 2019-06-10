@@ -79,6 +79,10 @@ button:focus{outline: none!important}
     padding-top:10px;
 }
 
+.search_type .mat-select{
+    font-size: 0.8em!important;
+}
+
 .search_date{
     margin:0;
     display: flex;
@@ -90,6 +94,10 @@ button:focus{outline: none!important}
     margin:auto;
     width:85%;
     font-size: 0.9em;
+    border-radius: 20px;
+    border:1px solid lightgray;
+    padding: 3px 0 3px 7px;
+    font-size: 0.8em;
 }
 
 .search_date input:focus{
@@ -124,6 +132,8 @@ button:focus{outline: none!important}
 
 .tableSpinner{
     margin:auto!important;
+    right:-2%;
+    top:3px;
 }
 
 @media only screen and (min-width:1700px){

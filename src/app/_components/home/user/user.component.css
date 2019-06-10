@@ -55,6 +55,10 @@ button:focus{outline: none!important}
     padding-top:10px;
 }
 
+.search_type .mat-select{
+    font-size: 0.8em!important;
+}
+
 .search_input{
     margin:0;
     display: flex;
@@ -63,12 +67,12 @@ button:focus{outline: none!important}
 
 .search_input input{
     border-radius: 20px;
-    height:55%;
+    height:50%;
     margin:auto;
     padding:0 15% 0 16%;
     border:1px solid lightgray;
     width:85%;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 .search_input input:focus{
