@@ -74,13 +74,17 @@ button:focus{outline: none!important}
     justify-content: flex-end;
 }
 
-.search_type{
+.search_range_type{
     margin:0 0 0 10px;
     padding-top:10px;
 }
 
-.search_type .mat-select{
+.search_range_type .mat-select{
     font-size: 0.8em!important;
+}
+
+.search_range_type .mat-form-field-wrapper{
+    padding-bottom: 1.4em!important;
 }
 
 .search_date{
@@ -96,26 +100,12 @@ button:focus{outline: none!important}
     font-size: 0.9em;
     border-radius: 20px;
     border:1px solid lightgray;
-    padding: 3px 0 3px 7px;
+    padding: 6px 0 6px 7px;
     font-size: 0.8em;
 }
 
 .search_date input:focus{
     outline:0;
-}
-
-.searchIcon{
-    position:relative;
-    top:28px;
-    left:14%;
-    display: block;
-    width: 23px;
-    height: 23px;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 28px;
-    background-image: url(~src/assets/images/baseline-search-24px.svg);
-
 }
 
 .mat-elevation-z8{
@@ -133,7 +123,7 @@ button:focus{outline: none!important}
 .tableSpinner{
     margin:auto!important;
     right:-2%;
-    top:3px;
+    top:6px;
 }
 
 @media only screen and (min-width:1700px){

@@ -59,6 +59,10 @@ button:focus{outline: none!important}
     font-size: 0.8em!important;
 }
 
+.search_type .mat-form-field-wrapper{
+    padding-bottom: 1.4em!important;
+}
+
 .search_input{
     margin:0;
     display: flex;
@@ -67,8 +71,8 @@ button:focus{outline: none!important}
 
 .search_input input{
     border-radius: 20px;
-    height:50%;
-    margin:auto;
+    height:40%;
+    margin:29px auto auto -15px;
     padding:0 15% 0 16%;
     border:1px solid lightgray;
     width:85%;
@@ -81,8 +85,8 @@ button:focus{outline: none!important}
 
 .searchIcon{
     position:relative;
-    top:28px;
-    left:14%;
+    top:35px;
+    left:8%;
     display: block;
     width: 23px;
     height: 23px;
