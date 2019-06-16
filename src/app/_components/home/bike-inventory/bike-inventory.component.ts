@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation,Inject } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
 import { DataShareService } from 'src/app/_service/data-share.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-bike-inventory',
@@ -77,14 +78,16 @@ export class BikeDialog {
   bike:any = this.data.bike;
   action:String = this.data.action;
   constructor(
-    public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, private notification : NotifierService) {
     }
 
     ngOnInit(){
     }
 
     saveChanges(){
-      // TODO: IMPLEMENT SENDING REQUEST FOR EDIT TO BACKEND
+      this._core.editBike(this.bike).subscribe(res => {
+        this.notification.notify('success', res.message);
+      });
       // this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
     }
 

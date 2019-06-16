@@ -19,8 +19,8 @@ export class CoreService {
 
   constructor(private http:HttpClient,private notification :NotifierService) { }
 
-  // private baseServerAddress: string = "http://localhost:8082";
-  private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
+  private baseServerAddress: string = "http://localhost:8082";
+  // private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
 
   private bikeListUrl: string = this.baseServerAddress + "/getBikes";
   private activeRentalsUrl: string = this.baseServerAddress + "/getActiveRentals";
@@ -34,6 +34,7 @@ export class CoreService {
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
   private newRentalUrl:string = this.baseServerAddress + "/newRental";
+  private editBikeUrl:string = this.baseServerAddress + "/editBike";
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
@@ -114,7 +115,7 @@ testSearchCustomer():Observable<any>{
   }
 
   newRental(newRental):Observable<any>{
-    return this.http.post(this.newRentalUrl,newRental,httpOptions).pipe(catchError(()=>{
+    return this.http.post(this.newRentalUrl,newRental,httpOptions).pipe(catchError((error)=>{
       this.notification.notify( 'error', 'Something bad happened, please try again later.' );
       return throwError(
       'Something bad happened; please try again later.');}));
@@ -161,5 +162,13 @@ testSearchCustomer():Observable<any>{
         'Something bad happened; please try again later.');}));
   }
   
-  
+  editBike(editedBikeInfo):Observable<any>{
+    console.log(editedBikeInfo);
+    return this.http.patch(this.editBikeUrl, editedBikeInfo, httpOptions).pipe(
+      catchError((httpError) => {
+        this.notification.notify('error', httpError.error.message);
+        return throwError(httpError.error.message);
+      })
+    );
+  }
 }
