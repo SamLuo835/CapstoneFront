@@ -19,8 +19,8 @@ export class CoreService {
 
   constructor(private http:HttpClient,private notification :NotifierService) { }
 
-  private baseServerAddress: string = "http://localhost:8082";
-  // private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
+  //private baseServerAddress: string = "http://localhost:8082";
+   private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
 
   private bikeListUrl: string = this.baseServerAddress + "/getBikes";
   private activeRentalsUrl: string = this.baseServerAddress + "/getActiveRentals";
