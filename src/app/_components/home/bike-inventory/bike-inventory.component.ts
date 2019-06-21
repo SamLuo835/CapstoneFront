@@ -82,6 +82,44 @@ export class BikeDialog {
     }
 
     ngOnInit(){
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+
+        document.getElementById("header").style.height = "70px";
+
+        document.getElementById("menuFlexBox").style.width = "100%";
+        document.getElementById("menuFlexBox").style.flexDirection = "row";
+        document.getElementById("menuFlexBox").style.top = "unset";
+        document.getElementById("menuFlexBox").style.justifyContent = "space-between";
+
+
+        document.getElementById("headerTitle").style.fontSize = "1.5em";
+        document.getElementById("headerTitle").style.right = "unset";
+        document.getElementById("headerTitle").style.padding = "25px 0 0 25px";
+      
+        document.getElementById("headerMenu").style.top = "unset";
+
+        document.getElementById("headerLogo").style.display = "none";
+
+        
+
+      } else {
+        document.getElementById("header").style.height = "200px";
+
+        document.getElementById("menuFlexBox").style.width = "unset";
+        document.getElementById("menuFlexBox").style.flexDirection = "column";
+        document.getElementById("menuFlexBox").style.top = "40px";
+        document.getElementById("menuFlexBox").style.justifyContent = "unset";
+
+
+        document.getElementById("headerMenu").style.top = "20px";
+
+        document.getElementById("headerTitle").style.right = "4%";
+        document.getElementById("headerTitle").style.paddingTop = "unset";
+        document.getElementById("headerTitle").style.fontSize = "3em";
+       
+        document.getElementById("headerLogo").style.display = "block";
+
+      }
     }
 
     saveChanges(){
