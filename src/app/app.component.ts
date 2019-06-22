@@ -20,23 +20,13 @@ export class AppComponent {
   animation :boolean = false;
 
   ngOnInit() {
-
     window.addEventListener("scroll" , () => {
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         this.animation = true;
-      } else {
+      } else if(document.body.scrollTop  <= 0  || document.documentElement.scrollTop <= 0){
         this.animation = false;
       }
     });
-
-    function scrollFunction() {
-
-      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-        this.animation = true;       
-      } else {
-        this.animation = false;
-      }
-    }  
   }
 
 

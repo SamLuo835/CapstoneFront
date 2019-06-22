@@ -39,7 +39,7 @@ h1{
 
 .menu{
     top:20px;
-    text-align: end;
+    text-align: right;
     position: relative;
 }
 
@@ -74,6 +74,7 @@ h1{
 }
 
 img{
+    position: relative;
     max-width: 250px;
 }
 
@@ -170,9 +171,9 @@ img{
 
 .menuBack{
     -webkit-animation-name: animateMenuBack; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.6s; /* Safari 4.0 - 8.0 */
     animation-name: animateMenuBack;
-    animation-duration: 0.5s;
+    animation-duration: 0.6s;
     -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
     -moz-animation-fill-mode: forwards;    /* FF 5+ */
     -o-animation-fill-mode: forwards;      /* Not implemented yet */
@@ -195,13 +196,13 @@ img{
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateTitleBack {
-    0% { right:50vw; bottom:20px; font-size: 1.8em}
+    0% { right:50vw; bottom:25px; font-size: 1.8em}
     100% { right:0; bottom:0; font-size: 3.0em}
   }
   
   /* Standard syntax */
   @keyframes animateTitleBack {
-    0% { right:50vw; bottom:20px; font-size: 1.8em}
+    0% { right:50vw; bottom:25px; font-size: 1.8em}
     100% { right:0; bottom:0; font-size: 3.0em}
   }
 
@@ -209,37 +210,37 @@ img{
   /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenuBack {
     0% { top:-85px;}
-    100% { top: 20px ; right:0}
+    100% { top: 20px;}
   }
   
   /* Standard syntax */
   @keyframes animateMenuBack {
     0% { top:-85px;}
-    100% { top: 20px ; right:0}
+    100% { top: 20px}
   }
 
 
    /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateImageBack {
-    100% {width:250px;opacity: 1;}
-    0% {  width:50px; right:800px;opacity: 0;}
+    100% {width:250px;right:0;opacity: 1;}
+    0% {  width:10px; right:15vw;opacity: 0;}
   }
   
   /* Standard syntax */
   @keyframes animateImageBack {
-    100% {width:250px;opacity: 1;}
-    0% {width:50px; right:800px;opacity: 0;}
+    100% {width:250px;right:0;opacity: 1;}
+    0% {width:10px; right:15vw;opacity: 0;}
   }
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenu {
-    0% {top:20px;right:0}
+    0% {top:20px}
     100% { top:-85px; }
   }
   
   /* Standard syntax */
   @keyframes animateMenu {
-    0%{top:20px;right:0}
+    0%{top:20px}
     100% { top:-85px;  }
   }
 
@@ -248,25 +249,25 @@ img{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:50vw; bottom:20px; font-size: 1.8em}
+    100% { right:50vw; bottom:25px; font-size: 1.8em}
   }
   
   /* Standard syntax */
   @keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:50vw; bottom:20px; font-size: 1.8em}
+    100% { right:50vw; bottom:25px; font-size: 1.8em}
   }
 
   /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateImage {
-    0% {width:250px}
-    100% {  width:50px; right:800px;opacity: 0;}
+    0% {width:250px; right:0;opacity: 1;}
+    100% {  width:10px; right:15vw;opacity: 0;}
   }
   
   /* Standard syntax */
   @keyframes animateImage {
-    0% {width:250px}
-    100% {  width:50px;right:800px;opacity: 0;}
+    0% {width:250px; right:0;opacity: 1;}
+    100% {  width:10px;right:15vw;opacity: 0;}
   }
 
 

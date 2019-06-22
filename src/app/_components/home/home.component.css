@@ -8,6 +8,7 @@
 }
 
 .addBike{
+    z-index: 50;
     position: fixed;
     top:90vh;
     left:94vw;
