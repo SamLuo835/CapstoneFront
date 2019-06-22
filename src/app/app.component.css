@@ -146,9 +146,9 @@ img{
 
 .moveMenu{
     -webkit-animation-name: animateMenu; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
     animation-name: animateMenu;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
     -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
     -moz-animation-fill-mode: forwards;    /* FF 5+ */
     -o-animation-fill-mode: forwards;      /* Not implemented yet */
@@ -196,27 +196,25 @@ img{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateTitleBack {
     0% { right:50vw; bottom:20px; font-size: 1.8em}
-
     100% { right:0; bottom:0; font-size: 3.0em}
   }
   
   /* Standard syntax */
   @keyframes animateTitleBack {
     0% { right:50vw; bottom:20px; font-size: 1.8em}
-
     100% { right:0; bottom:0; font-size: 3.0em}
   }
 
 
   /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenuBack {
-    0% { top:-80px; right:-12vw}
+    0% { top:-85px;}
     100% { top: 20px ; right:0}
   }
   
   /* Standard syntax */
   @keyframes animateMenuBack {
-    0% { top:-80px; right:-12vw }
+    0% { top:-85px;}
     100% { top: 20px ; right:0}
   }
 
@@ -236,13 +234,13 @@ img{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenu {
     0% {top:20px;right:0}
-    100% { top:-80px; right:-12vw }
+    100% { top:-85px; }
   }
   
   /* Standard syntax */
   @keyframes animateMenu {
     0%{top:20px;right:0}
-    100% { top:-80px;  right:-12vw }
+    100% { top:-85px;  }
   }
 
 
