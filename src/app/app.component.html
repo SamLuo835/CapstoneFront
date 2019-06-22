@@ -1,11 +1,11 @@
 <header>
-<div class=" header headerFlex" id="header" >
+<div class="header headerFlex" [ngClass]="animation?'headerBG':'headerBGback'" >
   <div class="imageBox" >
-  <img src="{{imgSrc}}" id="headerLogo">
+  <img src="{{imgSrc}}" [ngClass]="animation?'moveImage':'imageBack'" id="headerLogo">
   </div>
-  <div class="menuflexbox" id="menuFlexBox">
-  <h1 class="headerTitle" id="headerTitle">Sheridan Bike Rental System</h1>
-  <div class="menu" id="headerMenu">
+  <div class="menuflexbox"  >
+  <h1 class="headerTitle" [ngClass]="animation?'moveTitle':'TitleBack'">Sheridan Bike Rental System</h1>
+  <div class="menu" [ngClass]="animation?'moveMenu':'menuBack'">
   <span>
   <a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a><span class="verticalLine">|</span>
   <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a><span class="verticalLine">|</span>

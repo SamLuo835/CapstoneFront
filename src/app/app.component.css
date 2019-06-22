@@ -7,7 +7,7 @@
     justify-content: space-around;
     position: fixed;
     z-index: 100;
-    transition: 0.2s;
+    transition: 0.5s;
     top:0;
 }
 
@@ -27,26 +27,20 @@ h1{
     top:40px;
     display: flex;
     flex-direction: column;
-    transition: 0.2s;
 
 }
 
 .headerTitle{
     position: relative;
-    right:4%;
     text-align: right;
     font-family: 'Trocchi', serif;
-    transition: 0.2s;
 
 }
 
 .menu{
-    position: relative;
     top:20px;
-    right: 4%;
     text-align: end;
-    transition: 0.2s;
-
+    position: relative;
 }
 
 .menu span{
@@ -75,6 +69,9 @@ h1{
 }
 
 
+.imageBox{
+    position: relative;
+}
 
 img{
     max-width: 250px;
@@ -123,7 +120,208 @@ img{
 }
 
 
+.moveImage{
+    -webkit-animation-name: animateImage; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+  animation-name: animateImage;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards;    /* FF 5+ */
+  -o-animation-fill-mode: forwards;      /* Not implemented yet */
+  -ms-animation-fill-mode: forwards;     /* IE 10+ */
+  animation-fill-mode: forwards;         /* When the spec is finished */
+}
 
+.moveTitle{
+    -webkit-animation-name: animateTitle; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateTitle;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards;    /* FF 5+ */
+  -o-animation-fill-mode: forwards;      /* Not implemented yet */
+  -ms-animation-fill-mode: forwards;     /* IE 10+ */
+  animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+.moveMenu{
+    -webkit-animation-name: animateMenu; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateMenu;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+.TitleBack{
+    -webkit-animation-name: animateTitleBack; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateTitleBack;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+.menuBack{
+    -webkit-animation-name: animateMenuBack; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateMenuBack;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+.imageBack{
+    -webkit-animation-name: animateImageBack; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateImageBack;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateTitleBack {
+    0% { right:50vw; bottom:20px; font-size: 1.8em}
+
+    100% { right:0; bottom:0; font-size: 3.0em}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateTitleBack {
+    0% { right:50vw; bottom:20px; font-size: 1.8em}
+
+    100% { right:0; bottom:0; font-size: 3.0em}
+  }
+
+
+  /* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateMenuBack {
+    0% { top:-80px; right:-12vw}
+    100% { top: 20px ; right:0}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateMenuBack {
+    0% { top:-80px; right:-12vw }
+    100% { top: 20px ; right:0}
+  }
+
+
+   /* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateImageBack {
+    100% {width:250px;opacity: 1;}
+    0% {  width:50px; right:800px;opacity: 0;}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateImageBack {
+    100% {width:250px;opacity: 1;}
+    0% {width:50px; right:800px;opacity: 0;}
+  }
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateMenu {
+    0% {top:20px;right:0}
+    100% { top:-80px; right:-12vw }
+  }
+  
+  /* Standard syntax */
+  @keyframes animateMenu {
+    0%{top:20px;right:0}
+    100% { top:-80px;  right:-12vw }
+  }
+
+
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateTitle {
+    0%{right:0;bottom:0}
+    100% { right:50vw; bottom:20px; font-size: 1.8em}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateTitle {
+    0%{right:0;bottom:0}
+    100% { right:50vw; bottom:20px; font-size: 1.8em}
+  }
+
+  /* Safari 4.0 - 8.0 */
+@-webkit-keyframes animateImage {
+    0% {width:250px}
+    100% {  width:50px; right:800px;opacity: 0;}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateImage {
+    0% {width:250px}
+    100% {  width:50px;right:800px;opacity: 0;}
+  }
+
+
+  .headerBG{
+    -webkit-animation-name: animateBG; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateBG;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+.headerBGback{
+    -webkit-animation-name: animateBGback; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+    animation-name: animateBGback;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+    -moz-animation-fill-mode: forwards;    /* FF 5+ */
+    -o-animation-fill-mode: forwards;      /* Not implemented yet */
+    -ms-animation-fill-mode: forwards;     /* IE 10+ */
+    animation-fill-mode: forwards;         /* When the spec is finished */
+}
+
+ /* Safari 4.0 - 8.0 */
+ @-webkit-keyframes animateBG {
+    0% {background-color: white}
+    100% { background-color: #eeeeee;box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateBG {
+    0% {background-color: white}
+    100% { background-color: #eeeeee;box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);}
+  }
+
+
+   /* Safari 4.0 - 8.0 */
+ @-webkit-keyframes animateBGback {
+    0% {background-color: #eeeeee;box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+    100% { background-color: white}
+  }
+  
+  /* Standard syntax */
+  @keyframes animateBGback {
+    0% {background-color: #eeeeee;box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);}
+    100% { background-color: white}
+  }
+
+  
 
 
 
