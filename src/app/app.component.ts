@@ -21,9 +21,9 @@ export class AppComponent {
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
-      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      if (document.documentElement.scrollTop > 80) {
         this.animation = true;
-      } else if(document.body.scrollTop  <= 0  || document.documentElement.scrollTop <= 0){
+      } else if( document.documentElement.scrollTop < 20){
         this.animation = false;
       }
     });
