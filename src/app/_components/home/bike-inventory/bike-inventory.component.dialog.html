@@ -77,8 +77,12 @@
         </mat-dialog-actions>
     </div>
 
-</div>
-<mat-dialog-actions class="close-dialog">
+    <mat-dialog-actions class="close-dialog" *ngIf="action == 'modify'">
         <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
-    </mat-dialog-actions>    
+    </mat-dialog-actions>
+    
+    <mat-dialog-actions class="close-dialog" *ngIf="action == 'create'">
+        <button class="btn btn-outline-dark" mat-dialog-close (click)="addBike()">Add Bike</button>
+    </mat-dialog-actions>
+</div>
     

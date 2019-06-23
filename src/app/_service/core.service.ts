@@ -19,7 +19,7 @@ export class CoreService {
 
   constructor(private http:HttpClient,private notification :NotifierService) { }
 
-  //private baseServerAddress: string = "http://localhost:8082";
+  // private baseServerAddress: string = "http://localhost:8082";
    private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
 
   private bikeListUrl: string = this.baseServerAddress + "/getBikes";
@@ -27,6 +27,7 @@ export class CoreService {
   private activeRentalDetailUrl: string = this.baseServerAddress + "/getActiveRental/";
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
+  private newBikeUrl: string = this.baseServerAddress + "/newBike";
   
   //TODO 
   private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
@@ -163,8 +164,16 @@ testSearchCustomer():Observable<any>{
   }
   
   editBike(editedBikeInfo):Observable<any>{
-    console.log(editedBikeInfo);
     return this.http.patch(this.editBikeUrl, editedBikeInfo, httpOptions).pipe(
+      catchError((httpError) => {
+        this.notification.notify('error', httpError.error.message);
+        return throwError(httpError.error.message);
+      })
+    );
+  }
+
+  newBike(newBike):Observable<any>{
+    return this.http.post(this.newBikeUrl, newBike, httpOptions).pipe(
       catchError((httpError) => {
         this.notification.notify('error', httpError.error.message);
         return throwError(httpError.error.message);

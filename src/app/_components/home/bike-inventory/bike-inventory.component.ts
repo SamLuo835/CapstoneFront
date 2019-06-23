@@ -19,42 +19,37 @@ export class BikeInventoryComponent implements OnInit {
 
   ngOnInit() {
     //check data share bikelist first
-      if(this._dataShare.getBikeList().length == 0){
-        this.getBikeList();
-      }
-      else{
-        this.showSpinner = false;
-        this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
-      }
+    if(this._dataShare.getBikeList().length == 0){
+      this.getBikeList();
     }
-
-
-
-  
+    else{
+      this.showSpinner = false;
+      this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
+    }
+  }
 
   getBikeList(){
     this._core.getBikeList().subscribe(res=>{
       this.showSpinner = false;
-      this.bikes = JSON.parse(res) ;
+      this.bikes = JSON.parse(res);
     //calling this will trigger the subscribe event that listening on bike list in other component
-      this._dataShare.changeBikeList(JSON.parse(res))
-      })
-    }
+      this._dataShare.changeBikeList(JSON.parse(res));
+    });
+  }
 
 
-    openDialog(index,action): void { 
-      const dialogRef = this._modal.open(BikeDialog, {
-       data: {bike:this.bikes[index],action:action},
-       height: '600px',
-       width: '600px',
-       autoFocus:false,
-       disableClose: true
-     });
-     dialogRef.afterClosed().subscribe(result => {
-       console.log('The dialog was closed');
-     }); 
- }
-
+  openDialog(index,action): void { 
+    const dialogRef = this._modal.open(BikeDialog, {
+      data: {bike:this.bikes[index],action:action},
+      height: '600px',
+      width: '600px',
+      autoFocus:false,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    }); 
+  }
 
   changeStatus(i){
       console.log(this.bikes[i]);
@@ -77,65 +72,35 @@ export class BikeDialog {
 
   bike:any = this.data.bike;
   action:String = this.data.action;
-  constructor(
-    public dialogRef: MatDialogRef<BikeDialog>,@Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, private notification : NotifierService) {
+  constructor(public dialogRef: MatDialogRef<BikeDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
+    private notification : NotifierService) {
+
+    if(this.action == 'create') {
+      this.bike.imgPath = '1.jpg'; // default image if new bike
     }
+  }
 
-    ngOnInit(){
-      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+  saveChanges() {
+    this._core.editBike(this.bike).subscribe(res => {
+      this.notification.notify('success', res.message);
+    });
+  }
 
-        document.getElementById("header").style.height = "70px";
+  addBike() {
+    this.bike.bikeState = 'AVAILABLE'; // default state
+    this._core.newBike(this.bike).subscribe(res => {
+      this.notification.notify('success', res.message);
+    });
+  }
 
-        document.getElementById("menuFlexBox").style.width = "100%";
-        document.getElementById("menuFlexBox").style.flexDirection = "row";
-        document.getElementById("menuFlexBox").style.top = "unset";
-        document.getElementById("menuFlexBox").style.justifyContent = "space-between";
+  changeImage() {
+    // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
+  }
 
-
-        document.getElementById("headerTitle").style.fontSize = "1.5em";
-        document.getElementById("headerTitle").style.right = "unset";
-        document.getElementById("headerTitle").style.padding = "25px 0 0 25px";
-      
-        document.getElementById("headerMenu").style.top = "unset";
-
-        document.getElementById("headerLogo").style.display = "none";
-
-        
-
-      } else {
-        document.getElementById("header").style.height = "200px";
-
-        document.getElementById("menuFlexBox").style.width = "unset";
-        document.getElementById("menuFlexBox").style.flexDirection = "column";
-        document.getElementById("menuFlexBox").style.top = "40px";
-        document.getElementById("menuFlexBox").style.justifyContent = "unset";
-
-
-        document.getElementById("headerMenu").style.top = "20px";
-
-        document.getElementById("headerTitle").style.right = "4%";
-        document.getElementById("headerTitle").style.paddingTop = "unset";
-        document.getElementById("headerTitle").style.fontSize = "3em";
-       
-        document.getElementById("headerLogo").style.display = "block";
-
-      }
-    }
-
-    saveChanges(){
-      this._core.editBike(this.bike).subscribe(res => {
-        this.notification.notify('success', res.message);
-      });
-      // this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
-    }
-
-    changeImage() {
-      // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
-    }
-
-    onClick(): void {
-      this.dialogRef.close({action:'cancel'});
-    }
+  onClick(): void {
+    this.dialogRef.close({action:'cancel'});
+  }
 }
 
   // TODO: IMPLEMENT UPLOAD IMAGE
