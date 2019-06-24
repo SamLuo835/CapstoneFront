@@ -23,8 +23,11 @@ export class AppComponent {
     window.addEventListener("scroll" , () => {
       if (document.documentElement.scrollTop > 50) {
         this.animation = true;
-      } else if( document.documentElement.scrollTop < 20 && document.getElementsByClassName('cdk-overlay-backdrop').length == 0){
-        this.animation = false;
+      } else if( document.documentElement.scrollTop < 20){
+        //start new if-block to reduce the unnecessary get class when the scroll event trigger
+        if(document.getElementsByClassName('cdk-overlay-backdrop').length == 0){
+          this.animation = false;
+        }
       }
     });
   }
