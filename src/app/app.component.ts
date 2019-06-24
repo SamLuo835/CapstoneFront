@@ -21,9 +21,9 @@ export class AppComponent {
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
-      if (document.documentElement.scrollTop > 80) {
+      if (document.documentElement.scrollTop > 50) {
         this.animation = true;
-      } else if( document.documentElement.scrollTop < 20){
+      } else if( document.documentElement.scrollTop < 20 && document.getElementsByClassName('cdk-overlay-backdrop').length == 0){
         this.animation = false;
       }
     });

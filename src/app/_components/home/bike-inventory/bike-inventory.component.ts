@@ -12,7 +12,7 @@ import { NotifierService } from 'angular-notifier';
 })
 
 export class BikeInventoryComponent implements OnInit {
-  constructor(private _core :CoreService,private _dataShare:DataShareService,private _modal: MatDialog) { }
+  constructor(private _core :CoreService,private _dataShare:DataShareService,private _modal: MatDialog,private notification : NotifierService) { }
 
   bikes:Array<any>; 
   showSpinner : boolean = true
@@ -47,19 +47,24 @@ export class BikeInventoryComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result['action'] == "refresh"){
+      this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
+      console.log(this.bikes);
+      }
     }); 
   }
 
   changeStatus(i){
-      console.log(this.bikes[i]);
       console.log(this._dataShare.getBikeList());
       console.log(this.bikes);
-      //call back end service to change status of bike
-      //call get bikes again to use the response bike list and pass down to changeBikeList (passing local bikelist will 
-      //make data share bike list tie to local, making the next drop down selection alter the share bike list without 
-      //service side operation.
-      //this._dataShare.changeBikeList();
+
+      this._core.editBike(this.bikes[i]).subscribe(res => {
+        this.notification.notify('success', res.message);
+        this._core.getBikeList().subscribe(res=>{
+          this._dataShare.changeBikeList(JSON.parse(res));
+          }
+        )
+      });
     }
   }
 
@@ -74,7 +79,7 @@ export class BikeDialog {
   action:String = this.data.action;
   constructor(public dialogRef: MatDialogRef<BikeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
-    private notification : NotifierService) {
+    private notification : NotifierService,private _dataShare:DataShareService) {
 
     if(this.action == 'create') {
       this.bike.imgPath = '1.jpg'; // default image if new bike
@@ -84,14 +89,22 @@ export class BikeDialog {
   saveChanges() {
     this._core.editBike(this.bike).subscribe(res => {
       this.notification.notify('success', res.message);
-    });
+      this._core.getBikeList().subscribe(res=>{
+        this._dataShare.changeBikeList(JSON.parse(res));
+        this.dialogRef.close({action:"refresh"});
+        },error =>{this.dialogRef.close()});
+    },error =>{this.dialogRef.close()});
   }
 
   addBike() {
     this.bike.bikeState = 'AVAILABLE'; // default state
     this._core.newBike(this.bike).subscribe(res => {
       this.notification.notify('success', res.message);
-    });
+      this._core.getBikeList().subscribe(res=>{
+        this._dataShare.changeBikeList(JSON.parse(res));
+        this.dialogRef.close({action:"refresh"});
+        },error =>{this.dialogRef.close()})
+    },error =>{this.dialogRef.close()});
   }
 
   changeImage() {
