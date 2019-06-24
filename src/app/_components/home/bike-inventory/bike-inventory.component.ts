@@ -93,9 +93,8 @@ export class BikeDialog {
       this.notification.notify('success', res.message);
       this._core.getBikeList().subscribe(res=>{
         this._dataShare.changeBikeList(JSON.parse(res));
-        this.dialogRef.close();
-        },error =>{this.dialogRef.close()});
-    },error =>{this.dialogRef.close()});
+        },error =>{});
+    },error =>{});
   }
 
   addBike() {
@@ -104,9 +103,8 @@ export class BikeDialog {
       this.notification.notify('success', res.message);
       this._core.getBikeList().subscribe(res=>{
         this._dataShare.changeBikeList(JSON.parse(res));
-        this.dialogRef.close();
-        },error =>{this.dialogRef.close()})
-    },error =>{this.dialogRef.close()});
+        },error =>{})
+    },error =>{});
   }
 
   changeImage() {

@@ -43,7 +43,7 @@ h1{
     position: relative;
 }
 
-.menu span{
+.menu > span{
     position: relative;
     top:30px;
 }
@@ -120,6 +120,23 @@ img{
     min-height: 80vh;
 }
 
+.menu .mat-button{
+  font-size: 1.0rem;
+  font-weight: 400!important;
+  font-family: '-apple-system','BlinkMacSystemFont',"Segoe UI",'Roboto',"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
+}
+
+.menu  .mat-button:hover  > .mat-button-focus-overlay{
+  opacity: 0!important;
+}
+
+.menu .mat-button .mat-menu-panel{
+  background-color: transparent!important
+}
+
+ .mat-menu-content .mat-menu-item:focus{
+  outline: none!important;
+}
 
 .moveImage{
     -webkit-animation-name: animateImage; /* Safari 4.0 - 8.0 */
@@ -297,27 +314,27 @@ img{
 
  /* Safari 4.0 - 8.0 */
  @-webkit-keyframes animateBG {
-    0% {background-color: white;height: 200px;}
-    100% { background-color: #eeeeee;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);height:65px}
+    0% {height: 200px;}
+    100% {box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);height:65px}
   }
   
   /* Standard syntax */
   @keyframes animateBG {
-    0% {background-color: white;height: 200px;}
-    100% { background-color: #eeeeee;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);height:65px}
+    0% {height: 200px;}
+    100% { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);height:65px}
   }
 
 
    /* Safari 4.0 - 8.0 */
  @-webkit-keyframes animateBGback {
-    0% {background-color: #eeeeee;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
-    100% { background-color: white}
+    0% {box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+    100% { }
   }
   
   /* Standard syntax */
   @keyframes animateBGback {
-    0% {background-color: #eeeeee;box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);}
-    100% { background-color: white}
+    0% {box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);}
+    100% {}
   }
 
   

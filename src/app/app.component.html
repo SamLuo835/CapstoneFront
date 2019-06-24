@@ -9,7 +9,18 @@
   <span>
   <a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a><span class="verticalLine">|</span>
   <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a><span class="verticalLine">|</span>
-  <a class="nav-link" [ngClass]="getClass('/report')" routerLink="/report" *ngIf="_auth.loggedIn()"  (click)="goToPage()">Reports </a><span  *ngIf="_auth.loggedIn()" class="verticalLine">|</span>
+  <a class="nav-link" [ngClass]="getClass('/report')" routerLink="/report" *ngIf="_auth.loggedIn()"  (click)="goToPage()">Reports </a><span  *ngIf="_auth.loggedIn()"  class="verticalLine">|</span>
+  <a class="nav-link" #matButton  [ngClass]="getClass('/changePass')"    [ngClass]="getClass('/addUser')"  *ngIf="_auth.loggedIn()" mat-button [disableRipple]=true [matMenuTriggerFor]="menu">Settings</a>
+  <mat-menu #menu="matMenu">
+  <button mat-menu-item>Add User</button>
+  <button mat-menu-item [matMenuTriggerFor]="campus">Change Campus</button>
+  <button mat-menu-item>Change Password</button>
+  </mat-menu>
+  <mat-menu #campus="matMenu">
+    <button mat-menu-item>Trafalgar</button>
+    <button mat-menu-item >Davis</button>
+  </mat-menu>
+  <span  *ngIf="_auth.loggedIn()" class="verticalLine">|</span>
   <a class="nav-link" [ngClass]="getClass('/password-recover')" *ngIf="!_auth.loggedIn()" routerLink="/password-recover" >Forget Password</a>
   <a class="nav-link"  routerLink="" *ngIf="_auth.loggedIn()" (click)="_auth.logoutUser()" >Logout</a>
 </span>

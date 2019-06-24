@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ViewEncapsulation, ViewChild } from '@angular/core';
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -6,26 +6,35 @@ import {AuthService} from '../app/_service/auth.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {DataShareService} from '../app/_service/data-share.service';
+import {MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[Location]
+  providers:[Location],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class AppComponent {
   title = 'Capstonefront';
   imgSrc='./assets/images/logo.png'
   lastPing?: Date = null;
   animation :boolean = false;
+  @ViewChild(MatMenuTrigger) menu: MatMenuTrigger;
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
+      if(this.menu != undefined){
+        if(this.menu.menuOpen){
+          this.menu.closeMenu();
+        }
+      }
       if (document.documentElement.scrollTop > 50) {
         this.animation = true;
-      } else if( document.documentElement.scrollTop < 20){
+      } else if( document.documentElement.scrollTop == 0 ){
         //start new if-block to reduce the unnecessary get class when the scroll event trigger
-        if(document.getElementsByClassName('cdk-overlay-backdrop').length == 0){
+        if(document.getElementsByClassName('cdk-overlay-backdrop')[1] == undefined){
           this.animation = false;
         }
       }

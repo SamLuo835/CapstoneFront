@@ -47,6 +47,8 @@ import { Ng2OdometerModule } from 'ng2-odometer';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 import { LowerSectionComponentComponent } from './_components/reports/lower-section-component/lower-section-component.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 
 
@@ -99,6 +101,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NgxMatDrpModule,
     Ng2OdometerModule.forRoot(),
     MatTooltipModule,
+    MatMenuModule,
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000},
     } )
   ],
