@@ -10,12 +10,16 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./bike-inventory.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-
 export class BikeInventoryComponent implements OnInit {
   constructor(private _core :CoreService,private _dataShare:DataShareService,private _modal: MatDialog,private notification : NotifierService) { }
 
   bikes:Array<any>; 
   showSpinner : boolean = true
+  subscriptions = [];
+
+  ngOnDestroy(){
+    this.subscriptions.forEach( s => s.unsubscribe());
+  }
 
   ngOnInit() {
     //check data share bikelist first
@@ -26,6 +30,8 @@ export class BikeInventoryComponent implements OnInit {
       this.showSpinner = false;
       this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
     }
+    this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message =>{ this.bikes = JSON.parse(JSON.stringify(message))}));
+
   }
 
   getBikeList(){
@@ -47,10 +53,6 @@ export class BikeInventoryComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result['action'] == "refresh"){
-      this.bikes = JSON.parse(JSON.stringify(this._dataShare.getBikeList()));
-      console.log(this.bikes);
-      }
     }); 
   }
 
@@ -91,7 +93,7 @@ export class BikeDialog {
       this.notification.notify('success', res.message);
       this._core.getBikeList().subscribe(res=>{
         this._dataShare.changeBikeList(JSON.parse(res));
-        this.dialogRef.close({action:"refresh"});
+        this.dialogRef.close();
         },error =>{this.dialogRef.close()});
     },error =>{this.dialogRef.close()});
   }
@@ -102,7 +104,7 @@ export class BikeDialog {
       this.notification.notify('success', res.message);
       this._core.getBikeList().subscribe(res=>{
         this._dataShare.changeBikeList(JSON.parse(res));
-        this.dialogRef.close({action:"refresh"});
+        this.dialogRef.close();
         },error =>{this.dialogRef.close()})
     },error =>{this.dialogRef.close()});
   }
