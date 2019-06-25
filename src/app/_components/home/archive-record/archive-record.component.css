@@ -42,13 +42,6 @@ mat-paginator{
     width:90%;
 }
 
-.activeRentalDialog{
-    display:flex;
-    justify-content: space-between;
-    position: relative;
-    top:80px;
-
-}
 
 button:focus{outline: none!important}
 

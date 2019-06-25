@@ -12,13 +12,13 @@
   <a class="nav-link" [ngClass]="getClass('/report')" routerLink="/report" *ngIf="_auth.loggedIn()"  (click)="goToPage()">Reports </a><span  *ngIf="_auth.loggedIn()"  class="verticalLine">|</span>
   <a class="nav-link" #matButton  [ngClass]="getClass('/changePass')"    [ngClass]="getClass('/addUser')"  *ngIf="_auth.loggedIn()" mat-button [disableRipple]=true [matMenuTriggerFor]="menu">Settings</a>
   <mat-menu #menu="matMenu">
-  <button mat-menu-item>Add User</button>
-  <button mat-menu-item [matMenuTriggerFor]="campus">Change Campus</button>
-  <button mat-menu-item>Change Password</button>
+  <button mat-menu-item [disableRipple]=true>Create User</button>
+  <button mat-menu-item [matMenuTriggerFor]="campus" [disableRipple]=true>Switch Campus</button>
+  <button mat-menu-item [disableRipple]=true>Change Password</button>
   </mat-menu>
   <mat-menu #campus="matMenu">
-    <button mat-menu-item>Trafalgar</button>
-    <button mat-menu-item >Davis</button>
+    <button mat-menu-item [disableRipple]=true>Trafalgar Campus</button>
+    <button mat-menu-item [disableRipple]=true>Davis Campus</button>
   </mat-menu>
   <span  *ngIf="_auth.loggedIn()" class="verticalLine">|</span>
   <a class="nav-link" [ngClass]="getClass('/password-recover')" *ngIf="!_auth.loggedIn()" routerLink="/password-recover" >Forget Password</a>

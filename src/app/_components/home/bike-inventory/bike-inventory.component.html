@@ -1,10 +1,11 @@
 <div>
 <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
-    <div class="row">
-        <div *ngFor="let item of bikes; let i = index">
-            <div class="col-lg">
+    <div class="row" cdkDropListGroup>
+        <div cdkDropList [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)" ></div>
+        <div *ngFor="let item of bikes; let i = index" cdkDropList  [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)">
+            <div class="col-lg card-container" cdkDrag (cdkDragMoved)="dragMoved($event);">
                 <div class="card bikeCard">
-                    <div class="card-header">Bike ID: {{item.id}}</div>
+                    <div class="card-header" cdkDragHandle >Bike ID: {{item.id}}</div>
                     <img class="card-img-top" src="./assets/images/{{item.imgPath}}" alt="Card image cap">
                     <div class="card-body">
                         <mat-form-field class="full-width">

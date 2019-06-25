@@ -138,6 +138,19 @@ h1{
   outline: none!important;
 }
 
+.mat-menu-content .mat-menu-item:not(:last-child){   
+  border-bottom: 1px solid lightgray;
+}
+
+.mat-menu-content .mat-menu-item{ 
+  color:#003767;
+}
+
+.mat-menu-content .mat-menu-item:hover{ 
+  background: none;
+  color:#00b2ce;
+}
+
 .moveImage{
     -webkit-animation-name: animateImage; /* Safari 4.0 - 8.0 */
   -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
@@ -226,13 +239,13 @@ h1{
 
   /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenuBack {
-    0% { top:-90px;}
+    0% { top:-95px;}
     100% { top: 0px;}
   }
   
   /* Standard syntax */
   @keyframes animateMenuBack {
-    0% { top:-90px;left:15vw}
+    0% { top:-95px;left:15vw}
     100% { top: 0px;left:0vw}
   }
 
@@ -252,13 +265,13 @@ h1{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenu {
     0% {top:0}
-    100% { top:-90px; }
+    100% { top:-95px; }
   }
   
   /* Standard syntax */
   @keyframes animateMenu {
     0%{top:0;left:0vw}
-    100% { top:-90px; left:15vw }
+    100% { top:-95px; left:15vw }
   }
 
 

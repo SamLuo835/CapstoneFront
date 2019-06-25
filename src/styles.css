@@ -36,7 +36,7 @@ app-root{
 
 
 .mat-dialog-content{
-   max-height:91%!important;
+   height:52vh!important;
 }
 
 .close{
