@@ -78,7 +78,7 @@ export class BikeInventoryComponent implements OnInit {
 
     if (this.sourceIndex != this.targetIndex)
       moveItemInArray(this.bikes, this.sourceIndex, this.targetIndex);
-
+      this._dataShare.changeBikeList(this.bikes);
       //TODO Call web service to upload the sequence 
   }
 
