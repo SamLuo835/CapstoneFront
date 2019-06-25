@@ -8,7 +8,7 @@
     max-width: 16rem;
 }
 
-.card-header{
+.bikeCard .card-header{
     font-weight: 600;
     cursor: move;
 }
