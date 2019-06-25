@@ -25,19 +25,23 @@ export class AppComponent {
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
+     
       if(this.menu != undefined){
         if(this.menu.menuOpen){
           this.menu.closeMenu();
         }
       }
+
       if (document.documentElement.scrollTop > 50) {
         this.animation = true;
       } else if( document.documentElement.scrollTop == 0 ){
         //start new if-block to reduce the unnecessary get class when the scroll event trigger
-        if(document.getElementsByClassName('cdk-overlay-backdrop')[1] == undefined){
-          this.animation = false;
+          if(document.getElementsByClassName('cdk-overlay-backdrop').length == 0 || (document.getElementsByClassName('cdk-overlay-transparent-backdrop').length > 0)){
+            this.animation = false;
+          }
         }
-      }
+      
+
     });
   }
 

@@ -73,7 +73,7 @@ h1{
     position: relative;
 }
 
-img{
+.imageBox img{
     position: relative;
     max-width: 250px;
 }
