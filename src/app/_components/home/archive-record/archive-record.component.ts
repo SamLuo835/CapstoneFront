@@ -4,6 +4,8 @@ import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
 import { NgxDrpOptions, PresetItem, Range } from 'ngx-mat-daterange-picker';
 import { NotifierService } from 'angular-notifier';
 import * as _moment from 'moment';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-archive-record',
@@ -114,5 +116,44 @@ export class ArchiveRecordComponent implements OnInit {
       this.init = true;
     }
   }
+
+
+  ngAfterViewInit() {
+
+    // server-side search
+    fromEvent(this.input.nativeElement,'keyup')
+        .pipe(
+            debounceTime(800),
+            distinctUntilChanged(),
+            tap(() => {
+              console.log(this.input.nativeElement.value)
+              this.$searching = true;
+              setTimeout(()=>{
+                if(this.input.nativeElement.value == ""){
+                  this._core.archivedRentalsDataCall().subscribe(res=>{ 
+                    this.tableData = res;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource = new MatTableDataSource(this.tableData)
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource.paginator.length = this.tableData.length;
+                  })
+                }
+                else{
+                  this._core.testReport().subscribe(res=>{
+                    this.tableData = [] //res;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource = new MatTableDataSource(this.tableData)
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.paginator.pageIndex = 0;
+                    this.dataSource.paginator.length = this.tableData.length;
+                  })
+                }
+                this.$searching = false;
+              },1500); ; 
+            })
+        )
+        .subscribe();
+    }
 
 }
