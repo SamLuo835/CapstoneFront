@@ -5,8 +5,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { NotifierService } from 'angular-notifier';
 import {
   CdkDrag,
-  CdkDragStart,
-  CdkDropList, CdkDropListContainer, CdkDropListGroup,
+  CdkDropList, CdkDropListGroup,
   moveItemInArray,
   CdkDragMove
 } from "@angular/cdk/drag-drop";
@@ -36,6 +35,7 @@ export class BikeInventoryComponent implements OnInit {
   public activeContainer;
   @ViewChild(CdkDropListGroup) listGroup: CdkDropListGroup<CdkDropList>;
   @ViewChild(CdkDropList) placeholder: CdkDropList;
+
 
 
   ngAfterViewInit() {
@@ -162,6 +162,11 @@ export class BikeInventoryComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
+      if(result['action'] != undefined){
+      if(result['action'] == 'redirect'){
+          this._dataShare.changeRedirectMessage({index:4,bikeId:result['bikeId']});
+       }
+      }
     }); 
   }
 
@@ -230,12 +235,16 @@ export class BikeDialog {
     },error =>{});
   }
 
+  showArchivedRecord(){
+    this.dialogRef.close({action:'redirect',bikeId:this.bike['id']});
+  }
+
   changeImage() {
     // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
   }
 
   onClick(): void {
-    this.dialogRef.close({action:'cancel'});
+    this.dialogRef.close({});
   }
 }
 

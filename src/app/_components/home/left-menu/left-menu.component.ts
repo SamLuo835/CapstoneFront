@@ -45,6 +45,17 @@ export class LeftMenuComponent implements OnInit {
     this.subscriptions.push(this._dataShare.currentFormRequire.subscribe(message => {this.formRequire = message}))
     this.subscriptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => {this.customerFormRequire = message}))
     this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message =>{this.bikeList = message;this.checkAvailableBike()}));
+    this.subscriptions.push(this._dataShare.currentRedirectMessage.subscribe(message =>{
+      if(message != null){
+        this.componentIndex = message['index'];this.panelOpenState = false;
+        this.messageEvent.emit(this.componentIndex);
+        window.scroll({
+          top: 150,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
+  }));
 
   }
 
@@ -102,7 +113,7 @@ export class LeftMenuComponent implements OnInit {
       case 'newRental':
         this.componentIndex = 6
         window.scroll({
-          top: 80,
+          top: 150,
           left: 0,
           behavior: 'smooth'
         });
@@ -110,7 +121,7 @@ export class LeftMenuComponent implements OnInit {
       case 'newCustomer':
         this.componentIndex = 7
         window.scroll({
-          top: 80,
+          top: 150,
           left: 0,
           behavior: 'smooth'
         });
@@ -145,7 +156,7 @@ export class LeftMenuComponent implements OnInit {
       this.panelOpenState = true;
     }
     window.scroll({
-      top: 80,
+      top: 150,
       left: 0,
       behavior: 'smooth'
     });   

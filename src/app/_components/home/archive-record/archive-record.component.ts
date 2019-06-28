@@ -6,6 +6,7 @@ import { NotifierService } from 'angular-notifier';
 import * as _moment from 'moment';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { DataShareService } from 'src/app/_service/data-share.service';
 
 @Component({
   selector: 'app-archive-record',
@@ -16,7 +17,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 })
 export class ArchiveRecordComponent implements OnInit {
 
-  constructor(private _core :CoreService,private notification :NotifierService) { }
+  constructor(private _core :CoreService,private notification :NotifierService ,private _dataShare :DataShareService) { }
 
   init: boolean = false;
 
@@ -33,6 +34,8 @@ export class ArchiveRecordComponent implements OnInit {
   range:Range = {fromDate:new Date(), toDate: new Date()};
   options:NgxDrpOptions;
   presets:Array<PresetItem> = [];
+  subscriptions = []
+  queryMessage : Object ;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,13 +43,31 @@ export class ArchiveRecordComponent implements OnInit {
 
 
   ngOnInit() {
-    this._core.archivedRentalsDataCall().subscribe(res=>{ 
-      this.showSpinner = false;
-      this.tableData = res;
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+
+    this.queryMessage = this._dataShare.getRedirectMessage();
+
+    if(this.queryMessage == null){
+        this._core.archivedRentalsDataCall().subscribe(res=>{ 
+          this.showSpinner = false;
+          this.tableData = res;
+          this.dataSource = new MatTableDataSource(this.tableData);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
+    } 
+    else{
+      console.log("using query Object");
+      //TODO  use query object to search for records
+      this._core.archivedRentalsDataCall().subscribe(res=>{ 
+        this.showSpinner = false;
+        this.tableData = res;
+        this.dataSource = new MatTableDataSource(this.tableData);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+      this.queryMessage = null;
+      this._dataShare.changeRedirectMessage(this.queryMessage);
+    }
     const today = new Date();
     const lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
 

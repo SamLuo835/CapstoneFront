@@ -34,8 +34,20 @@ export class DataShareService {
 
   currentBikeList = this.bikeList.asObservable();
 
+  private redirectMessage = new BehaviorSubject(null);
+
+  currentRedirectMessage = this.redirectMessage.asObservable();
+
 
   constructor() { }
+
+  changeRedirectMessage(message : Object){
+    this.redirectMessage.next(message);
+  }
+
+  getRedirectMessage(){
+    return this.redirectMessage.getValue();
+  }
 
 
   changeBikeList(message : Array<any>){
