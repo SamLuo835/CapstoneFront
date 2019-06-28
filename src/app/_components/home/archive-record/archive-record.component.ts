@@ -22,7 +22,7 @@ export class ArchiveRecordComponent implements OnInit {
   init: boolean = false;
 
   $searching:boolean = false;
-  searchType:String = 'signOut';
+  searchType:String = 'ID';
 
   tableData :Object[];
   showSpinner : boolean = true;
@@ -65,6 +65,14 @@ export class ArchiveRecordComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
+      if(this.queryMessage['bikeId'] != undefined){
+        this.searchType = 'bikeID';
+        this.input.nativeElement.value = this.queryMessage['bikeId'];
+      }
+      else{
+
+      }
+
       this.queryMessage = null;
       this._dataShare.changeRedirectMessage(this.queryMessage);
     }
