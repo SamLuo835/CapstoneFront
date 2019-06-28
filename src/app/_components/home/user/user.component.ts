@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
   constructor(private _core :CoreService) { }
 
   $searching:boolean = false;
-  searchType:String = 'name';
+  searchType:String = 'ID';
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;

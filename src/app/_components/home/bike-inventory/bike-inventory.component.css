@@ -82,3 +82,12 @@
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
+.redirectLink{
+    font-weight: 600;
+    color:#073063!important;
+}
+
+.redirectLink:hover{
+    cursor: pointer;
+    color:#17a2b8!important;
+}

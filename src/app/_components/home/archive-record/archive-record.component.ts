@@ -34,7 +34,6 @@ export class ArchiveRecordComponent implements OnInit {
   range:Range = {fromDate:new Date(), toDate: new Date()};
   options:NgxDrpOptions;
   presets:Array<PresetItem> = [];
-  subscriptions = []
   queryMessage : Object ;
 
   @ViewChild(MatSort) sort: MatSort;

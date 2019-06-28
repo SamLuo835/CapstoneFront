@@ -82,14 +82,14 @@
    <hr>
 <div style="display: flex;justify-content: space-between">
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'modify'">
-        <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()">Save Changes</button>
+        <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()" style="font-weight: 500">SAVE CHANGES</button>
 </mat-dialog-actions>
     
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'modify'">
-        <button class="btn btn-outline-dark" mat-dialog-close (click)="showArchivedRecord()">Show Archived Records</button>
+        <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show This Bike's Archived Records</a>
 </mat-dialog-actions>
 
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'create'">
-        <button class="btn btn-outline-dark" mat-dialog-close (click)="addBike()">Add Bike</button>
+        <button class="btn btn-outline-dark" mat-dialog-close (click)="addBike()" style="font-weight: 500">ADD BIKE</button>
 </mat-dialog-actions>
 </div>

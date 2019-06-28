@@ -1,8 +1,8 @@
 <div>
 <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
     <div class="row" cdkDropListGroup>
-        <div cdkDropList [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)" ></div>
-        <div *ngFor="let item of bikes; let i = index" cdkDropList  [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)">
+        <div cdkDropList [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped()" ></div>
+        <div *ngFor="let item of bikes; let i = index" cdkDropList  [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped()">
             <div class="col-lg card-container" cdkDrag (cdkDragMoved)="dragMoved($event);">
                 <div class="card bikeCard">
                     <div class="card-header" cdkDragHandle >Bike ID: {{item.id}}</div>
