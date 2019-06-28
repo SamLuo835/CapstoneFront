@@ -135,7 +135,7 @@ export class NewCustomerComponent implements OnInit {
 
   accept(){
     window.scroll({
-      top: 0,
+      top: 80,
       left: 0,
       behavior: 'smooth'
     });    

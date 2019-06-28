@@ -102,7 +102,7 @@ export class LeftMenuComponent implements OnInit {
       case 'newRental':
         this.componentIndex = 6
         window.scroll({
-          top: 0,
+          top: 80,
           left: 0,
           behavior: 'smooth'
         });
@@ -110,7 +110,7 @@ export class LeftMenuComponent implements OnInit {
       case 'newCustomer':
         this.componentIndex = 7
         window.scroll({
-          top: 0,
+          top: 80,
           left: 0,
           behavior: 'smooth'
         });
@@ -145,7 +145,7 @@ export class LeftMenuComponent implements OnInit {
       this.panelOpenState = true;
     }
     window.scroll({
-      top: 0,
+      top: 80,
       left: 0,
       behavior: 'smooth'
     });   
