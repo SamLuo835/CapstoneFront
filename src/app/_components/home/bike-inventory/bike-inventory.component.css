@@ -74,8 +74,8 @@
     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  .card-container:active{
-    opacity: 1;
+  .card-header:active{
+    opacity: .5;
   }
 
 .my-drop-zone { border: dotted 3px lightgray; }
@@ -96,8 +96,11 @@
     border-radius: 25px;
     color:#073063!important;
     font-weight: 600;
-    text-align: end;}
+    font-family:'Roboto',sans-serif;
+    text-align: end;
+    padding:0;
+}
 
 .card-details:hover{
-    background-color: #eeeeee!important;
+    color:#17a2b8!important;
 }
