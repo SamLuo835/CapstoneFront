@@ -91,3 +91,13 @@
     cursor: pointer;
     color:#17a2b8!important;
 }
+
+.card-details{
+    border-radius: 25px;
+    color:#073063!important;
+    font-weight: 600;
+    text-align: end;}
+
+.card-details:hover{
+    background-color: #eeeeee!important;
+}
