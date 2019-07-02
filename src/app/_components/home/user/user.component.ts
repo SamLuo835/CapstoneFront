@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail', 'type', 'isBlackListed'];
+  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','isBlackListed','more'];
 
   tableDetail:Object = {};
 
@@ -75,6 +75,11 @@ export class UserComponent implements OnInit {
             })
         )
         .subscribe();
+    }
+
+
+    showMore(element){
+      
     }
 
 }

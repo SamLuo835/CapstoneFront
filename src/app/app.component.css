@@ -80,7 +80,7 @@ h1{
 
 .footer-information {
     background: #003767;
-    padding: 48px;
+    padding: 48px 48px 22px 48px;
     overflow: hidden;
     width:100%;
     flex-shrink: 0;
