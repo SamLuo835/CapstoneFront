@@ -1,4 +1,4 @@
-<h1 mat-dialog-title >Customer ID: {{user.sheridanId}}
+<h1 mat-dialog-title >Sheridan ID: {{user.sheridanId}}
         <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -56,7 +56,26 @@
             </tr>
         </table>
         <br>
-        <table class="full-width">
+        <table>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Customer Type</mat-label>
+                        <mat-select [(value)]="user.type">
+                            <mat-option value="STUDENT">Student</mat-option>
+                            <mat-option value="STAFF">Staff</mat-option>
+                            <mat-option value="FACULTY">Faculty</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-checkbox color='primary' [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
+                </td>
+            </tr>
+        </table>
+      
+
+       <!-- <table class="full-width">
                 <tr>
                     <td>
                         <mat-form-field class="full-width">
@@ -70,22 +89,18 @@
                     </td>
                    
                 </tr>
-                <br>
                 <tr>
                     <td >
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Emergency Contact Phone"  [(ngModel)]="user.emergencyContactPhone">
                         </mat-form-field>
                     </td>
-                    <td>
-                        <mat-checkbox  color='primary'  [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
-                    </td>
                 </tr>
             </table>
-    
+        -->
        
     </mat-tab>
-    <mat-tab label="Active Rental">
+    <mat-tab label="Active Rental/ Owing Amount">
 
     </mat-tab>
 </mat-tab-group>
