@@ -1,5 +1,5 @@
 .full-width{
-    width:100%!important;
+    width:100%;
 }
 
 
@@ -18,9 +18,6 @@
     width: 100%;
   }
   
-  .full-width {
-    width: 100%;
-  }
   
   td {
     padding-right: 8px;
