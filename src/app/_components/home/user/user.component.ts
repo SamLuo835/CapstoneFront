@@ -82,8 +82,9 @@ export class UserComponent implements OnInit {
 
 
     openDialog(element): void { 
+      let tempUser =  JSON.parse(JSON.stringify(element));
       const dialogRef = this._modal.open(UserDialog, {
-        data: {user:element},
+        data: {user:tempUser},
         height: '600px',
         width: '600px',
         autoFocus:false,
