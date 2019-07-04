@@ -64,7 +64,6 @@ export class ArchiveRecordComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
-      console.log(this.queryMessage)
 
       if(this.queryMessage['bikeId'] != undefined){
         this.searchType = 'bikeID';
@@ -72,7 +71,6 @@ export class ArchiveRecordComponent implements OnInit {
       }
       else if((this.queryMessage['userId'] != undefined)){
         this.searchType = 'ID';
-        console.log(this.queryMessage);
         this.input.nativeElement.value = this.queryMessage['userId'];
       }
 

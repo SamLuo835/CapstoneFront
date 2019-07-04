@@ -25,50 +25,57 @@
             <tr>
                 <td>
                     <mat-form-field class="full-width">
+                        <input matInput placeholder="Phone" [(ngModel)]="user.phone">
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="full-width">
                         <input matInput placeholder="Address" [(ngModel)]="user.address">
                     </mat-form-field>
                 </td>
-               <!-- unnessary to have change status drop down in bike dialog <td>
+            </tr>
+            <tr> 
+                <td>
                     <mat-form-field class="full-width">
-                        <mat-label>Bike Status</mat-label>
-                        <mat-select panelClass="selectdropdown" name="type" [(ngModel)]="bike.bikeState" (selectionChange)="onChange(5)">
-                            <mat-option  value="AVAILABLE">
-                                Available
-                            </mat-option>
-                            <mat-option value="RENTED">
-                                Rented
-                            </mat-option>
-                            <mat-option value="OUT_OF_SERVICE">
-                                Out of Service
-                            </mat-option>
-                            <mat-option value="NEEDS_SAFETY_CHECK">
-                                Needs Safety Check
-                            </mat-option>
-                            <mat-option value="MISSING">
-                                Missing
-                            </mat-option>
-                            <mat-option value="IN_MAINTENANCE">
-                                In Maintenance
-                            </mat-option>
-                        </mat-select>
+                            <input matInput placeholder="Personal Email"  [(ngModel)]="user.personalEmail">
                     </mat-form-field>
-                </td>-->
+                </td>
+            
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Sheridan Email"  [(ngModel)]="user.sheridanEmail">
+                    </mat-form-field>
+                </td>
             </tr>
         </table>
-            
         <br>
-        <div class="container">
-            <mat-form-field class="full-width">
-                <textarea matInput placeholder="Personal Email"  [(ngModel)]="user.personalEmail"></textarea>
-            </mat-form-field>
-        </div>
-    
-        <br>
-        <div class="container">
-            <mat-form-field class="full-width">
-                <textarea matInput placeholder="Sheridan Email"  [(ngModel)]="user.sheridanEmail"></textarea>
-            </mat-form-field>
-        </div>
+        <table class="full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Emergency Contact First Name" [(ngModel)]="user.emergencyContactFirstName">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="full-width">
+                                <input matInput placeholder="Emergency Contact Last Name"  [(ngModel)]="user.emergencyContactLastName">
+                        </mat-form-field>
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td >
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Emergency Contact Phone"  [(ngModel)]="user.emergencyContactPhone">
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
     
        
     </div>
