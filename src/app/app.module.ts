@@ -49,6 +49,7 @@ import { LowerSectionComponentComponent } from './_components/reports/lower-sect
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -106,6 +107,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTooltipModule,
     MatMenuModule,
     DragDropModule,
+    MatTabsModule,
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000},
     } )
   ],

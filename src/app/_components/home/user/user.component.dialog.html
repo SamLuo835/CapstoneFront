@@ -4,8 +4,10 @@
         </button>
     </h1>
    
-    <hr>
     <div mat-dialog-content>
+        <mat-tab-group>
+        <mat-tab label="Basic Info">
+        <br>
         <table class="full-width" cellspacing="0">
             <tr>
                 <td>
@@ -54,7 +56,7 @@
             </tr>
         </table>
         <br>
-        <table class="full-width" cellspacing="0">
+        <table class="full-width">
                 <tr>
                     <td>
                         <mat-form-field class="full-width">
@@ -68,17 +70,26 @@
                     </td>
                    
                 </tr>
+                <br>
                 <tr>
                     <td >
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Emergency Contact Phone"  [(ngModel)]="user.emergencyContactPhone">
                         </mat-form-field>
                     </td>
+                    <td>
+                        <mat-checkbox  color='primary'  [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
+                    </td>
                 </tr>
             </table>
     
        
-    </div>
+    </mat-tab>
+    <mat-tab label="Active Rental">
+
+    </mat-tab>
+</mat-tab-group>
+</div>
        <hr>
     <div style="display: flex;justify-content: space-between">
     <mat-dialog-actions class="close-dialog">
@@ -86,7 +97,6 @@
     </mat-dialog-actions>
         
     <mat-dialog-actions class="close-dialog">
-            <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show Associated Rentals</a>
+            <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show Associated Past Rentals</a>
     </mat-dialog-actions>
-    
-    </div>
+</div>

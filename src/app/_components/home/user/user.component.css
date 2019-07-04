@@ -108,3 +108,11 @@ button:focus{outline: none!important}
     color:#073063;
     font-family: 'Roboto',sans-serif;
 }
+
+
+.mat-tab-header{
+    position: sticky!important;
+    top:0!important;
+    z-index:1000!important;
+    background-color: white!important;
+}
