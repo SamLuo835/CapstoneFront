@@ -26,7 +26,7 @@ import { PasswordRecoverComponent } from './_components/password-recover/passwor
 import { LeftMenuComponent } from './_components/home/left-menu/left-menu.component';
 import { BikeInventoryComponent, BikeDialog } from './_components/home/bike-inventory/bike-inventory.component';
 import { ActiveRecordComponent,DetailDialog } from './_components/home/active-record/active-record.component';
-import { UserComponent } from './_components/home/user/user.component';
+import { UserComponent, UserDialog } from './_components/home/user/user.component';
 import { ArchiveRecordComponent } from './_components/home/archive-record/archive-record.component';
 import { RepairToolComponent } from './_components/home/repair-tool/repair-tool.component';
 import { LockComponent } from './_components/home/lock/lock.component';
@@ -76,7 +76,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NewCustomerComponent,
     BikeDialog,
     UpperSectionComponentComponent,
-    LowerSectionComponentComponent
+    LowerSectionComponentComponent,
+    UserDialog
   ],
   imports: [
     BrowserAnimationsModule,
@@ -108,7 +109,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000},
     } )
   ],
-  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog],
+  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
   bootstrap: [AppComponent]
 })

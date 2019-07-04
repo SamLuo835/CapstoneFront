@@ -64,12 +64,16 @@ export class ArchiveRecordComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
+      console.log(this.queryMessage)
+
       if(this.queryMessage['bikeId'] != undefined){
         this.searchType = 'bikeID';
         this.input.nativeElement.value = this.queryMessage['bikeId'];
       }
-      else{
-
+      else if((this.queryMessage['userId'] != undefined)){
+        this.searchType = 'ID';
+        console.log(this.queryMessage);
+        this.input.nativeElement.value = this.queryMessage['userId'];
       }
 
       this.queryMessage = null;
@@ -186,7 +190,7 @@ export class ArchiveRecordComponent implements OnInit {
 
 
     showMore(element){
-      
+
     }
 
 }
