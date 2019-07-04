@@ -10,9 +10,9 @@
     <table [ngClass]='dataSource!==undefined ? "visible":"hide"' mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- id Column -->
-        <ng-container matColumnDef="rentalId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rental Id </th>
-          <td mat-cell *matCellDef="let element"> {{element.rentalId}} </td>
+        <ng-container matColumnDef="bikeId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Bike Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.bikeId}} </td>
         </ng-container>
       
         <!-- sign out date Column -->
