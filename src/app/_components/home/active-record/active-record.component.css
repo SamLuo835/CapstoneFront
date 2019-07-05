@@ -39,7 +39,7 @@ mat-paginator{
     z-index: -10;
 }
 
-.full-width{
+.mat-dialog-container .full-width{
     width:90%;
 }
 

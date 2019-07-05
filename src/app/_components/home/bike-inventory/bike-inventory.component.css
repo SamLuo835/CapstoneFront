@@ -33,7 +33,7 @@
     color: #6c757d !important;
 }
 
-.full-width{
+.mat-dialog-container .full-width{
     width:90%;
 }
 
@@ -74,7 +74,7 @@
     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  .card-header:active{
+  .bikeCard .card-header:active{
     opacity: .5;
   }
 

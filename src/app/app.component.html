@@ -33,9 +33,9 @@
 <div [ngClass]="[_auth.loggedIn()?'app':'app_logout',animation?'content-transition':'']"  style="position:relative;"  >
   <router-outlet></router-outlet>            
 </div>
-<notifier-container  *ngIf="_auth.loggedIn()"  style="z-index:150"></notifier-container>
+<notifier-container  *ngIf="_auth.loggedIn()"  [ngClass]="animation?'content-transition':''" style="z-index:150;top:200px;position:relative" ></notifier-container>
 
-    <div class="footer-information"*ngIf="this._auth.loggedIn()" [ngClass]="animation?'content-transition':''" style="position:relative">
+    <div class="footer-information"*ngIf="this._auth.loggedIn()" [ngClass]="animation?'content-transition':''" style="top:200px;position:relative">
 		
         <!-- BEGIN .content -->
         <div class="content">

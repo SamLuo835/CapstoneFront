@@ -5,7 +5,7 @@
   </app-left-menu>
 </div>
 
-<div class="col-lg-10 ">
+<div class="col-lg-10 "  [ngClass]="componentIndex===6?'newRentalCenter':''">
   <app-bike-inventory *ngIf="componentIndex === 1"></app-bike-inventory>
   <app-lock *ngIf="componentIndex === 2"></app-lock>
   <app-active-record *ngIf="componentIndex === 3"></app-active-record>
