@@ -27,6 +27,7 @@ app-root{
 .mat-sort-header-container{
         display:flex;
         justify-content: center!important;
+        padding-left: 10px;
 }
 
 

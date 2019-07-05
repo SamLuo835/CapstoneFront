@@ -21,7 +21,7 @@ export class UserComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','isBlackListed','more'];
+  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','status','more'];
 
   tableDetail:Object = {};
 
