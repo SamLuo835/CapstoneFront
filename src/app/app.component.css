@@ -1,3 +1,16 @@
+#login-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -100;
+}
+
+.content-transition{
+  top:70px!important;
+}
+
 .header{
     max-height: 200px;
     background-color: white;
@@ -118,6 +131,13 @@ h1{
 .app{
     flex: 2 0 auto;
     min-height: 80vh;
+    top:200px;
+}
+
+.app_logout{
+  flex: unset;
+  min-height: unset;
+  top:0;
 }
 
 .menu .mat-button{
@@ -187,80 +207,7 @@ h1{
     animation-fill-mode: forwards;         /* When the spec is finished */
 }
 
-.TitleBack{
-    -webkit-animation-name: animateTitleBack; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.6s; /* Safari 4.0 - 8.0 */
-    animation-name: animateTitleBack;
-    animation-duration: 0.6s;
-    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-    -moz-animation-fill-mode: forwards;    /* FF 5+ */
-    -o-animation-fill-mode: forwards;      /* Not implemented yet */
-    -ms-animation-fill-mode: forwards;     /* IE 10+ */
-    animation-fill-mode: forwards;         /* When the spec is finished */
-}
 
-.menuBack{
-    -webkit-animation-name: animateMenuBack; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.6s; /* Safari 4.0 - 8.0 */
-    animation-name: animateMenuBack;
-    animation-duration: 0.6s;
-    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-    -moz-animation-fill-mode: forwards;    /* FF 5+ */
-    -o-animation-fill-mode: forwards;      /* Not implemented yet */
-    -ms-animation-fill-mode: forwards;     /* IE 10+ */
-    animation-fill-mode: forwards;         /* When the spec is finished */
-}
-
-.imageBack{
-    -webkit-animation-name: animateImageBack; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
-    animation-name: animateImageBack;
-    animation-duration: 0.5s;
-    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-    -moz-animation-fill-mode: forwards;    /* FF 5+ */
-    -o-animation-fill-mode: forwards;      /* Not implemented yet */
-    -ms-animation-fill-mode: forwards;     /* IE 10+ */
-    animation-fill-mode: forwards;         /* When the spec is finished */
-}
-
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes animateTitleBack {
-    0% { right:50vw; bottom:25px; font-size: 1.8em}
-    100% { right:0; bottom:0; font-size: 3.0em}
-  }
-  
-  /* Standard syntax */
-  @keyframes animateTitleBack {
-    0% { right:50vw; bottom:25px; font-size: 1.8em}
-    100% { right:0; bottom:0; font-size: 3.0em}
-  }
-
-
-  /* Safari 4.0 - 8.0 */
-@-webkit-keyframes animateMenuBack {
-    0% { top:-95px;}
-    100% { top: 0px;}
-  }
-  
-  /* Standard syntax */
-  @keyframes animateMenuBack {
-    0% { top:-95px;left:15vw}
-    100% { top: 0px;left:0vw}
-  }
-
-
-   /* Safari 4.0 - 8.0 */
-@-webkit-keyframes animateImageBack {
-    100% {width:250px;right:0;opacity: 1;}
-    0% {  width:100px; right:15vw;opacity: 0;}
-  }
-  
-  /* Standard syntax */
-  @keyframes animateImageBack {
-    100% {width:250px;right:0;opacity: 1;}
-    0% {width:100px; right:15vw;opacity: 0;}
-  }
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenu {
@@ -313,17 +260,7 @@ h1{
     animation-fill-mode: forwards;         /* When the spec is finished */
 }
 
-.headerBGback{
-    -webkit-animation-name: animateBGback; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 0.6s; /* Safari 4.0 - 8.0 */
-    animation-name: animateBGback;
-    animation-duration: 0.6s;
-    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-    -moz-animation-fill-mode: forwards;    /* FF 5+ */
-    -o-animation-fill-mode: forwards;      /* Not implemented yet */
-    -ms-animation-fill-mode: forwards;     /* IE 10+ */
-    animation-fill-mode: forwards;         /* When the spec is finished */
-}
+
 
  /* Safari 4.0 - 8.0 */
  @-webkit-keyframes animateBG {
@@ -338,17 +275,7 @@ h1{
   }
 
 
-   /* Safari 4.0 - 8.0 */
- @-webkit-keyframes animateBGback {
-    0% {box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
-    100% { }
-  }
-  
-  /* Standard syntax */
-  @keyframes animateBGback {
-    0% {box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);}
-    100% {}
-  }
+
 
   
 

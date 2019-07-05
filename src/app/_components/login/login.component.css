@@ -16,3 +16,22 @@ mat-checkbox{
     color:red;
 }
 
+.password-recover{
+    text-align: center;
+    padding-top: 15px;
+    font-size: 0.8rem;
+}
+
+
+.login-header{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    color: #073063;
+    text-align: center;
+}
+
+
+.headerLogo{
+    display: flex;
+    justify-content: center;
+}

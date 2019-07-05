@@ -19,29 +19,21 @@ import {MatMenuTrigger} from '@angular/material/menu';
 export class AppComponent {
   title = 'Capstonefront';
   imgSrc='./assets/images/logo.png'
+  loginbg='./assets/images/login-background.jpg'
   lastPing?: Date = null;
   animation :boolean = false;
   @ViewChild(MatMenuTrigger) menu: MatMenuTrigger;
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
-     
+     if(this._auth.loggedIn()){
       if(this.menu != undefined){
         if(this.menu.menuOpen){
           this.menu.closeMenu();
         }
       }
-
-      if (document.documentElement.scrollTop > 50) {
-        this.animation = true;
-      } else if( document.documentElement.scrollTop == 0 ){
-        //start new if-block to reduce the unnecessary get class when the scroll event trigger
-          if(document.getElementsByClassName('cdk-overlay-backdrop').length == 0 || (document.getElementsByClassName('cdk-overlay-transparent-backdrop').length > 0)){
-            this.animation = false;
-          }
-        }
-      
-
+      this.animation = true;
+    }
     });
   }
 
@@ -82,9 +74,9 @@ export class AppComponent {
             this.eventFire(overLayElements[overLayElements.length-1],'click');
           }
         }
+        this.animation =false;
+
         this.openDialog();
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
       }
       else{
         this.reset();
@@ -116,6 +108,11 @@ export class AppComponent {
       console.log('The dialog was closed');
     });
   }
+
+  logoutUser(){
+    this.animation =false;
+    this._auth.logoutUser();
+  }
 }
 
 @Component({
@@ -123,6 +120,7 @@ export class AppComponent {
   templateUrl: 'app.component.timeout.html',
 })
 export class TimeoutDialog {
+  @ViewChild(MatMenuTrigger) menu: MatMenuTrigger;
 
   constructor(
     public dialogRef: MatDialogRef<TimeoutDialog>,private dialog:MatDialog,private _router :Router,private ngZone :NgZone,private _dataShare :DataShareService) {
@@ -130,7 +128,13 @@ export class TimeoutDialog {
   onClick(): void {
     this.dialog.closeAll();
     this.dialogRef.close();
-
+    if(this.menu != undefined){
+      if(this.menu.menuOpen){
+        this.menu.closeMenu();
+      }
+    }
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
     this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);this._dataShare.changeCustomerShowForm(false);
   });
   }
