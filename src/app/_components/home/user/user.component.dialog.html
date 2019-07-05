@@ -2,7 +2,7 @@
         <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-    </h1>
+</h1>
    
     <div class="dialog-content" mat-dialog-content>
         <mat-tab-group>
@@ -30,36 +30,33 @@
                         <input matInput placeholder="Phone" [(ngModel)]="user.phone">
                     </mat-form-field>
                 </td>
-            </tr>
-            <tr>
                 <td>
                     <mat-form-field class="full-width">
                         <input matInput placeholder="Address" [(ngModel)]="user.address">
                     </mat-form-field>
                 </td>
             </tr>
+            <br>
             <tr> 
                 <td>
                     <mat-form-field class="full-width">
                             <input matInput placeholder="Personal Email"  [(ngModel)]="user.personalEmail">
                     </mat-form-field>
                 </td>
-            
+                    <td>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Sheridan Email"  [(ngModel)]="user.sheridanEmail">
+                        </mat-form-field>
+                    </td>
                 <br>
             </tr>
+           
+        </table>
+        <br>
+        <table class="full-width">
             <tr>
                 <td>
                     <mat-form-field class="full-width">
-                        <input matInput placeholder="Sheridan Email"  [(ngModel)]="user.sheridanEmail">
-                    </mat-form-field>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td>
-                    <mat-form-field>
                         <mat-label>Customer Type</mat-label>
                         <mat-select [(value)]="user.type">
                             <mat-option value="STUDENT">Student</mat-option>
@@ -69,7 +66,7 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-checkbox color='primary' [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
+                    <mat-checkbox class="full-width" color='primary' [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
                 </td>
             </tr>
         </table>
@@ -108,7 +105,7 @@
        <hr>
     <div style="display: flex;justify-content: space-between">
     <mat-dialog-actions class="close-dialog">
-            <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()" style="font-weight: 500">SAVE CHANGES</button>
+            <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
     </mat-dialog-actions>
         
     <mat-dialog-actions class="close-dialog">

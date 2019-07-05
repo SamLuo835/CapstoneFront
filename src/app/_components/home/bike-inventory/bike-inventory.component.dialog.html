@@ -82,11 +82,11 @@
    <hr>
 <div style="display: flex;justify-content: space-between">
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'modify'">
-        <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()" style="font-weight: 500">SAVE CHANGES</button>
+        <button class="btn btn-outline-dark" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
 </mat-dialog-actions>
     
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'modify'">
-        <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show Associated Rentals</a>
+        <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show Associated Past Rentals</a>
 </mat-dialog-actions>
 
 <mat-dialog-actions class="close-dialog " *ngIf="action == 'create'">

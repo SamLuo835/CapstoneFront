@@ -120,3 +120,8 @@ button:focus{outline: none!important}
     z-index:1000!important;
     background-color: white!important;
 }
+
+.redirectLink{
+    font-family: 'Roboto',sans-serif;
+    font-weight: 500;
+}
