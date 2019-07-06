@@ -7,10 +7,14 @@
   <div class="menuflexbox"  >
   <h1 class="headerTitle" [ngClass]="animation?'moveTitle':''">Sheridan Bike Rental System</h1>
   <div class="menu" [ngClass]="animation?'moveMenu':''">
-  <span>
-  <a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >Home</a><span class="verticalLine">|</span>
+  <div>
+  <span class="homeIcon"></span>
+  <a class="nav-link" [ngClass]="getClass('/home')" routerLink="/" >     Home</a><span class="verticalLine">|</span>
+  <span class="aboutIcon"></span>
   <a class="nav-link" [ngClass]="getClass('/about')" routerLink="/about" (click)="goToPage()">About</a><span class="verticalLine">|</span>
+  <span class="reportIcon"></span>
   <a class="nav-link" [ngClass]="getClass('/report')" routerLink="/report"  (click)="goToPage()">Reports </a><span   class="verticalLine">|</span>
+  <span class="settingIcon"></span>
   <a class="nav-link" #matButton  [ngClass]="getClass('/changePass')"    [ngClass]="getClass('/addUser')" mat-button [disableRipple]=true [matMenuTriggerFor]="menu">Settings</a>
   <mat-menu #menu="matMenu">
   <button mat-menu-item [disableRipple]=true >Create User</button>
@@ -24,8 +28,10 @@
     <button mat-menu-item [disableRipple]=true>Davis Campus</button>
   </mat-menu>
   <span  class="verticalLine">|</span>
+  <span class="signoutIcon"></span>
+
   <a class="nav-link"  routerLink="" (click)="logoutUser()" >Logout</a>
-</span>
+</div>
   </div>
   </div>
 </div>

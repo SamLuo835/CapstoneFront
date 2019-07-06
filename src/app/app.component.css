@@ -212,13 +212,13 @@ h1{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateMenu {
     0% {top:0}
-    100% { top:-95px; }
+    100% { top:-65px; }
   }
   
   /* Standard syntax */
   @keyframes animateMenu {
     0%{top:0;left:0vw}
-    100% { top:-95px; left:15vw }
+    100% { top:-65px; left:13vw }
   }
 
 
@@ -226,13 +226,13 @@ h1{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:50vw; bottom:25px; font-size: 1.8em}
+    100% { right:45vw; bottom:25px; font-size: 1.8em;text-align: left}
   }
   
   /* Standard syntax */
   @keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:50vw; bottom:25px; font-size: 1.8em}
+    100% { right:45vw; bottom:25px; font-size: 1.8em;text-align: left}
   }
 
   /* Safari 4.0 - 8.0 */
@@ -277,8 +277,81 @@ h1{
 
 
 
-  
+  .homeIcon{
+    position: relative;
+    top: 3px;
+    left: 10px;
+    /* top: 33px; */
+    /* left: 8%; */
+    display: inline-block;
+    width: 23px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 20px;
+    background-image: url(~src/assets/images/device-desktop.svg);
+}
 
+.aboutIcon{
+    position: relative;
+    top: 4px;
+    left: 9px;
+    /* top: 33px; */
+    /* left: 8%; */
+    display: inline-block;
+    width: 23px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 20px;
+    background-image: url(~src/assets/images/info.svg);
+}
+
+.reportIcon{
+    position: relative;
+    top: 4px;
+    left: 9px;
+    /* top: 33px; */
+    /* left: 8%; */
+    display: inline-block;
+    width: 23px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 17px;
+    background-image: url(~src/assets/images/file.svg);
+}
+
+.settingIcon{
+    position: relative;
+    top: 4px;
+    left: 9px;
+    /* top: 33px; */
+    /* left: 8%; */
+    display: inline-block;
+    width: 23px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 20px;
+    background-image: url(~src/assets/images/gear.svg);
+}
+
+
+.signoutIcon{
+    position: relative;
+    top: 8px;
+    left: 9px;
+    /* top: 33px; */
+    /* left: 8%; */
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 20px;
+    background-image: url(~src/assets/images/sign-out.svg);
+}
 
 
 

@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit {
       err=>{
         this.submitting = false;
        // this.errorMsg = err['body']['error']
+        this.errorMsg = "Unexpected error. Please try again."
         console.log(err)
       }
     );
