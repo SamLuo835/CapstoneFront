@@ -1,4 +1,18 @@
 
+.btn-light{
+  background-color:#8ca0b9;
+  color:white;
+}
+
+.btn-light:hover{
+  background-color: #dadada
+}
+
+.btn-light:focus{
+  outline: 0;
+}
+
+
 mat-expansion-panel-header:hover{
   background-color:#dadada!important;
   
