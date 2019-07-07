@@ -12,8 +12,9 @@ mat-checkbox{
 }
 
 .error{
+    margin-bottom: 10px;
     font-size: 0.9em;
-    color:red;
+    color:#f44336;
 }
 
 .password-recover{

@@ -21,7 +21,6 @@
                     Email is <strong>required</strong>
                   </mat-error>
               </mat-form-field>
-              <span class="error" >{{errorMsg}}</span> 
 
               <mat-checkbox color='primary' [(checked)]="checkedBox" (change)="rememberCheck($event)">Remember me</mat-checkbox>
             </div>
@@ -34,6 +33,9 @@
                   </mat-error>
               </mat-form-field>
               <mat-spinner  diameter='20' *ngIf="submitting" style="margin:unset!important;display: inline;left:-25px" ></mat-spinner>
+            </div>
+            <div  style="display:flex">
+            <span class="error" >{{errorMsg}}&nbsp;</span> 
             </div>
             <button style="width:100%" type="button" (click)="loginUser()" [disabled]="passwordFormControl.hasError('required') || emailFormControl.hasError('required') || emailFormControl.hasError('email')" 
             class="btn btn-success">Login</button>

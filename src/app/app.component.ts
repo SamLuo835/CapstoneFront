@@ -32,7 +32,9 @@ export class AppComponent {
           this.menu.closeMenu();
         }
       }
-      this.animation = true;
+      if( document.documentElement.scrollTop > 50 ){
+        this.animation = true;
+      }
     }
     });
   }
