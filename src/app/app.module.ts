@@ -108,7 +108,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatMenuModule,
     DragDropModule,
     MatTabsModule,
-    NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',gap:10}},behaviour:{autoHide:3000},
+    NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],
   entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog],

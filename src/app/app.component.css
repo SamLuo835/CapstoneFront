@@ -19,7 +19,7 @@
     width:100%;
     justify-content: space-around;
     position: fixed;
-    z-index: 999;
+    z-index: 100;
     transition: 0.6s;
     top:0;
 }
