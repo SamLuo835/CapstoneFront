@@ -289,7 +289,7 @@ h1{
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: 20px;
-    background-image: url(~src/assets/images/device-desktop.svg);
+    background-image: url(~src/assets/images/home.svg);
 }
 
 .aboutIcon{
@@ -318,13 +318,13 @@ h1{
     height: 20px;
     background-repeat: no-repeat;
     background-position: 50%;
-    background-size: 17px;
+    background-size: 20px;
     background-image: url(~src/assets/images/file.svg);
 }
 
 .settingIcon{
     position: relative;
-    top: 4px;
+    top: 5px;
     left: 9px;
     /* top: 33px; */
     /* left: 8%; */
@@ -340,7 +340,7 @@ h1{
 
 .signoutIcon{
     position: relative;
-    top: 8px;
+    top: 6px;
     left: 9px;
     /* top: 33px; */
     /* left: 8%; */
@@ -350,7 +350,7 @@ h1{
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: 20px;
-    background-image: url(~src/assets/images/sign-out.svg);
+    background-image: url(~src/assets/images/logout.svg);
 }
 
 
