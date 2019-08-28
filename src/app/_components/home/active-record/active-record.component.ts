@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild,ViewEncapsulation,Inject } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
 import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
 
 
 
@@ -123,6 +123,7 @@ import { DataShareService } from 'src/app/_service/data-share.service';
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
+  tabSwitch:boolean =false;
 
   myFilter = (d: Date): boolean => {
     const day = d.getDay();
@@ -130,6 +131,15 @@ export class DetailDialog {
     return day !== 0 && day !== 6;
   }
   
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    if(tabChangeEvent.index == 1){
+      this.tabSwitch = true;
+    }
+    else{
+      this.tabSwitch = false;
+    }
+  }
+
   //convert to moment formatted date string
   signOutDate:string;
   dueDate:string;
@@ -162,9 +172,12 @@ export class DetailDialog {
 
     }
 
+    updateAmount(){
+
+    }
 
   
-    onClick(): void {
+    closeDialog(): void {
       this.dialogRef.close({action:'cancel'});
     }
 }

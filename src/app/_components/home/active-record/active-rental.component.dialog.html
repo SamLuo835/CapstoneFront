@@ -1,8 +1,11 @@
-<h1 mat-dialog-title>Rental ID: {{data.rentalId}}<button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+<h1 mat-dialog-title>Rental ID: {{data.rentalId}}<button float="right" type="button" (click)="closeDialog()" class="close" aria-label="Close">
     <span aria-hidden="true">&times;</span>
-  </button></h1>
-<hr>
-<div mat-dialog-content>
+  </button>
+</h1>
+<div  class="dialog-content" mat-dialog-content>
+    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+        <mat-tab label="Rental Information">
+        <br>
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
           <input matInput placeholder="Customer Name" disabled [(ngModel)]="data.customerName">
@@ -52,13 +55,23 @@
   <mat-form-field class="full-width">
       <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
   </mat-form-field>
+  
   </div>
+  </mat-tab>
+  <mat-tab label="Owing Amount/Return">
+    </mat-tab>
+    </mat-tab-group>
   </div>
   <hr>
  <mat-dialog-actions class="activeRentalDialog">
-  <button class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
 
-  <button class="btn btn-outline-dark" style="font-weight: 500"  (click)="closeCase()">RETURN</button>
+  <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
+  <button *ngIf="tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">MARK AS RETURN</button>
+
+
+  <a *ngIf="!tabSwitch" class="redirectLink" (click)="closeDialog()" style="margin-right: 10px" >Cancel</a>
+  <a *ngIf="tabSwitch" class="redirectLink" (click)="updateAmount()" >Update Owing Amount</a>
+
 
 </mat-dialog-actions>
 
