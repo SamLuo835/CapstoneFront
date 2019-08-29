@@ -26,7 +26,7 @@ export class AppComponent {
 
   ngOnInit() {
     window.addEventListener("scroll" , () => {
-     if(this._auth.loggedIn()){
+     if(this._router.url!=='/login'){
       if(this.menu != undefined){
         if(this.menu.menuOpen){
           this.menu.closeMenu();
@@ -60,7 +60,7 @@ export class AppComponent {
     this._dataShare.changeCustomerShowForm(false);
   }
 
-  constructor(private idle: Idle, private keepalive: Keepalive, private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
+  constructor(private idle: Idle, private keepalive: Keepalive, private _router :Router,private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
      // sets an idle timeout of 5 seconds, for testing purposes.
      idle.setIdle(600);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
@@ -69,7 +69,7 @@ export class AppComponent {
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     idle.onTimeout.subscribe(() => {
-      if(this._auth.loggedIn()){
+      if(this._router.url !== '/login'){
         let overLayElements = document.getElementsByClassName('mat-button-wrapper')
         if(overLayElements.length != 0){
          if(overLayElements[overLayElements.length-1].innerHTML == 'Cancel'){
@@ -77,7 +77,9 @@ export class AppComponent {
           }
         }
         this.animation =false;
-
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        //In the case of using JWT, should notify server to force expire token here
         this.openDialog();
       }
       else{
@@ -135,8 +137,6 @@ export class TimeoutDialog {
         this.menu.closeMenu();
       }
     }
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
     this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);this._dataShare.changeCustomerShowForm(false);
   });
   }

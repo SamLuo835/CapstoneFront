@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../_service/auth.service'
 import { BikeDialog } from './bike-inventory/bike-inventory.component';
 import { MatDialog } from '@angular/material';
 import {TooltipPosition} from '@angular/material/tooltip';
@@ -17,14 +16,10 @@ export class HomeComponent implements OnInit {
 
   position:TooltipPosition;
   
-  constructor(private _auth :AuthService,private _modal: MatDialog) { }
+  constructor(private _modal: MatDialog) { }
 
   ngOnInit() {
     this.position = 'left';
-  }
-
-  logoutButton(event){
-    this._auth.logoutUser();
   }
 
   receiveMessage($event){

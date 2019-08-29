@@ -1,5 +1,5 @@
-<img *ngIf="!this._auth.loggedIn()" src="{{loginbg}}" id="login-bg">
-<header *ngIf="this._auth.loggedIn()">
+<img *ngIf="this._router.url === '/login'" src="{{loginbg}}" id="login-bg">
+<header *ngIf="this._router.url !== '/login'">
 <div class="header headerFlex" [ngClass]="animation?'headerBG':''" >
   <div class="imageBox" >
   <img src="{{imgSrc}}" [ngClass]="animation?'moveImage':''" id="headerLogo">
