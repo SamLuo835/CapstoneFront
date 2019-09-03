@@ -9,6 +9,7 @@
 
 .content-transition{
   top:70px!important;
+  transition: 0.5s;
 }
 
 .header{

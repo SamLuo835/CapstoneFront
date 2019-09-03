@@ -76,7 +76,6 @@ export class AppComponent {
             this.eventFire(overLayElements[overLayElements.length-1],'click');
           }
         }
-        this.animation =false;
         localStorage.removeItem("token");
         localStorage.removeItem("role");
         //In the case of using JWT, should notify server to force expire token here
@@ -108,6 +107,7 @@ export class AppComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.animation = false;
       this.reset();
       console.log('The dialog was closed');
     });

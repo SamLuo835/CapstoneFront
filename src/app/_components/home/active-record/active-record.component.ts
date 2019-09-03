@@ -59,7 +59,7 @@ export class ActiveRecordComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-        if(result){
+        if(result != undefined){
         if(result['action']=='return'){
           this._core.returnBike(result['rentalId'],result['comment']).subscribe(res=>{
               console.log(res);
