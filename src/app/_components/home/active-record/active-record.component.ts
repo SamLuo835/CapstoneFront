@@ -127,8 +127,8 @@ export class DetailDialog {
   //TODO checkbox value should return from api
   checkBike:boolean = false;
   checkKey:boolean = true;
-  deepCopyCheckBike:boolean =JSON.parse(JSON.stringify(this.checkBike));
-  deepCopyCheckKey:boolean = JSON.parse(JSON.stringify(this.checkKey));
+  //deepCopyCheckBike:boolean =JSON.parse(JSON.stringify(this.checkBike));
+  //deepCopyCheckKey:boolean = JSON.parse(JSON.stringify(this.checkKey));
   owingAmount:number = 0;
   otherDamage:number = 0;
   
@@ -138,7 +138,7 @@ export class DetailDialog {
   latePenaltyCheck:boolean;
   lateAmount:number=25;
   readyToClosed:boolean;
-  
+
   updateOwingTotal(category:String){
     switch (category){
       case 'keyDamage':

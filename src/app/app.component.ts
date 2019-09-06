@@ -60,7 +60,7 @@ export class AppComponent {
     this._dataShare.changeCustomerShowForm(false);
   }
 
-  constructor(private idle: Idle, private keepalive: Keepalive, private _router :Router,private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
+  constructor(private idle: Idle, private keepalive: Keepalive, public _router :Router,private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
      // sets an idle timeout of 5 seconds, for testing purposes.
      idle.setIdle(600);
      // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
