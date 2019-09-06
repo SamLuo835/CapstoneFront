@@ -59,18 +59,45 @@
   </div>
   </mat-tab>
   <mat-tab label="Owing Amount/Return">
+    <h6 style="margin:10px 0;color:#003767">Check to Mark Component Inspection Completed</h6>
+          <section class="returnSection">
+           <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >Bike</mat-checkbox>
+            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Key & Lock</mat-checkbox>         
+          </section>
+          <mat-checkbox [disabled]="!checkBike || !checkKey"  style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="readyToClosed"  >This rental is ready to be closed</mat-checkbox>
+    <hr style="margin-top: 0">
+    <h6 style="margin:10px 0;color:#003767">Owing Amount Summary</h6>
+    <table class="full-width" style="color:#5f6368">
+      <tr class="tableHeader" ><td class="alignleft">Category</td><td>Amount</td><td>Apply</td></tr>
+        <tr><td class="alignleft">Late Penalty(5 days)</td><td>${{lateAmount}}</td><td>
+        </td></tr>
+        <tr><td class="alignleft">Key Damage</td><td>$25</td><td>
+            <mat-checkbox [disabled]="keyLostCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyDamageCheck" (change)="updateOwingTotal('keyDamage')" ></mat-checkbox>
+        </td></tr>
+        <tr><td class="alignleft">Key Lost</td><td>$25</td><td>
+            <mat-checkbox [disabled]="keyDamageCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyLostCheck" (change)="updateOwingTotal('keyLost')" ></mat-checkbox>
+        </td></tr>
+        <tr><td class="alignleft">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
+            <input matInput  style="text-align: right" type="number" [(ngModel)]="otherDamage"></mat-form-field></td><td>
+            <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updateOwingTotal('otherDamage')" ></mat-checkbox>
+        </td></tr>
+      </table>
+
     </mat-tab>
     </mat-tab-group>
   </div>
   <hr>
- <mat-dialog-actions class="activeRentalDialog">
 
+ 
+  <mat-dialog-actions class="activeRentalDialog">
   <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
-  <button *ngIf="tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">MARK AS RETURN</button>
-
-
-  <a *ngIf="!tabSwitch" class="redirectLink" (click)="closeDialog()" style="margin-right: 10px" >Cancel</a>
-  <a *ngIf="tabSwitch" class="redirectLink" (click)="updateAmount()" >Update Owing Amount</a>
+  <button *ngIf="tabSwitch && readyToClosed"  class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="updateCase()">RETURN RENTAL</button>
+  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">UPDATE RENTAL</button>
+  <!--<span *ngIf="tabSwitch && checkBike && checkKey && owingAmount!=0" style="font-size: 0.7em;
+  color:#f44336;">Outstanding amount is not 0</span>  -->
+  
+  <span style="color:#003767" *ngIf="tabSwitch">Total: ${{owingAmount}}</span>
+  <a  class="redirectLink" (click)="closeDialog()" style="margin-right: 10px" >Cancel</a>
 
 
 </mat-dialog-actions>

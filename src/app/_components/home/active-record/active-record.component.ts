@@ -123,7 +123,44 @@ import { DataShareService } from 'src/app/_service/data-share.service';
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
-  tabSwitch:boolean =false;
+  tabSwitch:boolean = false;
+  //TODO checkbox value should return from api
+  checkBike:boolean = false;
+  checkKey:boolean = true;
+  deepCopyCheckBike:boolean =JSON.parse(JSON.stringify(this.checkBike));
+  deepCopyCheckKey:boolean = JSON.parse(JSON.stringify(this.checkKey));
+  owingAmount:number = 0;
+  otherDamage:number = 0;
+  
+  otherDamageCheck:boolean;
+  keyDamageCheck:boolean;
+  keyLostCheck:boolean;
+  latePenaltyCheck:boolean;
+  lateAmount:number=25;
+  readyToClosed:boolean;
+  
+  updateOwingTotal(category:String){
+    switch (category){
+      case 'keyDamage':
+          if(this.keyDamageCheck){
+            this.owingAmount += 25;
+          }
+          else  this.owingAmount -= 25;
+          break;
+      case 'keyLost':
+          if(this.keyLostCheck){
+            this.owingAmount += 25;
+          }
+          else  this.owingAmount -= 25;
+          break;
+      case 'otherDamage':
+          if(this.otherDamageCheck){
+            this.owingAmount += this.otherDamage;
+          }
+          else  this.owingAmount -= this.otherDamage;
+          break;
+    }
+  }
 
   myFilter = (d: Date): boolean => {
     const day = d.getDay();
@@ -156,10 +193,14 @@ export class DetailDialog {
     }
 
 
-    closeCase(){
-      console.log(this.data.rentalId) 
-      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'return'});
+    updateCase(){
+      console.log(this.data.rentalId)
+      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'update'});
+    }
 
+    closeCase(){
+      console.log(this.data.rentalId)
+      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'return'});
     }
 
     saveChanges(){

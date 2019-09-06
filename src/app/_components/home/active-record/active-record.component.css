@@ -97,3 +97,20 @@ button:focus{outline: none!important}
     font-family: 'Roboto',sans-serif;
     font-weight: 500;
 }
+
+.returnSection{
+  color:#003767;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.tableHeader{
+    font-weight: 600;
+
+}
+
+.alignleft{
+    text-align: left;
+}
