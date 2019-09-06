@@ -67,17 +67,17 @@
           <mat-checkbox [disabled]="!checkBike || !checkKey"  style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="readyToClosed"  >This rental is ready to be closed</mat-checkbox>
     <hr style="margin-top: 0">
     <h6 style="margin:10px 0;color:#003767">Owing Amount Summary</h6>
-    <table class="full-width" style="color:#5f6368">
+    <table class="full-width" style="color:#5f6368;margin:auto">
       <tr class="tableHeader" ><td class="alignleft">Category</td><td>Amount</td><td>Apply</td></tr>
-        <tr><td class="alignleft">Late Penalty(5 days)</td><td>${{lateAmount}}</td><td>
+        <tr><td class="alignleft" style="height: 60px">Late Penalty(5 days)</td><td>${{lateAmount}}</td><td>
         </td></tr>
-        <tr><td class="alignleft">Key Damage</td><td>$25</td><td>
+        <tr><td class="alignleft" style="height: 60px">Key Damage</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyLostCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyDamageCheck" (change)="updateOwingTotal('keyDamage')" ></mat-checkbox>
         </td></tr>
-        <tr><td class="alignleft">Key Lost</td><td>$25</td><td>
+        <tr><td class="alignleft" style="height: 60px">Key Lost</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyDamageCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyLostCheck" (change)="updateOwingTotal('keyLost')" ></mat-checkbox>
         </td></tr>
-        <tr><td class="alignleft">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
+        <tr><td class="alignleft" style="height: 60px">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
             <input matInput  style="text-align: right" type="number" [(ngModel)]="otherDamage"></mat-form-field></td><td>
             <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updateOwingTotal('otherDamage')" ></mat-checkbox>
         </td></tr>
