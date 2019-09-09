@@ -164,6 +164,7 @@ testSearchCustomer():Observable<any>{
   }
   
   editBike(editedBikeInfo):Observable<any>{
+    editedBikeInfo['@type']='Bike';
     return this.http.patch(this.editBikeUrl, editedBikeInfo, httpOptions).pipe(
       catchError((httpError) => {
         this.notification.notify('error', httpError.error.message);
