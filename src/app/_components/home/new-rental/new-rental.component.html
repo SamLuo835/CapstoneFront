@@ -33,8 +33,12 @@
 <div class="row" *ngIf="!showSpinner && showForm">
     <mat-spinner  diameter='40' *ngIf="submitting" style="position: absolute;z-index: 10;"></mat-spinner>
     <div class="col-md-12 ">
+
         <div class="container">
+
             <form class="form">
+                <h3 style="color:#003767;position: relative; right:5px;">Customer Information</h3>
+                <br>
                 <mat-form-field class="full-width">
                   <input matInput placeholder="First Name *"  name="firstname"   disabled  [(ngModel)]="resultUserData['firstName']">
                 </mat-form-field><br><br>
@@ -77,7 +81,7 @@
                   <td><mat-form-field class="full-width">
                     <input  matInput placeholder="Phone *"  name="phone"  disabled [(ngModel)]="resultUserData['phone']">
                 </mat-form-field></td>
-                <td> <mat-form-field class="full-width">
+                <!--<td> <mat-form-field class="full-width">
                   <mat-label>Pick a Bike *</mat-label>
                   <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                     <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.bikeState == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
@@ -87,9 +91,77 @@
                   <mat-error *ngIf="bikeFormControl.hasError('required')">
                     Bike is <strong>required</strong>
                 </mat-error>
-                </mat-form-field></td>
-              </tr></table>
-                <br><br>
+                </mat-form-field></td>-->
+              </tr>
+            </table>
+
+            <br>
+            <h3 style="color:#003767">Rental Components</h3>
+            <br>
+            <mat-horizontal-stepper labelPosition="bottom" style="background-color: #eeeeee;position: relative;right:20px;width:110%" linear #stepper>
+                <mat-step [stepControl]="bikeFormControl" >
+                  <form [formGroup]="bikeFormControl">
+                    <ng-template matStepLabel>Pick a Bike *</ng-template>
+                    <mat-form-field class="full-width">
+                        <mat-label>Pick a Bike *</mat-label>
+                        <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
+                          <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.bikeState == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
+                            Bike #{{bike.id}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="bikeFormControl.hasError('required')">
+                          Bike is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="lockFormControl" >
+                  <form [formGroup]="lockFormControl">
+                    <ng-template matStepLabel>Pick a Lock *</ng-template>
+                    
+                    <mat-form-field class="full-width">
+                        <mat-label>Pick a Lock *</mat-label>
+                        <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
+                          <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
+
+                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.lockState == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
+                            Lock #{{lock.id}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="lockFormControl.hasError('required')">
+                          Lock is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="keyFormControl" >
+                    <form [formGroup]="keyFormControl">
+                      <ng-template matStepLabel>Pick a Key *</ng-template>
+                      <mat-form-field class="full-width">
+                          <mat-label>Pick a Key *</mat-label>
+                          <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="keySelected" (selectionChange)="onChange()" [formControl]="keyFormControl">
+                            <mat-option *ngIf="!checkAvaliableKeys()" disabled>Currently No Key is Avaliable </mat-option>
+                            <mat-option *ngFor="let key of keyList" [ngStyle]="{'display': key.keyState == 'AVAILABLE' ? 'block':'none'}" [value]="key.id ">
+                              Key #{{key.id}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="keyFormControl.hasError('required')">
+                            Key is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                     
+                    </form>
+                  </mat-step>
+                  <mat-step>
+                      <ng-template matStepLabel>Done</ng-template>
+                      <p style="color:#003767">Picked Bike: {{bikeSelected}}</p>
+                      <p style="color:#003767">Picked Lock: {{lockSelected}}</p>
+                      <p style="color:#003767">Picked Key: {{keySelected}}</p>
+
+                    </mat-step>
+              
+              </mat-horizontal-stepper>
+            <br>
 
                 <mat-form-field class="full-width">
                     <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="comment"></textarea>

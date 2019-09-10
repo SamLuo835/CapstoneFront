@@ -30,6 +30,7 @@ export class CoreService {
   private newBikeUrl: string = this.baseServerAddress + "/newBike";
   
   //TODO 
+  private getLocksUrl:string = this.baseServerAddress + "/getLocks";
   private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
   private editRentalUrl:string = this.baseServerAddress + "/editRental";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
@@ -98,6 +99,8 @@ testSearchCustomer():Observable<any>{
       'Something bad happened; please try again later.');}));
   }
 
+
+
   getCustomerById(id):Observable<any>{
       //@PATHVARIABLE in spring
     return this.http.get(this.queryCustomerUrl+"/"+id,{ observe: 'response' }).pipe(catchError((httpError)=>{
@@ -157,6 +160,14 @@ testSearchCustomer():Observable<any>{
 
   getBikeList(){
     return this.http.get(this.bikeListUrl,{responseType:'text'}).pipe(
+      catchError(()=>{
+        this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+        return throwError(
+        'Something bad happened; please try again later.');}));
+  }
+
+  getLockList(){
+    return this.http.get(this.getLocksUrl,{responseType:'text'}).pipe(
       catchError(()=>{
         this.notification.notify( 'error', 'Something bad happened, please try again later.' );
         return throwError(
