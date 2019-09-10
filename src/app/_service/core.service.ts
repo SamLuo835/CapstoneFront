@@ -36,6 +36,10 @@ export class CoreService {
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
   private newRentalUrl:string = this.baseServerAddress + "/newRental";
   private editBikeUrl:string = this.baseServerAddress + "/editBike";
+  //Locks
+  private lockListUrl:string = this.baseServerAddress + "/getLocks";
+  private editLockUrl:string = this.baseServerAddress + "/editLock";
+  private newLockUrl:string = this.baseServerAddress + "/newLock";
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
@@ -174,6 +178,33 @@ testSearchCustomer():Observable<any>{
 
   newBike(newBike):Observable<any>{
     return this.http.post(this.newBikeUrl, newBike, httpOptions).pipe(
+      catchError((httpError) => {
+        this.notification.notify('error', httpError.error.message);
+        return throwError(httpError.error.message);
+      })
+    );
+  }
+
+  //Locks list
+  getLockList(){
+    return this.http.get(this.lockListUrl,{responseType:'text'}).pipe(
+      catchError(()=>{
+        this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+        return throwError(
+        'Something bad happened; please try again later.');}));
+  }
+  
+  editLock(editedLockInfo):Observable<any>{
+    return this.http.patch(this.editLockUrl, editedLockInfo, httpOptions).pipe(
+      catchError((httpError) => {
+        this.notification.notify('error', httpError.error.message);
+        return throwError(httpError.error.message);
+      })
+    );
+  }
+
+  newLock(newLock):Observable<any>{
+    return this.http.post(this.newLockUrl, newLock, httpOptions).pipe(
       catchError((httpError) => {
         this.notification.notify('error', httpError.error.message);
         return throwError(httpError.error.message);
