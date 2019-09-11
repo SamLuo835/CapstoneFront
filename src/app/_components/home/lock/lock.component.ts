@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ElementRef } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
-import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
+import {MatSort, MatTableDataSource,MatPaginator,MatDialogRef,MAT_DIALOG_DATA,MatDialog} from '@angular/material';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-lock',
@@ -9,17 +10,7 @@ import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
 })
 export class LockComponent implements OnInit {
 
-  // dummyData: Object[] = [{id:"L001", status:"Available"},
-  //                       {id:"L002", status:"Rented"},
-  //                       {id:"L003", status:"Rented"},
-  //                       {id:"L004", status:"Available"},
-  //                       {id:"L005", status:"Key Lost"},
-  //                       {id:"L006", status:"Lost"},
-  //                       {id:"L007", status:"Rented"},
-  //                       {id:"L008", status:"Available"},
-  //                       {id:"L009", status:"Available"},];
-
-  constructor(private _core :CoreService) {}
+  constructor(private _core :CoreService,private _modal: MatDialog) {}
 
   tableData :Array<any>;
   showSpinner : boolean = true;
@@ -27,13 +18,12 @@ export class LockComponent implements OnInit {
   displayedColumns: string[] = ['id', 'status', 'manage'];
   tableDetail:Object = {};
 
+  @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    // this.tableData = this.dummyData;
     this.getLockList();
-    console.log(this.tableData);
   }
 
   getLockList() {
@@ -46,4 +36,44 @@ export class LockComponent implements OnInit {
     });
   }
 
+  openDialog(element): void {
+    console.log(element);
+    const dialogRef = this._modal.open(LockDialog, {
+      data: {lock: element},
+      height: '600px',
+      width: '600px',
+      autoFocus: false,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res['action'] != undefined) {
+        if (res['action'] == 'redirect') {
+          console.log('Changed succesfully');
+        }
+      }
+    })
+  }
+}
+
+//dialog class
+@Component({
+  selector: 'LockDialog',
+  templateUrl: 'lock.component.dialog.html'
+})
+export class LockDialog {
+  lock: any;
+
+  constructor(public dialogRef: MatDialogRef<LockDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private _core: CoreService,
+    private  notification: NotifierService) {}
+  
+  ngOnInit() {
+    this.lock = this.data.lock;
+  }
+
+  saveChanges() {}
+
+  onClick(): void {
+    this.dialogRef.close({});
+  }
 }

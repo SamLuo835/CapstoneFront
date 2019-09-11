@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Lock ID: {{lock.id}}
+  <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</h1>
+
+<div class="dialog-content" mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Lock Information">
+      <br>
+      <table class="full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-select [(ngModel)]="lock.lockState" [(value)]="lock.lockState" name="Lock Status">
+                <mat-option value="AVAILABLE">
+                  <span class="text-success">Available</span>
+                </mat-option>
+                <mat-option value="UNAVAILABLE">
+                  <span class="text-secondary">Unavailable</span>
+                </mat-option>
+                <mat-option value="ARCHIVED">
+                  <span class="text-danger">Archived</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="2" [(ngModel)]="lock.keyItems.length" name="Number of Keys">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+
+  <hr>
+    <div style="display: flex;justify-content: space-between">
+    <mat-dialog-actions class="close-dialog">
+            <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
+    </mat-dialog-actions>
+    </div>
+
+  </div>

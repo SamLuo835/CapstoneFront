@@ -27,7 +27,7 @@ import { ActiveRecordComponent,DetailDialog } from './_components/home/active-re
 import { UserComponent, UserDialog } from './_components/home/user/user.component';
 import { ArchiveRecordComponent } from './_components/home/archive-record/archive-record.component';
 import { RepairToolComponent } from './_components/home/repair-tool/repair-tool.component';
-import { LockComponent } from './_components/home/lock/lock.component';
+import { LockComponent, LockDialog } from './_components/home/lock/lock.component';
 import {CoreService} from './_service/core.service';
 import { NewRentalComponent } from './_components/home/new-rental/new-rental.component';
 import {DataShareService} from './_service/data-share.service';
@@ -77,7 +77,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     BikeDialog,
     UpperSectionComponentComponent,
     LowerSectionComponentComponent,
-    UserDialog
+    UserDialog,
+    LockDialog
   ],
   imports: [
     BrowserAnimationsModule,
@@ -110,7 +111,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],
-  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog],
+  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog,LockDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
   bootstrap: [AppComponent]
 })
