@@ -1,12 +1,11 @@
-import { Component, OnInit,ViewEncapsulation} from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { Component, OnInit,ViewEncapsulation, ViewChild} from '@angular/core';
+import {FormControl, FormGroupDirective, NgForm, Validators, Form} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
 import { NotifierService } from 'angular-notifier';
-
-import { Observable } from 'rxjs';
+import { MatHorizontalStepper } from '@angular/material';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -18,8 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-new-rental',
   templateUrl: './new-rental.component.html',
   styleUrls: ['./new-rental.component.css'],
-  encapsulation: ViewEncapsulation.None,
-
+  encapsulation: ViewEncapsulation.None
 })
 export class NewRentalComponent implements OnInit {
 
@@ -28,18 +26,24 @@ export class NewRentalComponent implements OnInit {
   showSpinner:Boolean = false;
   comment:String = "";
   bikeSelected:String = "";
+  lockSelected:String = "";
+  keySelected:String = "";
   resultUserData:Object = {};
   showForm:boolean =false;
 
   newRentalData={"comment":null,"customer":{},"bike":{}};  
   bikeFormControl:FormControl;
+  lockFormControl:FormControl;
+  keyFormControl:FormControl;
 
+  lockList:Array<any> = [];
+  keyList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
   subsctiptions:Array<any> = [];
 
   submitting:boolean = false;
-
+  @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
@@ -91,18 +95,63 @@ export class NewRentalComponent implements OnInit {
     this.bikeFormControl = new FormControl('', [
       Validators.required
     ]);
+    this.lockFormControl = new FormControl('', [
+      Validators.required
+    ]);
+    this.keyFormControl = new FormControl('', [
+      Validators.required
+    ]);
   }
   
   onChange(){
     this.formRequire[0] = this.bikeFormControl.hasError('required');
+    this.formRequire[1] = this.lockFormControl.hasError('required');
+    this.formRequire[2] = this.keyFormControl.hasError('required');
+
     console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
+    console.log(this.lockSelected);
+    if(this.lockSelected){
+      for(let index in this.lockList){
+        if(this.lockList[index]['id'] == this.lockSelected){
+          this.keyList = this.lockList[index]['keyItems'];
+      }
+    }
+  }
+    this.stepper.next();
   }
 
   matcher = new MyErrorStateMatcher();
 
+  checkAvaliableKeys(){
+    if(this.keyList.length == 0) return false;
+    for(let index in this.keyList){
+      if(this.keyList[index].keyState == 'AVAILABLE'){
+          return true;
+      }
+      
+    }
+
+    return false;
+  } 
+
+  checkAvaliableLocks(){
+    if(this.lockList.length == 0) return false;
+    for(let index in this.lockList){
+      if(this.lockList[index].lockState == 'AVAILABLE'){
+          return true;
+      }
+      
+    }
+
+    return false;
+  } 
 
   submitId(){
+    //flush the selected value if user click cnacel and come back(the new rental component is not destroy)
+    this.keySelected="",
+    this.bikeSelected="",
+    this.lockSelected = "";
     this.errorMsg = null;
     this.showSpinner = true;
     this._coreService.getCustomerById(this.sheridanId)
@@ -117,6 +166,11 @@ export class NewRentalComponent implements OnInit {
         this.showForm = true;
         this.showSpinner = false;
         this._dataShare.changeShowForm(this.showForm);
+        this._coreService.getLockList().subscribe(
+          response => {
+            this.lockList = JSON.parse((response));
+          }
+        )
       }
       else if(response.status == 204){
         this.showForm = false;

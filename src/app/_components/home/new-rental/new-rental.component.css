@@ -32,3 +32,7 @@
     border-radius: 5px!important;
     overflow: scroll!important;
   }
+
+  .mat-step-icon-selected,.mat-step-icon-state-edit{
+    background-color: #003767!important;
+  }

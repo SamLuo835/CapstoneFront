@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Rental ID: {{data.rentalId}}<button float="right" type="button" (click)="closeDialog()" class="close" aria-label="Close">
+<h1 mat-dialog-title>Rental ID: {{data.id}}<button float="right" type="button" (click)="closeDialog()" class="close" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </h1>
@@ -8,13 +8,15 @@
         <br>
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
-          <input matInput placeholder="Customer Name" disabled [(ngModel)]="data.customerName">
+          <input matInput placeholder="Customer Name" disabled value="{{data.customer.firstName}} {{data.customer.lastName}}">
         </mat-form-field></td>
         <td><mat-form-field class="full-width">
-          <input matInput placeholder="Sheridan ID" disabled [(ngModel)]="data.sheridanId">
+          <input matInput placeholder="Sheridan ID" disabled [(ngModel)]="data.customer.sheridanId">
         </mat-form-field></td>
         <td><mat-form-field class="full-width">
-            <input matInput placeholder="Bike ID" disabled [(ngModel)]="data.bikeId">
+            <div *ngFor="let item of data.rentalComponents; let i = index">
+                <input *ngIf="item['@type']=='Bike'" matInput placeholder="Bike ID" disabled [(ngModel)]="item.id">
+            </div>
           </mat-form-field></td>
       </tr>
     </table>
@@ -24,10 +26,10 @@
     <table class="full-width" cellspacing="0">
     <tr>
         <td><mat-form-field class="full-width">
-            <input matInput placeholder="Sheridan Email" disabled [(ngModel)]="data.sheridanEmail">
+            <input matInput placeholder="Sheridan Email" disabled [(ngModel)]="data.customer.sheridanEmail">
           </mat-form-field></td>
           <td><mat-form-field class="full-width">
-              <input matInput placeholder="Personal Email" disabled [(ngModel)]="data.personalEmail">
+              <input matInput placeholder="Personal Email" disabled [(ngModel)]="data.customer.personalEmail">
             </mat-form-field></td>
     </tr>
   </table>
