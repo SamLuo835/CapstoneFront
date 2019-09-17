@@ -20,8 +20,6 @@ export class LeftMenuComponent implements OnInit {
 
   panelOpenState = true;
 
-  bikeList = [];
-
   subscriptions = [];
   
   @Output() messageEvent = new EventEmitter<number>();
@@ -44,7 +42,6 @@ export class LeftMenuComponent implements OnInit {
     this.subscriptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.customerFormDisplay = message))
     this.subscriptions.push(this._dataShare.currentFormRequire.subscribe(message => {this.formRequire = message}))
     this.subscriptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => {this.customerFormRequire = message}))
-    this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message =>{this.bikeList = message;this.checkAvailableBike()}));
     this.subscriptions.push(this._dataShare.currentRedirectMessage.subscribe(message =>{
       if(message != null){
         this.componentIndex = message['index'];this.panelOpenState = false;
@@ -60,17 +57,6 @@ export class LeftMenuComponent implements OnInit {
   }
 
 
-  checkAvailableBike(){
-    if(!this.customerFormDisplay){
-      for( var i in this.bikeList){
-        if(this.bikeList[i]['bikeState'] == 'AVAILABLE'){
-          return false; 
-        }
-      }
-      return true;
-    }
-    else return false;
-    }
   
 
 

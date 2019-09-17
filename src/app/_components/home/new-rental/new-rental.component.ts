@@ -27,17 +27,17 @@ export class NewRentalComponent implements OnInit {
   comment:String = "";
   bikeSelected:String = "";
   lockSelected:String = "";
-  keySelected:String = "";
+  basketSelected:String = "";
   resultUserData:Object = {};
   showForm:boolean =false;
 
-  newRentalData={"comment":null,"customer":{},"bike":{}};  
+  newRentalData={"comment":null,"customer":{}};  
   bikeFormControl:FormControl;
   lockFormControl:FormControl;
-  keyFormControl:FormControl;
+  basketFormControl:FormControl;
 
   lockList:Array<any> = [];
-  keyList:Array<any> = [];
+  basketList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
   subsctiptions:Array<any> = [];
@@ -65,8 +65,14 @@ export class NewRentalComponent implements OnInit {
 
   createCustomerRental(){
       this.newRentalData['comment'] = this.comment
-      this.newRentalData['bike']['id'] = this.bikeSelected
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
+      if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
+          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected}];
+      if(this.bikeSelected != 'Skip' && this.basketSelected =='Skip')
+          this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected},{'@type':'LockItem','id':this.lockSelected}];
+      if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
+          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected},{'@type':'Basket','id':this.basketSelected}];
+
       this._coreService.newRental(this.newRentalData).subscribe(res=>{
         this.submitting = false;
         this._dataShare.changeSubmit(false);
@@ -98,7 +104,7 @@ export class NewRentalComponent implements OnInit {
     this.lockFormControl = new FormControl('', [
       Validators.required
     ]);
-    this.keyFormControl = new FormControl('', [
+    this.basketFormControl = new FormControl('', [
       Validators.required
     ]);
   }
@@ -106,27 +112,20 @@ export class NewRentalComponent implements OnInit {
   onChange(){
     this.formRequire[0] = this.bikeFormControl.hasError('required');
     this.formRequire[1] = this.lockFormControl.hasError('required');
-    this.formRequire[2] = this.keyFormControl.hasError('required');
+    this.formRequire[2] = this.basketFormControl.hasError('required');
 
     console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
-    console.log(this.lockSelected);
-    if(this.lockSelected){
-      for(let index in this.lockList){
-        if(this.lockList[index]['id'] == this.lockSelected){
-          this.keyList = this.lockList[index]['keyItems'];
-      }
-    }
-  }
+    console.log(this.bikeSelected);
     this.stepper.next();
   }
 
   matcher = new MyErrorStateMatcher();
 
-  checkAvaliableKeys(){
-    if(this.keyList.length == 0) return false;
-    for(let index in this.keyList){
-      if(this.keyList[index].keyState == 'AVAILABLE'){
+  checkAvaliableBaskets(){
+    if(this.basketList.length == 0) return false;
+    for(let index in this.basketList){
+      if(this.basketList[index].keyState == 'AVAILABLE'){
           return true;
       }
       
@@ -134,6 +133,20 @@ export class NewRentalComponent implements OnInit {
 
     return false;
   } 
+
+
+
+  checkAvaliableBikes(){
+    if(this.bikeList.length == 0) return false;
+    for(let index in this.bikeList){
+      if(this.bikeList[index].bikeState == 'AVAILABLE'){
+          return true;
+      }
+      
+    }
+
+    return false;
+    }
 
   checkAvaliableLocks(){
     if(this.lockList.length == 0) return false;
@@ -149,7 +162,7 @@ export class NewRentalComponent implements OnInit {
 
   submitId(){
     //flush the selected value if user click cnacel and come back(the new rental component is not destroy)
-    this.keySelected="",
+    this.basketSelected="",
     this.bikeSelected="",
     this.lockSelected = "";
     this.errorMsg = null;

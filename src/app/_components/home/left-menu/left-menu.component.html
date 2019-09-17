@@ -23,8 +23,7 @@
 <button mat-button  [ngClass]="{'hightLight':componentIndex == 5}" class="menuButton" (click)="buttonClick('customer')">Customers</button>
   <br> <br><br><br>
 
-  <button class="btn btn-light" style="width:100%;font-family: 'Roboto'" (click)="buttonClick('newRental')" [disabled]="checkAvailableBike()"  *ngIf="!formDisplay && !customerFormDisplay"> New Rental</button>
-  <span *ngIf="checkAvailableBike()" class="text-danger" style="font-size: 0.7rem">No bike is available at this moment</span>
+  <button class="btn btn-light" style="width:100%;font-family: 'Roboto'" (click)="buttonClick('newRental')"  *ngIf="!formDisplay && !customerFormDisplay"> New Rental</button>
 
   <br *ngIf="!formDisplay && !customerFormDisplay"><br *ngIf="!formDisplay && !customerFormDisplay">
 

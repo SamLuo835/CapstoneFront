@@ -170,13 +170,7 @@ testSearchCustomer():Observable<any>{
         'Something bad happened; please try again later.');}));
   }
 
-  getLockList(){
-    return this.http.get(this.getLocksUrl,{responseType:'text'}).pipe(
-      catchError(()=>{
-        this.notification.notify( 'error', 'Something bad happened, please try again later.' );
-        return throwError(
-        'Something bad happened; please try again later.');}));
-  }
+ 
   
   editBike(editedBikeInfo):Observable<any>{
     editedBikeInfo['@type']='Bike';
