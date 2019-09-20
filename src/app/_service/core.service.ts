@@ -169,11 +169,6 @@ testSearchCustomer():Observable<any>{
         return throwError(
         'Something bad happened; please try again later.');}));
   }
-<<<<<<< HEAD
-
- 
-=======
->>>>>>> 94de339e426760153c0efe6c3985b48d4dd022cd
   
   editBike(editedBikeInfo):Observable<any>{
     editedBikeInfo['@type']='Bike';
