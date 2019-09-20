@@ -91,7 +91,7 @@ export class ActiveRecordComponent implements OnInit {
 
   removeTableCell(result){
     for(let i in this.tableData){
-      if(this.tableData[i]['rentalId'] == result['rentalId']){
+      if(this.tableData[i]['id'] == result['rentalId']){
         this.tableData.splice(Number(i),1);
         this.dataSource = new MatTableDataSource(this.tableData);
         this.dataSource.sort = this.sort;
@@ -194,21 +194,21 @@ export class DetailDialog {
 
 
     updateCase(){
-      console.log(this.data.rentalId)
-      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'update'});
+      console.log(this.data.id)
+      this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'update'});
     }
 
     closeCase(){
-      console.log(this.data.rentalId)
-      this.dialogRef.close({rentalId:this.data.rentalId,comment:this.data.comment,action:'return'});
+      console.log(this.data.id)
+      this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
     }
 
     saveChanges(){
       //call service with modified fields
       console.log(this.data.comment)
       console.log(_moment(this.dueDate).format('YYYY-MM-DD'));
-      console.log(this.data.rentalId)
-      this.dialogRef.close({rentalId:this.data.rentalId,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
+      console.log(this.data.id)
+      this.dialogRef.close({rentalId:this.data.id,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
 
 
     }
