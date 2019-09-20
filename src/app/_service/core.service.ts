@@ -39,7 +39,7 @@ export class CoreService {
   private editBikeUrl:string = this.baseServerAddress + "/editBike";
   //Locks
   private lockListUrl:string = this.baseServerAddress + "/getLocks";
-  private editLockUrl:string = this.baseServerAddress + "/editLock";
+  private editLockUrl:string = this.baseServerAddress + "/editRental/";
   private newLockUrl:string = this.baseServerAddress + "/newLock";
 
   test():Observable<any>{
@@ -169,8 +169,11 @@ testSearchCustomer():Observable<any>{
         return throwError(
         'Something bad happened; please try again later.');}));
   }
+<<<<<<< HEAD
 
  
+=======
+>>>>>>> 94de339e426760153c0efe6c3985b48d4dd022cd
   
   editBike(editedBikeInfo):Observable<any>{
     editedBikeInfo['@type']='Bike';
@@ -197,7 +200,9 @@ testSearchCustomer():Observable<any>{
       catchError(()=>{
         this.notification.notify( 'error', 'Something bad happened, please try again later.' );
         return throwError(
-        'Something bad happened; please try again later.');}));
+        'Something bad happened; please try again later.');
+      })
+    );
   }
   
   editLock(editedLockInfo):Observable<any>{
