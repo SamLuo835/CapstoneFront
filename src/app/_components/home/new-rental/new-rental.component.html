@@ -101,15 +101,15 @@
             <mat-horizontal-stepper labelPosition="bottom" style="background-color: #eeeeee;position: relative;right:20px;width:110%" linear #stepper>
                 <mat-step [stepControl]="bikeFormControl" >
                   <form [formGroup]="bikeFormControl">
-                    <ng-template matStepLabel>Pick a Bike *</ng-template>
+                    <ng-template matStepLabel>Select a Bike *</ng-template>
                     <mat-form-field class="full-width">
-                        <mat-label>Pick a Bike *</mat-label>
+                        <mat-label>Bike Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                           <mat-option *ngIf="!checkAvaliableBikes()" disabled>Currently No Bike is Avaliable </mat-option>
                           <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.bikeState == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
                             Bike #{{bike.id}}
                           </mat-option>
-                          <mat-option value="Skip"> Skip </mat-option>
+                          <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
                         </mat-select>
                         <mat-error *ngIf="bikeFormControl.hasError('required')">
                           Bike is <strong>required</strong>
@@ -119,10 +119,10 @@
                 </mat-step>
                 <mat-step [stepControl]="lockFormControl" >
                   <form [formGroup]="lockFormControl">
-                    <ng-template matStepLabel>Pick a Lock *</ng-template>
+                    <ng-template matStepLabel>Select a Lock *</ng-template>
                     
                     <mat-form-field class="full-width">
-                        <mat-label>Pick a Lock *</mat-label>
+                        <mat-label>Lock Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
                           <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
                           <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.lockState == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
@@ -137,15 +137,15 @@
                 </mat-step>
                 <mat-step [stepControl]="basketFormControl" >
                     <form [formGroup]="basketFormControl">
-                      <ng-template matStepLabel>Pick a Basket *</ng-template>
+                      <ng-template matStepLabel>Select a Basket *</ng-template>
                       <mat-form-field class="full-width">
-                          <mat-label>Pick a Basket *</mat-label>
+                          <mat-label>Basket Component</mat-label>
                           <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="basketSelected" (selectionChange)="onChange()" [formControl]="basketFormControl">
                             <mat-option *ngIf="!checkAvaliableBaskets()" disabled>Currently No Basket is Avaliable </mat-option>
                             <!--<mat-option *ngFor="let basket of basketList" [ngStyle]="{'display': key.keyState == 'AVAILABLE' ? 'block':'none'}" [value]="key.id ">
                               Basket #{{basket.id}}
                             </mat-option>-->
-                            <mat-option value="Skip"> Skip </mat-option>
+                            <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
                           </mat-select>
                           <mat-error *ngIf="basketFormControl.hasError('required')">
                             Basket is <strong>required</strong>
@@ -155,10 +155,16 @@
                   </mat-step>
                   <mat-step>
                       <ng-template matStepLabel>Done</ng-template>
-                      <p style="color:#003767">Picked Bike: {{bikeSelected}}</p>
-                      <p style="color:#003767">Picked Lock: {{lockSelected}}</p>
-                      <p style="color:#003767">Picked Basket: {{basketSelected}}</p>
-
+                      <div style="display: flex">
+                      <div>
+                      <p style="color:#003767;margin-right:20px">Selected Components: </p>
+                      </div>
+                      <div>
+                          <p style="color:#003767"> Bike: {{bikeSelected}}</p>
+                          <p style="color:#003767"> Lock: {{lockSelected}}</p>
+                          <p style="color:#003767"> Basket: {{basketSelected}}</p>
+                      </div>
+                      </div>
                     </mat-step>
               
               </mat-horizontal-stepper>
