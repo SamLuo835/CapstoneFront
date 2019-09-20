@@ -93,8 +93,8 @@
  
   <mat-dialog-actions class="activeRentalDialog">
   <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
-  <button *ngIf="tabSwitch && readyToClosed"  class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="updateCase()">RETURN RENTAL</button>
-  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">UPDATE RENTAL</button>
+  <button *ngIf="tabSwitch && readyToClosed"  class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">RETURN RENTAL</button>
+  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="updateCase()">UPDATE RENTAL</button>
   <!--<span *ngIf="tabSwitch && checkBike && checkKey && owingAmount!=0" style="font-size: 0.7em;
   color:#f44336;">Outstanding amount is not 0</span>  -->
   
