@@ -12,7 +12,19 @@
         <tr>
           <td>
             <mat-form-field class="full-width">
-              <mat-select [(ngModel)]="lock.lockState" [(value)]="lock.lockState" name="Lock Status">
+              <input matInput [(ngModel)]="lock.id" [(value)]="lock.id" placeholder="Lock ID">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <input matInput [(ngModel)]="lock.keyNum" [(value)]="lock.keyNum" placeholder="Number of Keys">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-select [(ngModel)]="lock.lockState" [(value)]="lock.lockState" placeholder="Lock Status">
                 <mat-option value="AVAILABLE">
                   <span class="text-success">Available</span>
                 </mat-option>
@@ -25,9 +37,11 @@
               </mat-select>
             </mat-form-field>
           </td>
+        </tr>
+        <tr>
           <td>
             <mat-form-field class="full-width">
-              <input matInput placeholder="2" [(ngModel)]="lock.keyItems.length" name="Number of Keys">
+              <textarea matInput [(ngModel)]="lock.notes" [(value)]="lock.notes" placeholder="Notes"></textarea>
             </mat-form-field>
           </td>
         </tr>
@@ -37,9 +51,8 @@
 
   <hr>
     <div style="display: flex;justify-content: space-between">
-    <mat-dialog-actions class="close-dialog">
-            <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
-    </mat-dialog-actions>
+      <mat-dialog-actions class="close-dialog">
+        <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
+      </mat-dialog-actions>
     </div>
-
-  </div>
+</div>
