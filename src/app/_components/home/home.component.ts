@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     openDialog(): void { 
       const dialogRef = this._modal.open(BikeDialog, {
-        data:{bike:{bikeState:'',id:null,imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
+        data:{bike:{state:'',id:null,imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
        height: '600px',
        width: '600px',
        autoFocus:false,

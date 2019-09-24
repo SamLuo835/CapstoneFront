@@ -35,7 +35,7 @@
            <!-- unnessary to have change status drop down in bike dialog <td>
                 <mat-form-field class="full-width">
                     <mat-label>Bike Status</mat-label>
-                    <mat-select panelClass="selectdropdown" name="type" [(ngModel)]="bike.bikeState" (selectionChange)="onChange(5)">
+                    <mat-select panelClass="selectdropdown" name="type" [(ngModel)]="bike.state" (selectionChange)="onChange(5)">
                         <mat-option  value="AVAILABLE">
                             Available
                         </mat-option>

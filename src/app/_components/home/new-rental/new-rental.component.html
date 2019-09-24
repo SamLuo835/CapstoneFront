@@ -84,7 +84,7 @@
                 <!--<td> <mat-form-field class="full-width">
                   <mat-label>Pick a Bike *</mat-label>
                   <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
-                    <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.bikeState == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
+                    <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.state == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
                       Bike #{{bike.id}}
                     </mat-option>
                   </mat-select>
@@ -106,7 +106,7 @@
                         <mat-label>Bike Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                           <mat-option *ngIf="!checkAvaliableBikes()" disabled>Currently No Bike is Avaliable </mat-option>
-                          <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.bikeState == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
+                          <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.state == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
                             Bike #{{bike.id}}
                           </mat-option>
                           <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
@@ -125,7 +125,7 @@
                         <mat-label>Lock Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
                           <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
-                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.lockState == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
+                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
                             Lock #{{lock.id}}
                           </mat-option>
                         </mat-select>

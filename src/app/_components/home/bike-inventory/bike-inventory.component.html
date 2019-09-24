@@ -11,7 +11,7 @@
                         <mat-form-field class="full-width">
                             <mat-label>Change Bike Status</mat-label>
                             <!--add one more class to show repair needed  -->
-                            <mat-select [disabled]="item.bikeState == 'RENTED'" [(value)]="item.bikeState" [ngClass]="{'rented':bikes[i].bikeState == 'RENTED','available':bikes[i].bikeState == 'AVAILABLE','otherState':bikes[i].bikeState != 'RENTED' && bikes[i].bikeState != 'AVAILABLE'} " (selectionChange)="changeStatus(i)">
+                            <mat-select [disabled]="item.state == 'RENTED'" [(value)]="item.state" [ngClass]="{'rented':bikes[i].state == 'RENTED','available':bikes[i].state == 'AVAILABLE','otherState':bikes[i].state != 'RENTED' && bikes[i].state != 'AVAILABLE'} " (selectionChange)="changeStatus(i)">
                                 <mat-option  value="AVAILABLE">
                                     <span class="text-success">Available</span>
                                 </mat-option>

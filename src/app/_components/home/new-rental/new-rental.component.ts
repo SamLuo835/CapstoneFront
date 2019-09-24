@@ -139,7 +139,7 @@ export class NewRentalComponent implements OnInit {
   checkAvaliableBikes(){
     if(this.bikeList.length == 0) return false;
     for(let index in this.bikeList){
-      if(this.bikeList[index].bikeState == 'AVAILABLE'){
+      if(this.bikeList[index].state == 'AVAILABLE'){
           return true;
       }
       
@@ -151,7 +151,7 @@ export class NewRentalComponent implements OnInit {
   checkAvaliableLocks(){
     if(this.lockList.length == 0) return false;
     for(let index in this.lockList){
-      if(this.lockList[index].lockState == 'AVAILABLE'){
+      if(this.lockList[index].state == 'AVAILABLE'){
           return true;
       }
       

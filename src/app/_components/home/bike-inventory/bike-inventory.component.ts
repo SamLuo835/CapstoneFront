@@ -226,7 +226,7 @@ export class BikeDialog {
   }
 
   addBike() {
-    this.bike.bikeState = 'AVAILABLE'; // default state
+    this.bike.state = 'AVAILABLE'; // default state
     this._core.newBike(this.bike).subscribe(res => {
       this.notification.notify('success', res.message);
       this._core.getBikeList().subscribe(res=>{

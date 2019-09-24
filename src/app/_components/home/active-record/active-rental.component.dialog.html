@@ -6,6 +6,39 @@
     <mat-tab-group (selectedTabChange)="tabChanged($event)">
         <mat-tab label="Rental Information">
         <br>
+        <h5 style="color:#003767">Rental Components</h5>
+            <div *ngFor="let item of data.rentalComponents; let i = index" style="margin:0 10px">
+                <mat-form-field  *ngIf="item['@type']=='Bike'" class="full-width">
+                    <input matInput placeholder="Bike ID" disabled [value]="item.id">
+              </mat-form-field>
+              <mat-form-field  *ngIf="item['@type']=='LockItem'" class="full-width">
+                  <input  matInput placeholder="Lock ID" disabled [value]="item.id">
+              </mat-form-field>
+              <mat-form-field *ngIf="item['@type']=='Basket'" class="full-width">
+                  <input  matInput placeholder="Basket ID" disabled [value]="item.id">
+              </mat-form-field>
+            </div>
+        <table class="full-width" cellspacing="0" >
+            <tr>
+                <td><mat-form-field class="full-width">
+                    <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="signOutDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field></td>
+                  <td><mat-form-field class="full-width">
+                      <input matInput [matDatepickerFilter]="myFilter" [min]="dueDate" [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'Late'?true:false" placeholder="Due Date" [(ngModel)]="dueDate">
+                     
+                      <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
+                      <mat-datepicker #duepicker></mat-datepicker>
+                    </mat-form-field></td>
+            </tr>
+          </table>
+          <mat-form-field class="full-width" style="margin:0 10px">
+              <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
+          </mat-form-field>  
+          <br><br>
+        <h5 style="color:#003767">Customer Detail</h5>
+
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
           <input matInput placeholder="Customer Name" disabled value="{{data.customer.firstName}} {{data.customer.lastName}}">
@@ -13,11 +46,6 @@
         <td><mat-form-field class="full-width">
           <input matInput placeholder="Sheridan ID" disabled [(ngModel)]="data.customer.sheridanId">
         </mat-form-field></td>
-        <td><mat-form-field class="full-width">
-            <div *ngFor="let item of data.rentalComponents; let i = index">
-                <input *ngIf="item['@type']=='Bike'" matInput placeholder="Bike ID" disabled [(ngModel)]="item.id">
-            </div>
-          </mat-form-field></td>
       </tr>
     </table>
 
@@ -33,55 +61,40 @@
             </mat-form-field></td>
     </tr>
   </table>
-  
-  <br>
-  
-  <table class="full-width" cellspacing="0">
-    <tr>
-        <td><mat-form-field class="full-width">
-            <input matInput disabled [matDatepicker]="picker" placeholder="Signout Date" [value]="signOutDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field></td>
-          <td><mat-form-field class="full-width">
-              <input matInput [matDatepickerFilter]="myFilter" [min]="dueDate" [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'Late'?true:false" placeholder="Due Date" [(ngModel)]="dueDate">
-             
-              <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
-              <mat-datepicker #duepicker></mat-datepicker>
-            </mat-form-field></td>
-    </tr>
-  </table>
-  
-  <br>
-  <div class="container">
-  <mat-form-field class="full-width">
-      <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
-  </mat-form-field>
-  
-  </div>
+
   </mat-tab>
   <mat-tab label="Owing Amount/Return">
     <h6 style="margin:10px 0;color:#003767">Check to Mark Component Inspection Completed</h6>
           <section class="returnSection">
-           <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >Bike</mat-checkbox>
-            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Key & Lock</mat-checkbox>         
+            <!--<div *ngFor="let item of data.rentalComponents; let i = index">
+            <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >{{item['@type']}}</mat-checkbox>
+            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Key & Lock</mat-checkbox> 
+            </div>-->
+            <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >Bike</mat-checkbox>
+            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Lock</mat-checkbox> 
           </section>
           <mat-checkbox [disabled]="!checkBike || !checkKey"  style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="readyToClosed"  >This rental is ready to be closed</mat-checkbox>
     <hr style="margin-top: 0">
+    <div style="display: flex;justify-content: space-between;margin:0 0 15px 0;height: 35px;">
     <h6 style="margin:10px 0;color:#003767">Owing Amount Summary</h6>
+    <button mat-raised-button color="primary" style="font-size: 0.7em" (click)="openCustomCat()">Add Custom Category</button>
+    </div>
     <table class="full-width" style="color:#5f6368;margin:auto">
-      <tr class="tableHeader" ><td class="alignleft">Category</td><td>Amount</td><td>Apply</td></tr>
-        <tr><td class="alignleft" style="height: 60px">Late Penalty(5 days)</td><td>${{lateAmount}}</td><td>
-        </td></tr>
-        <tr><td class="alignleft" style="height: 60px">Key Damage</td><td>$25</td><td>
+      <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td></tr>
+        <tr><td class="alignleft" style="height: 60px">Late Penalty(5 days)</td><td>${{lateAmount}}</td>
+            <td>
+              <mat-checkbox  style="margin:0 10px;" color='primary'  (change)="updatePaidCat('lateFee')" ></mat-checkbox>
+            </td>
+      </tr>
+        <!--<tr><td class="alignleft" style="height: 60px">Key Damage</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyLostCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyDamageCheck" (change)="updateOwingTotal('keyDamage')" ></mat-checkbox>
         </td></tr>
         <tr><td class="alignleft" style="height: 60px">Key Lost</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyDamageCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyLostCheck" (change)="updateOwingTotal('keyLost')" ></mat-checkbox>
-        </td></tr>
+        </td></tr>-->
         <tr><td class="alignleft" style="height: 60px">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
             <input matInput  style="text-align: right" type="number" [(ngModel)]="otherDamage"></mat-form-field></td><td>
-            <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updateOwingTotal('otherDamage')" ></mat-checkbox>
+            <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updatePaidCat('otherDamage')" ></mat-checkbox>
         </td></tr>
       </table>
 
