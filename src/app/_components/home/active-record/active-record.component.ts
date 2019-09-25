@@ -203,6 +203,14 @@ export class DetailDialog {
       this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
     }
 
+    addTableRow(){
+
+    }
+
+    updatePaidCat(category : String){
+
+    }
+
     saveChanges(){
       //call service with modified fields
       console.log(this.data.comment)
