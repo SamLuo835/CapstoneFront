@@ -5,17 +5,16 @@
 <div  class="dialog-content" mat-dialog-content>
     <mat-tab-group (selectedTabChange)="tabChanged($event)">
         <mat-tab label="Rental Information">
-        <br>
-        <h5 style="color:#003767">Rental Components</h5>
+        <h6 style="color:#003767;font-weight: 600;margin:10px 0">Rental Components</h6>
             <div *ngFor="let item of data.rentalComponents; let i = index" style="margin:0 10px">
                 <mat-form-field  *ngIf="item['@type']=='Bike'" class="full-width">
-                    <input matInput placeholder="Bike ID" disabled [value]="item.id">
+                    <input matInput placeholder="Bike ID" disabled [value]="item.name">
               </mat-form-field>
               <mat-form-field  *ngIf="item['@type']=='LockItem'" class="full-width">
-                  <input  matInput placeholder="Lock ID" disabled [value]="item.id">
+                  <input  matInput placeholder="Lock ID" disabled [value]="item.name">
               </mat-form-field>
               <mat-form-field *ngIf="item['@type']=='Basket'" class="full-width">
-                  <input  matInput placeholder="Basket ID" disabled [value]="item.id">
+                  <input  matInput placeholder="Basket ID" disabled [value]="item.name">
               </mat-form-field>
             </div>
         <table class="full-width" cellspacing="0" >
@@ -37,7 +36,7 @@
               <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
           </mat-form-field>  
           <br><br>
-        <h5 style="color:#003767">Customer Detail</h5>
+        <h6 style="color:#003767;font-weight: 600">Customer Detail</h6>
 
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
@@ -64,7 +63,7 @@
 
   </mat-tab>
   <mat-tab label="Owing Amount/Return">
-    <h6 style="margin:10px 0;color:#003767">Check to Mark Component Inspection Completed</h6>
+    <h6 style="margin:10px 0;color:#003767;font-weight: 600">Check to Mark Component Inspection Completed</h6>
           <section class="returnSection">
             <!--<div *ngFor="let item of data.rentalComponents; let i = index">
             <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >{{item['@type']}}</mat-checkbox>
@@ -76,26 +75,61 @@
           <mat-checkbox [disabled]="!checkBike || !checkKey"  style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="readyToClosed"  >This rental is ready to be closed</mat-checkbox>
     <hr style="margin-top: 0">
     <div style="display: flex;justify-content: space-between;margin:0 0 15px 0;height: 35px;">
-    <h6 style="margin:10px 0;color:#003767">Owing Amount Summary</h6>
-    <button mat-raised-button color="primary" style="font-size: 0.7em" (click)="addTableRow()">Add Custom Category</button>
+    <h6 style="margin:10px 0;color:#003767;font-weight: 600">Owing Amount Summary</h6>
+    <button mat-raised-button color="primary" style="font-size: 0.7em" [disabled]="checkEditModeOn()" (click)="addTableRow()">Add Custom Category</button>
+
     </div>
-    <table class="full-width" style="color:#5f6368;margin:auto">
-      <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td></tr>
-        <tr><td class="alignleft" style="height: 60px">Late Penalty(5 days)</td><td>${{lateAmount}}</td>
-            <td>
-              <mat-checkbox  style="margin:0 10px;" color='primary'  (change)="updatePaidCat('lateFee')" ></mat-checkbox>
+    <!--<div class="full-width expandable" *ngIf="newRowMode">
+      <div>Drag a label to new category</div>
+      <div style="display: flex;flex-wrap: wrap;justify-content: space-between">
+
+        <span  style="margin:5px 15px;background-color: #8ca0b9;border-radius: 5px;padding:5px;color: white" *ngFor="let item of labels; let i = index">{{item}}</span>
+      </div>
+    </div>-->
+
+    <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
+      <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
+        <tr *ngFor="let item of exampleJson; let i = index">
+            <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
+              {{item.category}}
             </td>
-      </tr>
+            <td *ngIf="isEditMode(i)" class="alignleft" style="height: 60px">
+                <mat-form-field style="width:80%"><input matInput [value]="item.category"></mat-form-field> 
+            </td>
+            <td *ngIf="!isEditMode(i)">
+              ${{item.fee}}
+            </td>
+            <td *ngIf="isEditMode(i)">
+                <mat-form-field  style="width:80%"><input matInput style="text-align: center" type="number" [value]="item.fee"></mat-form-field> 
+            </td>
+            <td>
+              <mat-checkbox  style="margin:0 10px;" color='primary' [disabled]="!isEditMode(i)" [(ngModel)]="item.paid"  ></mat-checkbox>
+            </td>
+            <td *ngIf="!isEditMode(i)">
+              <a [ngClass]="{'penIcon':item.paid == false && !checkEditModeOn(),'disableLink':item.paid==true && checkEditModeOn()}"  matTooltipPosition="right"  [matTooltipDisabled]="!item.paid" matTooltip="Category is paid" (click)="enterEditMode(i)">
+                <mat-icon>create</mat-icon>
+              </a>
+            </td>
+            <td *ngIf="isEditMode(i)">
+                <a class="editRentalIcon"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
+                  <mat-icon>check</mat-icon>
+                </a>
+                <a  class="editRentalIcon" style="color:#dc3545" matTooltip="Remove Category"  matTooltipPosition="right"   (click)="deleteRow(i)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </a>
+              </td>
+          </tr>
+      
         <!--<tr><td class="alignleft" style="height: 60px">Key Damage</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyLostCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyDamageCheck" (change)="updateOwingTotal('keyDamage')" ></mat-checkbox>
         </td></tr>
         <tr><td class="alignleft" style="height: 60px">Key Lost</td><td>$25</td><td>
             <mat-checkbox [disabled]="keyDamageCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyLostCheck" (change)="updateOwingTotal('keyLost')" ></mat-checkbox>
-        </td></tr>-->
+        </td></tr>
         <tr><td class="alignleft" style="height: 60px">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
             <input matInput  style="text-align: right" type="number" [(ngModel)]="otherDamage"></mat-form-field></td><td>
             <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updatePaidCat('otherDamage')" ></mat-checkbox>
-        </td></tr>
+        </td></tr>-->
       </table>
 
     </mat-tab>
@@ -107,9 +141,9 @@
   <mat-dialog-actions class="activeRentalDialog">
   <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
   <button *ngIf="tabSwitch && readyToClosed"  class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">RETURN RENTAL</button>
-  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="updateCase()">UPDATE RENTAL</button>
-  <!--<span *ngIf="tabSwitch && checkBike && checkKey && owingAmount!=0" style="font-size: 0.7em;
-  color:#f44336;">Outstanding amount is not 0</span>  -->
+  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" (click)="updateCase()">UPDATE RENTAL</button>
+  <!--<span *ngIf="tabSwitch && !readyToClosed && checkEditModeOn()" style="font-size: 0.7em;
+  color:#f44336;">Category still in edit mode</span> -->
   
   <span style="color:#003767" *ngIf="tabSwitch">Total: ${{owingAmount}}</span>
   <a  class="redirectLink" (click)="closeDialog()" style="margin-right: 10px" >Cancel</a>

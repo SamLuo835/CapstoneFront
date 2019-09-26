@@ -49,6 +49,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatIconModule} from '@angular/material/icon'
+
+
 
 
 
@@ -110,6 +113,7 @@ import {MatStepperModule} from '@angular/material/stepper';
     DragDropModule,
     MatTabsModule,
     MatStepperModule,
+    MatIconModule,
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],

@@ -107,7 +107,7 @@
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                           <mat-option *ngIf="!checkAvaliableBikes()" disabled>Currently No Bike is Avaliable </mat-option>
                           <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.state == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
-                            Bike #{{bike.id}}
+                            Bike #{{bike.name}}
                           </mat-option>
                           <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
                         </mat-select>
@@ -126,7 +126,7 @@
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
                           <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
                           <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
-                            Lock #{{lock.id}}
+                            Lock #{{lock.name}}
                           </mat-option>
                         </mat-select>
                         <mat-error *ngIf="lockFormControl.hasError('required')">

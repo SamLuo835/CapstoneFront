@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ViewEncapsulation,Inject } from '@angular/core';
+import { Component, OnInit,ViewChild,ViewEncapsulation,Inject, ElementRef } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
 import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
@@ -77,7 +77,7 @@ export class ActiveRecordComponent implements OnInit {
 
   changeTableCell(result){
     for(let i in this.tableData){
-      if(this.tableData[i]['rentalId'] == result['rentalId']){
+      if(this.tableData[i]['id'] == result['rentalId']){
         this.tableData[i]['comment'] = result['comment'];
         this.tableData[i]['dueDate'] = result['dueDate'];
         this.dataSource = new MatTableDataSource(this.tableData);
@@ -117,49 +117,29 @@ export class ActiveRecordComponent implements OnInit {
 //dialog class
 import * as _moment from 'moment';
 import { DataShareService } from 'src/app/_service/data-share.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'DetailDialog',
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
+  exampleJson = [{'category':'Late Penalty','fee':25,'paid':true},{'category':'Bike Lost','fee':300,'paid':false}]
+  rowEditMode =new Array(this.exampleJson.length).fill(false);
+  labels = ['bike damaged','bike lost','lock damaged','lock lost','basket damaged','basket lost','other'];
+
   tabSwitch:boolean = false;
   //TODO checkbox value should return from api
   checkBike:boolean = false;
   checkKey:boolean = true;
   //deepCopyCheckBike:boolean =JSON.parse(JSON.stringify(this.checkBike));
   //deepCopyCheckKey:boolean = JSON.parse(JSON.stringify(this.checkKey));
-  owingAmount:number = 0;
-  otherDamage:number = 0;
-  
-  otherDamageCheck:boolean;
-  keyDamageCheck:boolean;
-  keyLostCheck:boolean;
-  latePenaltyCheck:boolean;
-  lateAmount:number=25;
+  //newRowMode:boolean = false;
   readyToClosed:boolean;
 
-  updateOwingTotal(category:String){
-    switch (category){
-      case 'keyDamage':
-          if(this.keyDamageCheck){
-            this.owingAmount += 25;
-          }
-          else  this.owingAmount -= 25;
-          break;
-      case 'keyLost':
-          if(this.keyLostCheck){
-            this.owingAmount += 25;
-          }
-          else  this.owingAmount -= 25;
-          break;
-      case 'otherDamage':
-          if(this.otherDamageCheck){
-            this.owingAmount += this.otherDamage;
-          }
-          else  this.owingAmount -= this.otherDamage;
-          break;
-    }
+
+  updateOwingTotal(item){
+   console.log(item)
   }
 
   myFilter = (d: Date): boolean => {
@@ -182,7 +162,8 @@ export class DetailDialog {
   dueDate:string;
 
   constructor(
-    public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any) {
+    public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService) {
+      
     }
 
     
@@ -192,10 +173,65 @@ export class DetailDialog {
       
     }
 
+    enterEditMode(i){
+      if(!this.checkEditModeOn()){
+       if(this.exampleJson[i]['paid'] == true ){
+          return
+        }
+        else {
+          console.log("hello");
+          this.rowEditMode[i] = true
+          console.log(this.rowEditMode);
+        }
+       }
+    }
+
+    confirmEdit(i){
+      this.rowEditMode[i] = false;
+      //if(this.newRowMode == true){
+      //  this.newRowMode = false;
+      //}
+    }
+
+    addTableRow(){
+      this.rowEditMode.unshift(true);    
+      this.exampleJson.unshift({'category':'Enter Name','fee':0,'paid':false});
+      //this.newRowMode=true;
+
+    }
+
+    deleteRow(i){
+      this.exampleJson.splice(i,1);
+      //this.newRowMode = false;
+      this.rowEditMode.splice(i,1);
+    }
+
+
+    isEditMode(i){
+      if(this.rowEditMode[i] == true){
+        return true;
+      }
+      else return false;
+    }
+
+    checkEditModeOn(){
+      for(var i in this.rowEditMode){
+        if(this.rowEditMode[i] == true){
+          return true;
+      }
+      }
+      return false;
+
+    }
 
     updateCase(){
-      console.log(this.data.id)
-      this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'update'});
+      console.log(this.data.id);
+      if(this.checkEditModeOn){
+        this.notification.notify( 'error', 'Please confirm unsave category first.' );
+      }
+      else{
+        this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'update'});
+      }
     }
 
     closeCase(){
@@ -203,13 +239,12 @@ export class DetailDialog {
       this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
     }
 
-    addTableRow(){
-
-    }
-
+   
     updatePaidCat(category : String){
 
     }
+
+    
 
     saveChanges(){
       //call service with modified fields
@@ -220,11 +255,6 @@ export class DetailDialog {
 
 
     }
-
-    updateAmount(){
-
-    }
-
   
     closeDialog(): void {
       this.dialogRef.close({action:'cancel'});

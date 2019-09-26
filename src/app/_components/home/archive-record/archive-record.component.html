@@ -46,7 +46,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Bike ID </th>
         <td mat-cell *matCellDef="let element">
           <div *ngFor="let item of element.rentalComponents; let i = index">
-            <div *ngIf="item['@type']=='Bike'">{{item.id}}</div>
+            <div *ngIf="item['@type']=='Bike'">{{item.name}}</div>
           </div>
         </td>
       </ng-container>

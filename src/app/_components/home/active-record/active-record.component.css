@@ -114,3 +114,28 @@ button:focus{outline: none!important}
 .alignleft{
     text-align: left;
 }
+
+.editRentalIcon:hover{
+    cursor: pointer;
+}
+
+.disableLink{
+    color: #5f6368;
+}
+
+.penIcon{
+    color:#073063!important;
+}
+
+.penIcon:hover{
+    cursor: pointer;
+}
+
+.expandable{
+    transition: all 0.5s ease-in-out;
+    margin:10px 0;
+}
+
+.expandable:target{
+    height:100px;
+}

@@ -5,7 +5,7 @@
         <div *ngFor="let item of bikes; let i = index" cdkDropList  [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped()">
             <div class="col-lg card-container" cdkDrag (cdkDragMoved)="dragMoved($event);">
                 <div class="card bikeCard">
-                    <div class="card-header" cdkDragHandle >Bike ID: {{item.id}}</div>
+                    <div class="card-header" cdkDragHandle >Bike ID: {{item.name}}</div>
                     <img class="card-img-top" src="./assets/images/{{item.imgPath}}" alt="Card image cap">
                     <div class="card-body">
                         <mat-form-field class="full-width">
@@ -27,8 +27,8 @@
                                 <mat-option  value="IN_MAINTENANCE">
                                     <span class="text-secondary">In Maintenance</span>
                                 </mat-option>
-                                <mat-option  value="MISSING">
-                                        <span class="text-secondary">Missing</span>
+                                <mat-option  value="ARCHIVED">
+                                        <span class="text-secondary">Archived</span>
                                     </mat-option>
                             </mat-select>
                         </mat-form-field>
