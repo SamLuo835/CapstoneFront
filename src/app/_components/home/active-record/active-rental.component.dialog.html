@@ -94,16 +94,20 @@
               {{item.category}}
             </td>
             <td *ngIf="isEditMode(i)" class="alignleft" style="height: 60px">
-                <mat-form-field style="width:80%"><input matInput [value]="item.category"></mat-form-field> 
+                <mat-form-field style="width:80%">
+                  <input matInput [(ngModel)]="item.category">
+                </mat-form-field> 
             </td>
             <td *ngIf="!isEditMode(i)">
               ${{item.fee}}
             </td>
             <td *ngIf="isEditMode(i)">
-                <mat-form-field  style="width:80%"><input matInput style="text-align: center" type="number" [value]="item.fee"></mat-form-field> 
+                <mat-form-field  style="width:80%">
+                  <input matInput style="text-align: center"  type="number" [(ngModel)]="item.fee">
+                </mat-form-field> 
             </td>
             <td>
-              <mat-checkbox  style="margin:0 10px;" color='primary' [disabled]="!isEditMode(i)" [(ngModel)]="item.paid"  ></mat-checkbox>
+              <mat-checkbox  style="margin:0 10px;" color='primary' [disabled]="!isEditMode(i)"  [(ngModel)]="item.paid"  ></mat-checkbox>
             </td>
             <td *ngIf="!isEditMode(i)">
               <a [ngClass]="{'penIcon':item.paid == false && !checkEditModeOn(),'disableLink':item.paid==true && checkEditModeOn()}"  matTooltipPosition="right"  [matTooltipDisabled]="!item.paid" matTooltip="Category is paid" (click)="enterEditMode(i)">

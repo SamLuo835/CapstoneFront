@@ -21,7 +21,7 @@ export class ActiveRecordComponent implements OnInit {
   showSpinner : boolean = true;
   dialogSpinner : boolean = false;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['bikeId', 'signOutDate', 'dueDate', 'status','manage'];
+  displayedColumns: string[] = ['id', 'signOutDate', 'dueDate', 'rentalState','manage'];
 
   tableDetail:Object = {};
 
@@ -187,6 +187,7 @@ export class DetailDialog {
     }
 
     confirmEdit(i){
+
       this.rowEditMode[i] = false;
       //if(this.newRowMode == true){
       //  this.newRowMode = false;

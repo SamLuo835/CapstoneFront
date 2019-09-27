@@ -15,7 +15,7 @@ export class LockComponent implements OnInit {
   tableData :Array<any>;
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['id', 'status', 'manage'];
+  displayedColumns: string[] = ['id', 'state', 'manage'];
   tableDetail:Object = {};
 
   @ViewChild('input') input: ElementRef;
