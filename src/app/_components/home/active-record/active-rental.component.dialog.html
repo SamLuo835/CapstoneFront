@@ -80,8 +80,8 @@
 
     <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
       <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
-      <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "exampleJson" [cdkDropListConnectedTo]="predfined" (cdkDropListDropped)="drop($event)">  
-      <tr *ngIf="exampleJson.length==0"><td></td><td></td><td></td><td></td><tr>
+      <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "exampleJson" [cdkDropListConnectedTo]="[predefine]" (cdkDropListDropped)="drop($event)">  
+      <tr style="height:20px;" *ngIf="exampleJson.length==0"><td></td><td></td><td></td><td></td><tr>
       <tr  *ngFor="let item of exampleJson; let i = index">
             <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
               {{item.category}}
@@ -119,7 +119,6 @@
         </tbody>
 
       </table>
-      <br>
       
       <h6  *ngIf="exampleJson.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
 
