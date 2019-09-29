@@ -32,7 +32,7 @@
                     Password is <strong>required</strong>
                   </mat-error>
               </mat-form-field>
-              <mat-spinner  diameter='20' *ngIf="submitting" style="margin:unset!important;display: inline;left:-25px" ></mat-spinner>
+              <mat-spinner  diameter='20' [ngStyle]="{'visibility': submitting? 'visible':'hidden'}" style="margin:unset!important;position: relative;left:90%;top:-45px" ></mat-spinner>
             </div>
             <div  style="display:flex">
             <span class="error" >{{errorMsg}}&nbsp;</span> 

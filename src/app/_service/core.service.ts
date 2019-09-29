@@ -30,7 +30,6 @@ export class CoreService {
   private newBikeUrl: string = this.baseServerAddress + "/newBike";
   
   //TODO 
-  private getLocksUrl:string = this.baseServerAddress + "/getLocks";
   private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
   private editRentalUrl:string = this.baseServerAddress + "/editRental";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";

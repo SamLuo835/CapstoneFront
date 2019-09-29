@@ -118,6 +118,7 @@ export class ActiveRecordComponent implements OnInit {
 import * as _moment from 'moment';
 import { DataShareService } from 'src/app/_service/data-share.service';
 import { NotifierService } from 'angular-notifier';
+import {CdkDragDrop, moveItemInArray,copyArrayItem,} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'DetailDialog',
@@ -126,20 +127,25 @@ import { NotifierService } from 'angular-notifier';
 export class DetailDialog {
   exampleJson = [{'category':'Late Penalty','fee':25,'paid':true},{'category':'Bike Lost','fee':300,'paid':false}]
   rowEditMode =new Array(this.exampleJson.length).fill(false);
-  labels = ['bike damaged','bike lost','lock damaged','lock lost','basket damaged','basket lost','other'];
+  predefinedCat = [{'category':'Bike Lost','fee':300,'paid':false},{'category':'Lock Lost','fee':60,'paid':false},{'category':'Key Lost','fee':30,'paid':false},
+                  {'category':'Basket Lost','fee':50,'paid':false},{'category':'Light Lost','fee':5,'paid':false},{'category':'Bike Damage','fee':5,'paid':false},
+                  {'category':'Key Damage','fee':5,'paid':false}]
 
   tabSwitch:boolean = false;
-  //TODO checkbox value should return from api
-  checkBike:boolean = false;
-  checkKey:boolean = true;
-  //deepCopyCheckBike:boolean =JSON.parse(JSON.stringify(this.checkBike));
-  //deepCopyCheckKey:boolean = JSON.parse(JSON.stringify(this.checkKey));
-  //newRowMode:boolean = false;
+ 
   readyToClosed:boolean;
+  total:number = 0;
+  previousCategory:number = 0;
+  hoverText:boolean = false;
 
 
-  updateOwingTotal(item){
-   console.log(item)
+  closeReadyCheck(){
+    for(var i in this.exampleJson){
+      if(this.exampleJson[i].paid == false){
+        return false;
+      }
+    }
+    return true;
   }
 
   myFilter = (d: Date): boolean => {
@@ -170,7 +176,9 @@ export class DetailDialog {
     ngOnInit(){
       this.signOutDate = _moment(this.data.signOutDate).format();
       this.dueDate = _moment(this.data.dueDate).format();
-      
+      for(var i in this.exampleJson){
+        this.total += this.exampleJson[i].fee;
+      }
     }
 
     enterEditMode(i){
@@ -181,6 +189,7 @@ export class DetailDialog {
         else {
           console.log("hello");
           this.rowEditMode[i] = true
+          this.previousCategory = this.exampleJson[i].fee;
           console.log(this.rowEditMode);
         }
        }
@@ -189,6 +198,9 @@ export class DetailDialog {
     confirmEdit(i){
 
       this.rowEditMode[i] = false;
+      this.total -= this.previousCategory;
+      this.total += this.exampleJson[i].fee;
+      this.previousCategory = 0;
       //if(this.newRowMode == true){
       //  this.newRowMode = false;
       //}
@@ -205,6 +217,8 @@ export class DetailDialog {
       this.exampleJson.splice(i,1);
       //this.newRowMode = false;
       this.rowEditMode.splice(i,1);
+      this.total -= this.previousCategory;
+      this.previousCategory = 0;
     }
 
 
@@ -237,15 +251,13 @@ export class DetailDialog {
 
     closeCase(){
       console.log(this.data.id)
+      if(this.checkEditModeOn){
+        this.notification.notify( 'error', 'Please confirm unsave category first.' );
+      }
+      else{
       this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
-    }
-
-   
-    updatePaidCat(category : String){
-
-    }
-
-    
+      }
+    }    
 
     saveChanges(){
       //call service with modified fields
@@ -260,4 +272,31 @@ export class DetailDialog {
     closeDialog(): void {
       this.dialogRef.close({action:'cancel'});
     }
+
+    drop(event: CdkDragDrop<string[]>) {
+      if (event.previousContainer === event.container) {
+      } else {
+        copyArrayItem(event.previousContainer.data,
+                          event.container.data,
+                          event.previousIndex,
+                          event.currentIndex);
+              
+        this.total += event.container.data[event.currentIndex]['fee'];
+      }
+    }
+
+    currentIndex ;
+    hoverIn(i){
+        this.currentIndex = i;
+        this.hoverText = true;
+    }
+
+    hoverOut(i){
+      this.hoverText = false;
+    }
+
+
+      
 }
+
+

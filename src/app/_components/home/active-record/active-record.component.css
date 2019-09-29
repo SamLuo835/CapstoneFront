@@ -131,11 +131,20 @@ button:focus{outline: none!important}
     cursor: pointer;
 }
 
-.expandable{
-    transition: all 0.5s ease-in-out;
-    margin:10px 0;
+.dragCategory{
+    padding:5px;
+    margin:15px;
+    border-radius: 5px;
+    border:1px solid #5f6368;
+    color:white;
+    min-width:100px;
+    text-align: center;
+    cursor: move;
+    font-size: .8em;
+    background-color: #5f6368 
 }
 
-.expandable:target{
-    height:100px;
-}
+
+
+
+

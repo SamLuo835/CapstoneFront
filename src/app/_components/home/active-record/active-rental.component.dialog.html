@@ -63,17 +63,8 @@
 
   </mat-tab>
   <mat-tab label="Owing Amount/Return">
-    <h6 style="margin:10px 0;color:#003767;font-weight: 600">Check to Mark Component Inspection Completed</h6>
-          <section class="returnSection">
-            <!--<div *ngFor="let item of data.rentalComponents; let i = index">
-            <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >{{item['@type']}}</mat-checkbox>
-            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Key & Lock</mat-checkbox> 
-            </div>-->
-            <mat-checkbox [disabled]="checkBike" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkBike" >Bike</mat-checkbox>
-            <mat-checkbox [disabled]="checkKey" style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="checkKey" >Lock</mat-checkbox> 
-          </section>
-          <mat-checkbox [disabled]="!checkBike || !checkKey"  style="margin:0 10px;font-size: 0.8rem;" color='primary' [(ngModel)]="readyToClosed"  >This rental is ready to be closed</mat-checkbox>
-    <hr style="margin-top: 0">
+    
+          <hr style="margin-top: 0">
     <div style="display: flex;justify-content: space-between;margin:0 0 15px 0;height: 35px;">
     <h6 style="margin:10px 0;color:#003767;font-weight: 600">Owing Amount Summary</h6>
     <button mat-raised-button color="primary" style="font-size: 0.7em" [disabled]="checkEditModeOn()" (click)="addTableRow()">Add Custom Category</button>
@@ -89,7 +80,8 @@
 
     <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
       <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
-        <tr *ngFor="let item of exampleJson; let i = index">
+      <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "exampleJson" [cdkDropListConnectedTo]="predfined" (cdkDropListDropped)="drop($event)">  
+      <tr  *ngFor="let item of exampleJson; let i = index">
             <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
               {{item.category}}
             </td>
@@ -123,18 +115,19 @@
                   </a>
               </td>
           </tr>
-      
-        <!--<tr><td class="alignleft" style="height: 60px">Key Damage</td><td>$25</td><td>
-            <mat-checkbox [disabled]="keyLostCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyDamageCheck" (change)="updateOwingTotal('keyDamage')" ></mat-checkbox>
-        </td></tr>
-        <tr><td class="alignleft" style="height: 60px">Key Lost</td><td>$25</td><td>
-            <mat-checkbox [disabled]="keyDamageCheck" style="margin:0 10px;" color='primary' [(ngModel)]="keyLostCheck" (change)="updateOwingTotal('keyLost')" ></mat-checkbox>
-        </td></tr>
-        <tr><td class="alignleft" style="height: 60px">Other Damage</td><td>$  <mat-form-field style="max-width:20%;">
-            <input matInput  style="text-align: right" type="number" [(ngModel)]="otherDamage"></mat-form-field></td><td>
-            <mat-checkbox  style="margin:0 10px;" color='primary' [(ngModel)]="otherDamageCheck" (change)="updatePaidCat('otherDamage')" ></mat-checkbox>
-        </td></tr>-->
+        </tbody>
+
       </table>
+      <h6  *ngIf="exampleJson.length==0" style="color:#073063;margin:20px;text-align: center">There is no receivables for the rental</h6>
+
+      <hr>
+
+      <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
+        <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
+          <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut(i)" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['fee']:category['category']}}</span>
+        </div>
+
+      <span  style="font-size: 0.8em;color:#5f6368;margin-left: 15px;">* You can add predifined categories in Settings</span>
 
     </mat-tab>
     </mat-tab-group>
@@ -144,12 +137,12 @@
  
   <mat-dialog-actions class="activeRentalDialog">
   <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
-  <button *ngIf="tabSwitch && readyToClosed"  class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="closeCase()">RETURN RENTAL</button>
-  <button *ngIf="tabSwitch && !readyToClosed" class="btn btn-warning" style="font-weight: 500" (click)="updateCase()">UPDATE RENTAL</button>
+  <button *ngIf="tabSwitch && closeReadyCheck()"  class="btn btn-warning" style="font-weight: 500"  (click)="closeCase()">RETURN RENTAL</button>
+  <button *ngIf="tabSwitch && !closeReadyCheck()" class="btn btn-warning" style="font-weight: 500" (click)="updateCase()">UPDATE RENTAL</button>
   <!--<span *ngIf="tabSwitch && !readyToClosed && checkEditModeOn()" style="font-size: 0.7em;
   color:#f44336;">Category still in edit mode</span> -->
   
-  <span style="color:#003767" *ngIf="tabSwitch">Total: ${{owingAmount}}</span>
+  <span style="color:#003767" *ngIf="tabSwitch">Total: ${{total}}</span>
   <a  class="redirectLink" (click)="closeDialog()" style="margin-right: 10px" >Cancel</a>
 
 
