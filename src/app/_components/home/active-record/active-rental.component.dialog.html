@@ -81,6 +81,7 @@
     <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
       <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
       <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "exampleJson" [cdkDropListConnectedTo]="predfined" (cdkDropListDropped)="drop($event)">  
+      <tr *ngIf="exampleJson.length==0"><td></td><td></td><td></td><td></td><tr>
       <tr  *ngFor="let item of exampleJson; let i = index">
             <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
               {{item.category}}
@@ -118,10 +119,11 @@
         </tbody>
 
       </table>
-      <h6  *ngIf="exampleJson.length==0" style="color:#073063;margin:20px;text-align: center">There is no receivables for the rental</h6>
+      <br>
+      
+      <h6  *ngIf="exampleJson.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
 
       <hr>
-
       <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
         <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
           <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut(i)" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['fee']:category['category']}}</span>

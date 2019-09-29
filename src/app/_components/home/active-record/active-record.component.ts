@@ -125,7 +125,7 @@ import {CdkDragDrop, moveItemInArray,copyArrayItem,} from '@angular/cdk/drag-dro
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
-  exampleJson = [{'category':'Late Penalty','fee':25,'paid':true},{'category':'Bike Lost','fee':300,'paid':false}]
+  exampleJson = []
   rowEditMode =new Array(this.exampleJson.length).fill(false);
   predefinedCat = [{'category':'Bike Lost','fee':300,'paid':false},{'category':'Lock Lost','fee':60,'paid':false},{'category':'Key Lost','fee':30,'paid':false},
                   {'category':'Basket Lost','fee':50,'paid':false},{'category':'Light Lost','fee':5,'paid':false},{'category':'Bike Damage','fee':5,'paid':false},
