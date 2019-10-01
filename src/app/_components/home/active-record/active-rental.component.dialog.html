@@ -80,9 +80,9 @@
 
     <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
       <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
-      <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "exampleJson" [cdkDropListConnectedTo]="[predefine]" (cdkDropListDropped)="drop($event)">  
-      <tr style="height:20px;" *ngIf="exampleJson.length==0"><td></td><td></td><td></td><td></td><tr>
-      <tr  *ngFor="let item of exampleJson; let i = index">
+      <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "categoryList" [cdkDropListConnectedTo]="[predefine]" (cdkDropListDropped)="drop($event)">  
+      <tr style="height:20px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
+      <tr  *ngFor="let item of categoryList; let i = index">
             <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
               {{item.category}}
             </td>
@@ -92,11 +92,11 @@
                 </mat-form-field> 
             </td>
             <td *ngIf="!isEditMode(i)">
-              ${{item.fee}}
+              ${{item.value}}
             </td>
             <td *ngIf="isEditMode(i)">
                 <mat-form-field  style="width:80%">
-                  <input matInput style="text-align: center"  type="number" [(ngModel)]="item.fee">
+                  <input matInput style="text-align: center"  type="number" [(ngModel)]="item.value">
                 </mat-form-field> 
             </td>
             <td>
@@ -120,12 +120,12 @@
 
       </table>
       
-      <h6  *ngIf="exampleJson.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
+      <h6  *ngIf="categoryList.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
 
       <hr>
       <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
         <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
-          <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut(i)" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['fee']:category['category']}}</span>
+          <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
         </div>
 
       <span  style="font-size: 0.8em;color:#5f6368;margin-left: 15px;">* You can add predifined categories in Settings</span>

@@ -30,6 +30,8 @@ export class CoreService {
   private newBikeUrl: string = this.baseServerAddress + "/newBike";
   
   //TODO 
+  private payableListUrl:string = this.baseServerAddress + "/getPayablesByRentalId";
+  private updateCategoryUrl:string = this.baseServerAddress + "/updatePayables";
   private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
   private editRentalUrl:string = this.baseServerAddress + "/editRental";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
@@ -92,6 +94,21 @@ testSearchCustomer():Observable<any>{
       this.notification.notify( 'error', 'Something bad happened, please try again later.' );
       return throwError(
       'Something bad happened; please try again later.');}));
+  }
+
+
+  getPayablesById(id):Observable<any>{
+    return this.http.get(this.payableListUrl+"/"+id,httpOptions).pipe(catchError(()=>{
+      this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+      return throwError(
+      'Something bad happened; please try again later.');}));
+  }
+
+  updatePayables(categoryList):Observable<any>{
+      return this.http.patch(this.updateCategoryUrl,categoryList,httpOptions).pipe(catchError(()=>{
+        this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+        return throwError(
+        'Something bad happened; please try again later.');}));
   }
 
   editRental(id,comment,dueDate):Observable<any>{

@@ -118,30 +118,56 @@ export class ActiveRecordComponent implements OnInit {
 import * as _moment from 'moment';
 import { DataShareService } from 'src/app/_service/data-share.service';
 import { NotifierService } from 'angular-notifier';
-import {CdkDragDrop, moveItemInArray,copyArrayItem,} from '@angular/cdk/drag-drop';
+import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'DetailDialog',
   templateUrl: 'active-rental.component.dialog.html'
 })
 export class DetailDialog {
-  exampleJson = []
-  rowEditMode =new Array(this.exampleJson.length).fill(false);
-  predefinedCat = [{'category':'Bike Lost','fee':300,'paid':false},{'category':'Lock Lost','fee':60,'paid':false},{'category':'Key Lost','fee':30,'paid':false},
-                  {'category':'Basket Lost','fee':50,'paid':false},{'category':'Light Lost','fee':5,'paid':false},{'category':'Bike Damage','fee':5,'paid':false},
-                  {'category':'Key Damage','fee':5,'paid':false}]
+  categoryList = [];
+  rowEditMode = [];
+  
+  //predifineCategory should be an object in backEnd with 'category','value','paid','rental' property;
+  predefinedCat = [{'category':'Bike Lost','value':300,'paid':false,'rental':{'id':null}},{'category':'Lock Lost','value':60,'paid':false,'rental':{'id':null}},{'category':'Key Lost','value':30,'paid':false,'rental':{'id':null}},
+                  {'category':'Basket Lost','value':50,'paid':false,'rental':{'id':null}},{'category':'Light Lost','value':5,'paid':false,'rental':{'id':null}},{'category':'Bike Damage','value':5,'paid':false,'rental':{'id':null}},
+                  {'category':'Key Damage','value':5,'paid':false,'rental':{'id':null}}]
 
   tabSwitch:boolean = false;
- 
+  currentIndex ;
+
   readyToClosed:boolean;
   total:number = 0;
   previousCategory:number = 0;
   hoverText:boolean = false;
+  //convert to moment formatted date string
+  signOutDate:string;
+  dueDate:string;
 
+
+  constructor( 
+    public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService,
+    public _core: CoreService) {
+      
+    }
+
+
+  ngOnInit(){
+    this.signOutDate = _moment(this.data.signOutDate).format();
+    this.dueDate = _moment(this.data.dueDate).format();
+    this._core.getPayablesById(this.data.id).subscribe(res=>{
+      for(var i in res){
+        this.total += res[i].value;
+      } 
+      this.categoryList = JSON.parse(JSON.stringify(res));
+      this.rowEditMode = new Array(this.categoryList.length).fill(false);
+      
+    });
+  }
 
   closeReadyCheck(){
-    for(var i in this.exampleJson){
-      if(this.exampleJson[i].paid == false){
+    for(var i in this.categoryList){
+      if(this.categoryList[i].paid == false){
         return false;
       }
     }
@@ -163,34 +189,17 @@ export class DetailDialog {
     }
   }
 
-  //convert to moment formatted date string
-  signOutDate:string;
-  dueDate:string;
-
-  constructor(
-    public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService) {
-      
-    }
-
+ 
     
-    ngOnInit(){
-      this.signOutDate = _moment(this.data.signOutDate).format();
-      this.dueDate = _moment(this.data.dueDate).format();
-      for(var i in this.exampleJson){
-        this.total += this.exampleJson[i].fee;
-      }
-    }
 
     enterEditMode(i){
       if(!this.checkEditModeOn()){
-       if(this.exampleJson[i]['paid'] == true ){
+       if(this.categoryList[i]['paid'] == true ){
           return
         }
         else {
-          console.log("hello");
           this.rowEditMode[i] = true
-          this.previousCategory = this.exampleJson[i].fee;
-          console.log(this.rowEditMode);
+          this.previousCategory = this.categoryList[i].value;
         }
        }
     }
@@ -199,23 +208,17 @@ export class DetailDialog {
 
       this.rowEditMode[i] = false;
       this.total -= this.previousCategory;
-      this.total += this.exampleJson[i].fee;
+      this.total += this.categoryList[i].value;
       this.previousCategory = 0;
-      //if(this.newRowMode == true){
-      //  this.newRowMode = false;
-      //}
     }
 
     addTableRow(){
       this.rowEditMode.unshift(true);    
-      this.exampleJson.unshift({'category':'Enter Name','fee':0,'paid':false});
-      //this.newRowMode=true;
-
+      this.categoryList.unshift({'category':'Enter Name','value':0,'paid':false,'rental':{'id':this.data.id}});
     }
 
     deleteRow(i){
-      this.exampleJson.splice(i,1);
-      //this.newRowMode = false;
+      this.categoryList.splice(i,1);
       this.rowEditMode.splice(i,1);
       this.total -= this.previousCategory;
       this.previousCategory = 0;
@@ -231,26 +234,25 @@ export class DetailDialog {
 
     checkEditModeOn(){
       for(var i in this.rowEditMode){
-        if(this.rowEditMode[i] == true){
+        if(this.rowEditMode[i]==true){
           return true;
-      }
+        }
       }
       return false;
-
     }
 
     updateCase(){
-      console.log(this.data.id);
-      if(this.checkEditModeOn){
+      if(this.checkEditModeOn()){
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
       else{
-        this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'update'});
+        this._core.updatePayables(this.categoryList).subscribe(res => {
+          this.notification.notify('success', "Rental Updated.");
+        });
       }
     }
 
     closeCase(){
-      console.log(this.data.id)
       if(this.checkEditModeOn){
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
@@ -265,8 +267,6 @@ export class DetailDialog {
       console.log(_moment(this.dueDate).format('YYYY-MM-DD'));
       console.log(this.data.id)
       this.dialogRef.close({rentalId:this.data.id,action:'change',comment:this.data.comment,dueDate:_moment(this.dueDate).format('YYYY-MM-DD')});
-
-
     }
   
     closeDialog(): void {
@@ -281,17 +281,19 @@ export class DetailDialog {
                           event.previousIndex,
                           event.currentIndex);
               
-        this.total += event.container.data[event.currentIndex]['fee'];
+        this.total += event.container.data[event.currentIndex]['value'];
+        this.rowEditMode.unshift(false);    
+        this.categoryList[0].rental['id'] = this.data.id;
       }
     }
 
-    currentIndex ;
     hoverIn(i){
         this.currentIndex = i;
         this.hoverText = true;
     }
 
-    hoverOut(i){
+    hoverOut(){
+      this.currentIndex = null;
       this.hoverText = false;
     }
 
