@@ -5,7 +5,7 @@
 <div  class="dialog-content" mat-dialog-content>
     <mat-tab-group (selectedTabChange)="tabChanged($event)">
         <mat-tab label="Rental Information">
-        <h6 style="color:#003767;font-weight: 600;margin:10px 0">Rental Components</h6>
+        <h6 style="color:#003767;font-weight: 600;margin:25px 0 15px 0">Rental Components</h6>
             <div *ngFor="let item of data.rentalComponents; let i = index" style="margin:0 10px">
                 <mat-form-field  *ngIf="item['@type']=='Bike'" class="full-width">
                     <input matInput placeholder="Bike ID" disabled [value]="item.name">
@@ -32,11 +32,9 @@
                     </mat-form-field></td>
             </tr>
           </table>
-          <mat-form-field class="full-width" style="margin:0 10px">
-              <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
-          </mat-form-field>  
-          <br><br>
-        <h6 style="color:#003767;font-weight: 600">Customer Detail</h6>
+        
+          <br>
+        <h6 style="color:#003767;font-weight: 600;margin-bottom: 15px">Customer Detail</h6>
 
     <table class="full-width" cellspacing="0"><tr>
         <td><mat-form-field class="full-width">
@@ -49,6 +47,7 @@
     </table>
 
     <br>
+    
 
     <table class="full-width" cellspacing="0">
     <tr>
@@ -60,13 +59,16 @@
             </mat-form-field></td>
     </tr>
   </table>
-
+  <br>
+  <mat-form-field class="full-width" style="margin:0 10px">
+      <textarea matInput placeholder="Additional Comment" name="comment" [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>  
   </mat-tab>
-  <mat-tab label="Owing Amount/Return">
+  <mat-tab label="Receivables/Return">
     
           <hr style="margin-top: 0">
     <div style="display: flex;justify-content: space-between;margin:0 0 15px 0;height: 35px;">
-    <h6 style="margin:10px 0;color:#003767;font-weight: 600">Owing Amount Summary</h6>
+    <h6 style="margin:10px 0;color:#003767;font-weight: 600">Receivables Summary</h6>
     <button mat-raised-button color="primary" style="font-size: 0.7em" [disabled]="checkEditModeOn()" (click)="addTableRow()">Add Custom Category</button>
 
     </div>
@@ -121,8 +123,10 @@
       </table>
       
       <h6  *ngIf="categoryList.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
-
-      <hr>
+      <div style="display: flex;justify-content: flex-end">
+      <mat-checkbox  style="margin:0 10px;color:#073063;font-size: 0.7em" color='primary' [disabled]="!closeReadyCheck()" [(ngModel)]="checkBoxState" >The rental is ready to be closed</mat-checkbox>
+      </div>
+      <hr style="margin-top: 0">
       <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
         <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
           <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
@@ -138,8 +142,8 @@
  
   <mat-dialog-actions class="activeRentalDialog">
   <button *ngIf="!tabSwitch" class="btn btn-warning" style="font-weight: 500" mat-dialog-close (click)="saveChanges()">SAVE CHANGES</button>
-  <button *ngIf="tabSwitch && closeReadyCheck()"  class="btn btn-warning" style="font-weight: 500"  (click)="closeCase()">RETURN RENTAL</button>
-  <button *ngIf="tabSwitch && !closeReadyCheck()" class="btn btn-warning" style="font-weight: 500" (click)="updateCase()">UPDATE RENTAL</button>
+  <button *ngIf="tabSwitch && checkBoxState"  class="btn btn-warning" style="font-weight: 500"  (click)="returnRental()">RETURN RENTAL</button>
+  <button *ngIf="tabSwitch && !checkBoxState" class="btn btn-warning" style="font-weight: 500" (click)="updateReceivables()">UPDATE RENTAL</button>
   <!--<span *ngIf="tabSwitch && !readyToClosed && checkEditModeOn()" style="font-size: 0.7em;
   color:#f44336;">Category still in edit mode</span> -->
   

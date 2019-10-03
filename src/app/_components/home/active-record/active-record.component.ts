@@ -137,6 +137,8 @@ export class DetailDialog {
   currentIndex ;
 
   readyToClosed:boolean;
+  checkBoxState:boolean = false;
+
   total:number = 0;
   previousCategory:number = 0;
   hoverText:boolean = false;
@@ -241,23 +243,26 @@ export class DetailDialog {
       return false;
     }
 
-    updateCase(){
+    updateReceivables(){
       if(this.checkEditModeOn()){
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
       else{
         this._core.updatePayables(this.categoryList).subscribe(res => {
-          this.notification.notify('success', "Rental Updated.");
+          this.notification.notify('success', "Receivables Updated.");
         });
       }
     }
 
-    closeCase(){
-      if(this.checkEditModeOn){
+    returnRental(){
+      if(this.checkEditModeOn()){
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
       else{
-      this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
+        console.log(this.categoryList);
+        this._core.updatePayables(this.categoryList).subscribe(res => {
+          this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
+        });
       }
     }    
 
@@ -296,8 +301,6 @@ export class DetailDialog {
       this.currentIndex = null;
       this.hoverText = false;
     }
-
-
       
 }
 
