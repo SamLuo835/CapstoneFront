@@ -113,7 +113,15 @@ export class NewRentalComponent implements OnInit {
     this.formRequire[0] = this.bikeFormControl.hasError('required');
     this.formRequire[1] = this.lockFormControl.hasError('required');
     this.formRequire[2] = this.basketFormControl.hasError('required');
-
+    if(this.basketSelected == 'Skip' && this.lockSelected == 'Skip' && this.bikeSelected == 'Skip'){
+      this.formRequire[3] = true;
+    } 
+    else{
+      this.formRequire[3] = false;
+    }
+    if(this.stepper.selectedIndex == 0){
+      this.lockSelected = "";
+    }
     console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
     console.log(this.bikeSelected);

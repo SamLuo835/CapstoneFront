@@ -128,6 +128,7 @@
                           <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
                             Lock #{{lock.name}}
                           </mat-option>
+                          <mat-option value="Skip" *ngIf="bikeSelected == 'Skip'" style="background-color:#ffc107"> Skip </mat-option>
                         </mat-select>
                         <mat-error *ngIf="lockFormControl.hasError('required')">
                           Lock is <strong>required</strong>
@@ -163,6 +164,7 @@
                           <p style="color:#003767"> Bike: {{bikeSelected}}</p>
                           <p style="color:#003767"> Lock: {{lockSelected}}</p>
                           <p style="color:#003767"> Basket: {{basketSelected}}</p>
+                          <span *ngIf="bikeSelected=='Skip' && basketSelected == 'Skip' && lockSelected=='Skip'" style="color:#dc3545">No component selected</span>
                       </div>
                       </div>
                     </mat-step>

@@ -196,13 +196,8 @@ export class DetailDialog {
 
     enterEditMode(i){
       if(!this.checkEditModeOn()){
-       if(this.categoryList[i]['paid'] == true ){
-          return
-        }
-        else {
           this.rowEditMode[i] = true
           this.previousCategory = this.categoryList[i].value;
-        }
        }
     }
 
@@ -216,7 +211,8 @@ export class DetailDialog {
 
     addTableRow(){
       this.rowEditMode.unshift(true);    
-      this.categoryList.unshift({'category':'Enter Name','value':0,'paid':false,'rental':{'id':this.data.id}});
+      this.categoryList.unshift({'category':'','value':0,'paid':false,'rental':{'id':this.data.id}});
+      this.checkBoxState = false;
     }
 
     deleteRow(i){
@@ -289,6 +285,7 @@ export class DetailDialog {
         this.total += event.container.data[event.currentIndex]['value'];
         this.rowEditMode.unshift(false);    
         this.categoryList[0].rental['id'] = this.data.id;
+        this.checkBoxState = false;
       }
     }
 

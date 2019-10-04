@@ -105,7 +105,7 @@
               <mat-checkbox  style="margin:0 10px;" color='primary' [disabled]="!isEditMode(i)"  [(ngModel)]="item.paid"  ></mat-checkbox>
             </td>
             <td *ngIf="!isEditMode(i)">
-              <a [ngClass]="{'penIcon':item.paid == false && !checkEditModeOn(),'disableLink':item.paid==true && checkEditModeOn()}"  matTooltipPosition="right"  [matTooltipDisabled]="!item.paid" matTooltip="Category is paid" (click)="enterEditMode(i)">
+              <a class="penIcon"  matTooltipPosition="right"  [matTooltipDisabled]="!checkEditModeOn()" matTooltip="Confirm unsave category first" (click)="enterEditMode(i)">
                 <mat-icon>create</mat-icon>
               </a>
             </td>
