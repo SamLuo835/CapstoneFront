@@ -163,4 +163,21 @@ button:focus{outline: none!important}
 
 }
 
+.tabAction_R{
+    display:flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.tabAction_L{
+    display:flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.redirectLink{
+    font-family: 'Roboto',sans-serif;
+    font-weight: 500;
+}
+
 

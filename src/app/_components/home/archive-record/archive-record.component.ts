@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Inject ,ElementRef} from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
-import {MatSort, MatTableDataSource,MatPaginator} from '@angular/material';
+import {MatSort, MatTableDataSource,MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
 import { NgxDrpOptions, PresetItem, Range } from 'ngx-mat-daterange-picker';
 import { NotifierService } from 'angular-notifier';
 import * as _moment from 'moment';
@@ -17,7 +17,7 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 })
 export class ArchiveRecordComponent implements OnInit {
 
-  constructor(private _core :CoreService,private notification :NotifierService ,private _dataShare :DataShareService) { }
+  constructor(private _modal: MatDialog,private _core :CoreService,private notification :NotifierService ,private _dataShare :DataShareService) { }
 
   init: boolean = false;
 
@@ -188,7 +188,86 @@ export class ArchiveRecordComponent implements OnInit {
 
 
     showMore(element){
+        this.tableDetail = element;
+        this.openDialog();
+    }
 
+
+    openDialog(): void { 
+      //this.dialogSpinner = false;
+      const dialogRef = this._modal.open(ArchivedDialog, {
+       data: this.tableDetail,
+       height: '600px',
+       width: '600px',
+       autoFocus:false,
+       disableClose: true
+     });
+     dialogRef.afterClosed().subscribe(result => {
+       console.log('The dialog was closed');
+       if(result != undefined){
+        if(result['action']=='change'){
+         this._core.editRental(result['rentalId'],result['comment'],result['dueDate']).subscribe(res=>{
+           console.log(res);
+         },error=>{console.log(error)}) 
+       }
+     }}) 
+ }
+
+}
+
+
+//dialog class
+
+@Component({
+  selector: 'ArchivedDialog',
+  templateUrl: 'archive-record.component.dialog.html'
+})
+export class ArchivedDialog {
+ 
+  categoryList = [];
+  tabSwitch:boolean = false;
+  currentIndex ;
+
+
+  total:number = 0;
+  previousCategory:number = 0;
+  hoverText:boolean = false;
+  //convert to moment formatted date string
+  signOutDate:string;
+  dueDate:string;
+  returnDate:string;
+
+
+  constructor( 
+    public dialogRef: MatDialogRef<ArchivedDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService,
+    public _core: CoreService) { }
+
+
+    ngOnInit(){
+      this.signOutDate = _moment(this.data.signOutDate).format();
+      this.dueDate = _moment(this.data.dueDate).format();
+      this.returnDate = _moment(this.data.returnedDate).format();
+      this._core.getPayablesById(this.data.id).subscribe(res=>{
+        for(var i in res){
+          this.total += res[i].value;
+        } 
+        this.categoryList = JSON.parse(JSON.stringify(res));
+        //this.rowEditMode = new Array(this.categoryList.length).fill(false);
+      });
+    }
+
+   
+    tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+      if(tabChangeEvent.index == 1){
+        this.tabSwitch = true;
+      }
+      else{
+        this.tabSwitch = false;
+      }
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close({action:'cancel'});
     }
 
 }

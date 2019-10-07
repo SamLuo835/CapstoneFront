@@ -6,7 +6,7 @@
     <mat-tab-group (selectedTabChange)="tabChanged($event)">
         <mat-tab label="Rental Information">
         <h6 style="color:#003767;font-weight: 600;margin:25px 0 15px 0">Rental Components</h6>
-            <div *ngFor="let item of data.rentalComponents; let i = index" style="margin:0 10px">
+            <div *ngFor="let item of data.rentalComponents; let i = index" style="margin:0 13px">
                 <mat-form-field  *ngIf="item['@type']=='Bike'" class="full-width">
                     <input matInput placeholder="Bike ID" disabled [value]="item.name">
               </mat-form-field>
