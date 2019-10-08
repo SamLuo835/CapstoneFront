@@ -133,13 +133,13 @@ button:focus{outline: none!important}
     margin:0;
     display: flex;
     width:50%;
+    align-items: center
 }
 
 .search_input input{
     border-radius: 20px;
     height:40%;
-    margin:29px auto auto -15px;
-    padding:0 15% 0 16%;
+    padding:0 11% 0 13%;
     border:1px solid lightgray;
     width:70%;
     font-size: 0.8em;
@@ -147,20 +147,6 @@ button:focus{outline: none!important}
 
 .search_input input:focus{
     outline:0;
-}
-
-.search_input .searchIcon{
-    position:relative;
-    top:35px;
-    left:8%;
-    display: block;
-    width: 23px;
-    height: 23px;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 28px;
-    background-image: url(~src/assets/images/baseline-search-24px.svg);
-
 }
 
 .tabAction_R{

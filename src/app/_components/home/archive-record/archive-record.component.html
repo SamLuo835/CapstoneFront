@@ -17,13 +17,9 @@
               <mat-option  value="returnDate">
                   <span class="text-secondary">Return Date</span>
               </mat-option>
-
               <mat-option  value="ID">
                 <span class="text-secondary">Sheridan ID</span>
             </mat-option>
-            <mat-option  value="bikeID">
-              <span class="text-secondary">Bike ID</span>
-          </mat-option>
           </mat-select>
       </mat-form-field>
       </div>
@@ -33,9 +29,9 @@
       </div>
 
       <div class="search_input" [ngStyle]="{'display': (searchType == 'ID' || searchType =='bikeID')?'':'none'}">
-        <div class="searchIcon"></div>
+        <mat-icon style="position: relative;right: -12%;">search</mat-icon>
         <input  placeholder="search by {{searchType}}" #input>
-        <mat-spinner  diameter='20' style="margin:34px auto auto auto!important;right:24%"  [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}"></mat-spinner>
+        <mat-spinner  diameter='20' style="margin:auto!important;right:17%"  [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}"></mat-spinner>
       </div>
       </div>
     </div>

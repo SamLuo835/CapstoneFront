@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
   constructor(private _core :CoreService,private _modal: MatDialog,private _dataShare:DataShareService) { }
 
   $searching:boolean = false;
-  searchType:String = 'ID';
+  //searchType:String = 'ID';
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
@@ -63,8 +63,9 @@ export class UserComponent implements OnInit {
                   })
                 }
                 else{
-                  this._core.testSearchCustomer().subscribe(res=>{
-                    this.tableData = res['body'];
+                  this._core.searchCustomer(this.input.nativeElement.value.trim()).subscribe(res=>{
+                    this.tableData = res;
+                    if(this.tableData == null){ this.tableData = []}
                     this.dataSource.paginator.pageIndex = 0;
                     this.dataSource = new MatTableDataSource(this.tableData)
                     this.dataSource.paginator = this.paginator;
@@ -73,7 +74,7 @@ export class UserComponent implements OnInit {
                   })
                 }
                 this.$searching = false;
-              },1500); ; 
+              },1500); 
             })
         )
         .subscribe();

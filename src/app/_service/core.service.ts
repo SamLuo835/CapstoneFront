@@ -38,6 +38,10 @@ export class CoreService {
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
   private newRentalUrl:string = this.baseServerAddress + "/newRental";
   private editBikeUrl:string = this.baseServerAddress + "/editBike";
+
+  //search
+  private searchCustomerUrl:string = this.baseServerAddress + "/searchCustomers";
+
   //Locks
   private lockListUrl:string = this.baseServerAddress + "/getLocks";
   private editLockUrl:string = this.baseServerAddress + "/editRental/";
@@ -51,40 +55,11 @@ export class CoreService {
   return  of(new HttpResponse({ body: {total:100,user:120,late:20,average:4.5}, status: 200 }));
 }
 
-testSearchCustomer():Observable<any>{
-  return  of(new HttpResponse({ body: [  
-    {  
-       "sheridanId":999999900,
-       "firstName":"Patricia",
-       "lastName":"Huel",
-       "address":"07721 Stamm Avenue",
-       "sheridanEmail":"PatriciaHuel@sheridan.ca",
-       "personalEmail":"PatriciaHuel@gmail.com",
-       "phone":"320.230.3241",
-       "type":"STUDENT",
-       "willRecvEmail":true,
-       "notes":"",
-       "emergencyContactFirstName":"Wendie",
-       "emergencyContactLastName":"Hammes",
-       "emergencyContactPhone":"(278) 513-3772",
-       "blackListed":false
-    },
-    {  
-       "sheridanId":999999901,
-       "firstName":"Andrea",
-       "lastName":"Cormier",
-       "address":"709 Streich Circle",
-       "sheridanEmail":"AndreaCormier@sheridan.ca",
-       "personalEmail":"AndreaCormier@gmail.com",
-       "phone":"305-660-8726",
-       "type":"FACULTY",
-       "willRecvEmail":true,
-       "notes":"",
-       "emergencyContactFirstName":"Jannet",
-       "emergencyContactLastName":"Orn",
-       "emergencyContactPhone":"713-014-1927",
-       "blackListed":false
-    }], status: 200 }));
+searchCustomer(keyWord):Observable<any>{
+  return this.http.get(this.searchCustomerUrl+"/"+keyWord,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
 }
 
 

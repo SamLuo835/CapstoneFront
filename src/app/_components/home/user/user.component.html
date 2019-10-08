@@ -3,27 +3,11 @@
   <mat-spinner  diameter='40' *ngIf="showSpinner" ></mat-spinner>
   <div class="filter_container" [ngClass]='dataSource!==undefined ? "visible":"hide"'>
     <div class="table_name">Customers</div>
-    <div class="search_box">  
-    <div class="search_type">
-        <mat-form-field class="drop-width">
-          <mat-label>Select search option</mat-label>
-          <mat-select disableOptionCentering [(value)]="searchType" >
-              <mat-option  value="name">
-                  <span class="text-secondary">Name</span>
-              </mat-option>
-              <mat-option  value="email">
-                  <span class="text-secondary">Sheridan Email</span>
-              </mat-option>
-              <mat-option  value="ID">
-                  <span class="text-secondary">Sheridan ID</span>
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
-      </div>
-      <div class="search_input">
-        <div class="searchIcon"></div>
-        <input  placeholder="search by {{searchType}}" #input>
-        <mat-spinner  diameter='20' style="margin:34px auto auto auto!important;right:24%"  [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}"></mat-spinner>
+    <div class="search_box" style="min-height: 78px">  
+      <div class="user_search_input">
+        <mat-icon style="position: relative;right: -12%;">search</mat-icon>
+        <input  placeholder="search keyword" #input>
+        <mat-spinner  diameter='20' style="margin:auto!important;right:17%"  [ngStyle]="{'visibility':$searching ? 'visible':'hidden'}"></mat-spinner>
       </div>
       </div>
     </div>

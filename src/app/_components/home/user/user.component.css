@@ -54,52 +54,27 @@ button:focus{outline: none!important}
     justify-content: flex-end;
 }
 
-.search_type{
-    margin:0 0 0 10px;
-    padding-top:10px;
-}
 
-.search_type .mat-select{
-    font-size: 0.8em!important;
-}
-
-.search_type .mat-form-field-wrapper{
-    padding-bottom: 1.4em!important;
-}
-
-.search_input{
+.user_search_input{
     margin:0;
     display: flex;
     width:50%;
+    align-items: center;
 }
 
-.search_input input{
+.user_search_input input{
     border-radius: 20px;
     height:40%;
-    margin:29px auto auto -15px;
-    padding:0 15% 0 16%;
+    padding:0 11% 0 13%;
     border:1px solid lightgray;
     width:70%;
     font-size: 0.8em;
 }
 
-.search_input input:focus{
+.user_search_input input:focus{
     outline:0;
 }
 
-.searchIcon{
-    position:relative;
-    top:35px;
-    left:8%;
-    display: block;
-    width: 23px;
-    height: 23px;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 28px;
-    background-image: url(~src/assets/images/baseline-search-24px.svg);
-
-}
 
 .mat-elevation-z8{
     box-shadow: none;
