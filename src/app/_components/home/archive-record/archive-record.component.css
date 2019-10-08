@@ -166,4 +166,23 @@ button:focus{outline: none!important}
     font-weight: 500;
 }
 
+.penIcon{
+    color:#073063!important;
+}
 
+.penIcon:hover{
+    cursor: pointer;
+}
+
+.dragCategory{
+    padding:5px;
+    margin:15px;
+    border-radius: 5px;
+    border:1px solid #5f6368;
+    color:white;
+    min-width:100px;
+    text-align: center;
+    cursor: move;
+    font-size: .8em;
+    background-color: #5f6368 
+}

@@ -136,7 +136,6 @@ export class DetailDialog {
   tabSwitch:boolean = false;
   currentIndex ;
 
-  readyToClosed:boolean;
   checkBoxState:boolean = false;
 
   total:number = 0;

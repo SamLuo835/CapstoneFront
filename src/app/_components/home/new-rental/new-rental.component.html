@@ -76,7 +76,7 @@
                 </td>    
                 </tr>
                 </table>           
-                <span *ngIf="hasPayableHistory" style="color:#003767;font-size: 0.8em">This customer has {{payableCount}} payable(s) in history.  <a class="redirectLink" (click)="redirectCustomerPage()">Check on customer page</a></span>
+                <span *ngIf="hasPayableHistory" style="color:#003767;font-size: 0.8em">This customer has {{payableCount}} payable(s) in history.  <a class="redirectLink" style="text-decoration: underline!important" (click)="redirectArchivedPage()">Check on archived rental page.</a></span>
 
                 <br><br>
                 <mat-form-field class="full-width">

@@ -217,11 +217,11 @@ export class NewRentalComponent implements OnInit {
 
 
 
-  redirectCustomerPage(){
+  redirectArchivedPage(){
     this.showForm = false;
     this._dataShare.changeShowForm(this.showForm);
 
-    this._dataShare.changeRedirectMessage({index:5,userId:this.resultUserData['sheridanId']});
+    this._dataShare.changeRedirectMessage({index:4,userId:this.resultUserData['sheridanId']});
   }
 
 }
