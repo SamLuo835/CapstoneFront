@@ -24,6 +24,7 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','status','more'];
 
   tableDetail:Object = {};
+  queryMessage:string;
 
   @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
@@ -31,13 +32,27 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit() {
-    this._core.customersDataCall().subscribe(res=>{ 
-      this.showSpinner = false;
-      this.tableData = res;
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    })
+    this.queryMessage = this._dataShare.getRedirectMessage();
+
+    if(this.queryMessage == null){
+        this._core.customersDataCall().subscribe(res=>{ 
+        this.showSpinner = false;
+        this.tableData = res;
+        this.dataSource = new MatTableDataSource(this.tableData);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      })
+    }
+    else{
+        this._core.searchCustomer(this.queryMessage['userId']).subscribe(res=>{ 
+        this.showSpinner = false;
+        this.tableData = res;
+        this.dataSource = new MatTableDataSource(this.tableData);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.input.nativeElement.value = this.queryMessage['userId'];
+      })
+    }
   }
 
 

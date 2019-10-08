@@ -167,14 +167,6 @@ export class DetailDialog {
     });
   }
 
-  closeReadyCheck(){
-    for(var i in this.categoryList){
-      if(this.categoryList[i].paid == false){
-        return false;
-      }
-    }
-    return true;
-  }
 
   myFilter = (d: Date): boolean => {
     const day = d.getDay();

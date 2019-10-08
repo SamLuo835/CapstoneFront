@@ -31,6 +31,9 @@ export class NewRentalComponent implements OnInit {
   resultUserData:Object = {};
   showForm:boolean =false;
 
+  hasPayableHistory:boolean;
+  payableCount:number;
+
   newRentalData={"comment":null,"customer":{}};  
   bikeFormControl:FormControl;
   lockFormControl:FormControl;
@@ -192,6 +195,15 @@ export class NewRentalComponent implements OnInit {
             this.lockList = JSON.parse((response));
           }
         )
+        this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']).subscribe(
+          response => {
+            if(response.length!=0){
+              this.hasPayableHistory = true;
+              this.payableCount = response.length;
+            }
+
+          }
+        )
       }
       else if(response.status == 204){
         this.showForm = false;
@@ -201,6 +213,15 @@ export class NewRentalComponent implements OnInit {
     },error=>{ 
       this.showForm = false;
       this.showSpinner = false;})
+  }
+
+
+
+  redirectCustomerPage(){
+    this.showForm = false;
+    this._dataShare.changeShowForm(this.showForm);
+
+    this._dataShare.changeRedirectMessage({index:5,userId:this.resultUserData['sheridanId']});
   }
 
 }

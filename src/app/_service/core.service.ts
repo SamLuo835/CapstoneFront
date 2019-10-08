@@ -21,23 +21,32 @@ export class CoreService {
 
   // private baseServerAddress: string = "http://localhost:8082";
    private baseServerAddress: string = "http://bike-rental-hmc.herokuapp.com";
-
+  
+   //bikes 
   private bikeListUrl: string = this.baseServerAddress + "/getBikes";
+  private newBikeUrl: string = this.baseServerAddress + "/newBike";
+  private editBikeUrl:string = this.baseServerAddress + "/editBike";
+
+  //active rental
   private activeRentalsUrl: string = this.baseServerAddress + "/getActiveRentals";
   private activeRentalDetailUrl: string = this.baseServerAddress + "/getActiveRental/";
-  private customersUrl: string = this.baseServerAddress + "/getCustomers/";
-  private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
-  private newBikeUrl: string = this.baseServerAddress + "/newBike";
-  
-  //TODO 
   private payableListUrl:string = this.baseServerAddress + "/getPayablesByRentalId";
-  private updateCategoryUrl:string = this.baseServerAddress + "/updatePayables";
   private returnBikeUrl:string = this.baseServerAddress + "/returnRental";
   private editRentalUrl:string = this.baseServerAddress + "/editRental";
+  private newRentalUrl:string = this.baseServerAddress + "/newRental";
+
+  //payables
+  private updateCategoryUrl:string = this.baseServerAddress + "/updatePayables";
+  private payablesByCustomerUrl:string = this.baseServerAddress + "/getPayablesByCustID";
+
+  //archivedRental
+  private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
+
+
+  //customer
+  private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
-  private newRentalUrl:string = this.baseServerAddress + "/newRental";
-  private editBikeUrl:string = this.baseServerAddress + "/editBike";
 
   //search
   private searchCustomerUrl:string = this.baseServerAddress + "/searchCustomers";
@@ -74,6 +83,14 @@ searchCustomer(keyWord):Observable<any>{
 
   getPayablesById(id):Observable<any>{
     return this.http.get(this.payableListUrl+"/"+id,httpOptions).pipe(catchError(()=>{
+      this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+      return throwError(
+      'Something bad happened; please try again later.');}));
+  }
+
+
+  getPayablesByCustomerId(id):Observable<any>{
+    return this.http.get(this.payablesByCustomerUrl+"/"+id,httpOptions).pipe(catchError(()=>{
       this.notification.notify( 'error', 'Something bad happened, please try again later.' );
       return throwError(
       'Something bad happened; please try again later.');}));
