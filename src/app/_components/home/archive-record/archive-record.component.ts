@@ -27,7 +27,7 @@ export class ArchiveRecordComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = [ 'id','signOutDate', 'dueDate', 'returnedDate', 'rentalState','detail'];
+  displayedColumns: string[] = [ 'id', 'bike-id', 'signOutDate', 'dueDate', 'returnedDate', 'rentalState','detail'];
 
   tableDetail:Object = {};
 
