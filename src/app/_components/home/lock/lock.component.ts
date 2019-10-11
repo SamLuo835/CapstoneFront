@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ElementRef } f
 import { CoreService } from '../../../_service/core.service';
 import {MatSort, MatTableDataSource,MatPaginator,MatDialogRef,MAT_DIALOG_DATA,MatDialog} from '@angular/material';
 import { NotifierService } from 'angular-notifier';
+import { DataShareService } from 'src/app/_service/data-share.service';
 
 @Component({
   selector: 'app-lock',
@@ -36,10 +37,9 @@ export class LockComponent implements OnInit {
     });
   }
 
-  openDialog(element): void {
-    console.log(element);
+  openDialog(element, action): void {
     const dialogRef = this._modal.open(LockDialog, {
-      data: {lock: element},
+      data: {lock: element, action: action},
       height: '600px',
       width: '600px',
       autoFocus: false,
@@ -62,18 +62,35 @@ export class LockComponent implements OnInit {
 })
 export class LockDialog {
   lock: any;
+  action:String = this.data.action;
 
   constructor(public dialogRef: MatDialogRef<LockDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core: CoreService,
-    private  notification: NotifierService) {}
+    private  notification: NotifierService,private _dataShare:DataShareService) {}
   
   ngOnInit() {
     this.lock = this.data.lock;
   }
 
-  saveChanges() {}
+  saveChanges() {
+    this._core.editLock(this.lock).subscribe(res => {
+      this.notification.notify('success', res.message);
+      this._core.getBikeList().subscribe(res => {
+        this._dataShare.changeLockList(JSON.parse(res))
+      })
+    }, error => {});
+  }
 
   onClick(): void {
     this.dialogRef.close({});
+  }
+
+  addLock() {
+    this._core.newLock(this.lock).subscribe(res => {
+      this.notification.notify('success', res.message);
+      this._core.getLockList().subscribe(res=>{
+        this._dataShare.changeLockList(JSON.parse(res));
+        },error =>{})
+    },error =>{});
   }
 }

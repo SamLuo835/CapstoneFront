@@ -134,7 +134,7 @@
                         <mat-label>Lock Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
                           <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
-                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock.id ">
+                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock.name ">
                             Lock #{{lock.name}}
                           </mat-option>
                           <mat-option value="Skip" *ngIf="bikeSelected == 'Skip'" style="background-color:#ffc107"> Skip </mat-option>

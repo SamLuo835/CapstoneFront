@@ -53,7 +53,7 @@ export class CoreService {
 
   //Locks
   private lockListUrl:string = this.baseServerAddress + "/getLocks";
-  private editLockUrl:string = this.baseServerAddress + "/editRental/";
+  private editLockUrl:string = this.baseServerAddress + "/editLock";
   private newLockUrl:string = this.baseServerAddress + "/newLock";
 
   test():Observable<any>{
@@ -209,6 +209,7 @@ searchCustomer(keyWord):Observable<any>{
   }
   
   editLock(editedLockInfo):Observable<any>{
+    editedLockInfo['@type'] = 'LockItem';
     return this.http.patch(this.editLockUrl, editedLockInfo, httpOptions).pipe(
       catchError((httpError) => {
         this.notification.notify('error', httpError.error.message);
@@ -218,6 +219,7 @@ searchCustomer(keyWord):Observable<any>{
   }
 
   newLock(newLock):Observable<any>{
+    newLock['@type'] = 'LockItem';
     return this.http.post(this.newLockUrl, newLock, httpOptions).pipe(
       catchError((httpError) => {
         this.notification.notify('error', httpError.error.message);

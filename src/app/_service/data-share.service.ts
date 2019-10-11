@@ -34,6 +34,9 @@ export class DataShareService {
 
   currentBikeList = this.bikeList.asObservable();
 
+  private lockList = new BehaviorSubject([]);
+  currentLockList = this.lockList.asObservable();
+
   private redirectMessage = new BehaviorSubject(null);
 
   currentRedirectMessage = this.redirectMessage.asObservable();
@@ -89,4 +92,11 @@ export class DataShareService {
     return this.bikeList.getValue();
   }
 
+  //Lock related
+  getLockList() {
+    return this.lockList.getValue();
+  }
+  changeLockList(message : Array<any>) {
+    this.lockList.next(message);
+  }
 }

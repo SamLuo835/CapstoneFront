@@ -1,6 +1,11 @@
-<h1 mat-dialog-title>Lock ID: {{lock.name}}
+<h1 mat-dialog-title *ngIf="action == 'modify'">Lock ID: {{lock.name}}
   <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
     <span aria-hidden="true">&times;</span>
+  </button>
+</h1>
+<h1 mat-dialog-title *ngIf="action == 'create'">Add a New Lock
+  <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
   </button>
 </h1>
 
@@ -12,7 +17,7 @@
         <tr>
           <td>
             <mat-form-field class="full-width">
-              <input matInput [(ngModel)]="lock.id" [(value)]="lock.id" placeholder="Lock ID">
+              <input matInput [(ngModel)]="lock.name" [(value)]="lock.name" placeholder="Lock ID">
             </mat-form-field>
           </td>
         </tr>
@@ -50,9 +55,12 @@
   </mat-tab-group>
 
   <hr>
-    <div style="display: flex;justify-content: space-between">
-      <mat-dialog-actions class="close-dialog">
-        <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
-      </mat-dialog-actions>
-    </div>
+  <div style="display: flex;justify-content: space-between">
+    <mat-dialog-actions class="close-dialog" *ngIf="action == 'modify'">
+      <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
+    </mat-dialog-actions>
+    <mat-dialog-actions class="close-dialog " *ngIf="action == 'create'">
+      <button class="btn btn-warning" mat-dialog-close (click)="addLock()" style="font-weight: 500">ADD LOCK</button>
+    </mat-dialog-actions>
+  </div>
 </div>

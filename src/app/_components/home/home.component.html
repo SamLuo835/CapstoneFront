@@ -16,5 +16,6 @@
 
 
 </div>
-<div class="addBike" *ngIf="componentIndex === 1" (click)="openDialog()" mat-raised-button matTooltip="Add a New Bike" [matTooltipPosition]="position"></div>
+<div class="addBike" *ngIf="componentIndex === 1" (click)="openBikeDialog()" mat-raised-button matTooltip="Add a New Bike" [matTooltipPosition]="position"></div>
+<div class="addLock" *ngIf="componentIndex === 2" (click)="openLockDialog()" mat-raised-button matTooltip="Add a New Lock" [matTooltipPosition]="position"></div>
 </div>

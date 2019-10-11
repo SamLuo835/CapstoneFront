@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BikeDialog } from './bike-inventory/bike-inventory.component';
+import { LockDialog } from './lock/lock.component';
 import { MatDialog } from '@angular/material';
 import {TooltipPosition} from '@angular/material/tooltip';
 
@@ -26,17 +27,32 @@ export class HomeComponent implements OnInit {
     this.componentIndex = $event;
     }
 
-    openDialog(): void { 
+    openBikeDialog(): void { 
       const dialogRef = this._modal.open(BikeDialog, {
-        data:{bike:{state:'',id:null,imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
+        data:{bike:{ state:'',name: null,imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
        height: '600px',
        width: '600px',
        autoFocus:false,
        disableClose: true
      });
-     dialogRef.afterClosed().subscribe(result => {
-       console.log('The dialog was closed');
-     }); 
+     this.closeDialog(dialogRef); 
+    }
+
+    openLockDialog(): void {
+      const dialogRef = this._modal.open(LockDialog, {
+        data: {lock: { name: '', keyNum: '', state: '', notes: ''}, action: 'create'},
+        height: '600px',
+        width: '600px',
+        autoFocus: false,
+        disableClose: true
+      });
+     this.closeDialog(dialogRef);
     }
   
+    closeDialog(dialogRef): void {
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
+
 }
