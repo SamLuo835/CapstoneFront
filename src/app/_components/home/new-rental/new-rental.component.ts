@@ -73,7 +73,11 @@ export class NewRentalComponent implements OnInit {
       this.showForm = false;
       this._dataShare.changeShowForm(this.showForm);
       this._dataShare.changeWaiverSubmit(false);
-      
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });   
     }
   }))
   this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {

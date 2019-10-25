@@ -222,7 +222,7 @@
       <br>
       <h6 class="highLight">I HAVE READ AND UNDERSTOOD THIS AGREEMENT AND I AM AWARE THAT BY SIGNING THIS AGREEMENT I AM WAIVING CERTAIN LEGAL RIGHTS WHICH I OR MY HEIRS, NEXT OF KIN, EXECUTORS, ADMINISTERS AND ASSIGNS MAY HAVE AGAINST THE RELEASEES.  I DECLARE THAT I HAVE SIGNED IT FREELY AND WITHOUT ANY INDUCEMENT OR ASSURANCES OF ANY KIND WHATSOEVER. I AGREE THAT IF ANY PORTION OF THIS AGREEMENT IS HELD TO BE INVALID, THE REMAINDER SHALL CONTINUE IN FULL FORCE AND EFFECT.</h6>
       <br>
-      <div>
+      <div style = "display: flex;flex-direction: column;text-align: center;">
         <mat-checkbox color='primary' name="waiverBox" [checked]="waiverFormRequire"  (change)="waiverCheck($event)">I have read and signed the waiver</mat-checkbox>
         <p>Signed this day of {{getDate()}}</p>  
 
