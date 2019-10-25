@@ -29,7 +29,8 @@ export class NewRentalComponent implements OnInit {
   lockSelected:String = "";
   basketSelected:String = "";
   resultUserData:Object = {};
-  showForm:boolean =false;
+  showForm:boolean = false;
+  showWaiver:boolean = false;
 
   hasPayableHistory:boolean;
   payableCount:number;
@@ -39,10 +40,13 @@ export class NewRentalComponent implements OnInit {
   lockFormControl:FormControl;
   basketFormControl:FormControl;
 
+
+  
   lockList:Array<any> = [];
   basketList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
+  waiverFormRequire:boolean;
   subsctiptions:Array<any> = [];
 
   submitting:boolean = false;
@@ -55,18 +59,36 @@ export class NewRentalComponent implements OnInit {
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
+    this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
     this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
+    this.subsctiptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
+
     this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
     this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      this.submitting = true;
-      this.createCustomerRental();
+      //show waiver
+      this.createRentalDetail();
+      this._dataShare.changeSubmit(false);
+      this.showWaiver = true;
+      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.showForm = false;
+      this._dataShare.changeShowForm(this.showForm);
+      this._dataShare.changeWaiverSubmit(false);
+      
     }
-  }));
+  }))
+  this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
+    if(message){
+        this.submitting = true
+        this.saveRental();
+    }
+    }
+  ));
+
   }
 
 
 
-  createCustomerRental(){
+  createRentalDetail(){
       this.newRentalData['comment'] = this.comment
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
@@ -76,24 +98,28 @@ export class NewRentalComponent implements OnInit {
       if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected},{'@type':'Basket','id':this.basketSelected}];
 
-      this._coreService.newRental(this.newRentalData).subscribe(res=>{
-        this.submitting = false;
-        this._dataShare.changeSubmit(false);
-        this.showForm = false;
-        this._dataShare.changeShowForm(this.showForm);
-        this.notification.notify( 'success', 'New Rental Created.' );
-        //refresh the data share's bikelist since the back end update one bike availablity
-        this._coreService.getBikeList().subscribe(res=>{
-          //calling this will trigger the subscribe event that listening on bike list in other component
-            this._dataShare.changeBikeList( JSON.parse(res));
-            }
-          )
-      },error=>{
-        this.submitting = false;
-        this._dataShare.changeSubmit(false);
-        this.showForm = false;
-        this._dataShare.changeShowForm(this.showForm);
-        console.log(error)})
+  }
+
+
+  saveRental(){
+    this._coreService.newRental(this.newRentalData).subscribe(res=>{
+      this.submitting = false;
+      this._dataShare.changeWaiverSubmit(false);
+      this.showWaiver = false;
+      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.notification.notify( 'success', 'New Rental Created.' );
+      //refresh the data share's bikelist since the back end update one bike availablity
+      this._coreService.getBikeList().subscribe(res=>{
+        //calling this will trigger the subscribe event that listening on bike list in other component
+          this._dataShare.changeBikeList( JSON.parse(res));
+          }
+        )
+    },error=>{
+      this.submitting = false;
+      this._dataShare.changeWaiverSubmit(false);
+      this.showWaiver = false;
+      this._dataShare.changeShowWaiver(this.showWaiver);
+      console.log(error)})
   }
 
   idFormControl = new FormControl('', [
@@ -125,10 +151,16 @@ export class NewRentalComponent implements OnInit {
     if(this.stepper.selectedIndex == 0){
       this.lockSelected = "";
     }
-    console.log(this.formRequire)
     this._dataShare.changeForm(this.formRequire);
-    console.log(this.bikeSelected);
     this.stepper.next();
+  }
+
+  waiverCheck(){
+    if(this.waiverFormRequire){
+      this.waiverFormRequire = false;
+    }
+    else this.waiverFormRequire = true;
+    this._dataShare.changeWaiverForm(this.waiverFormRequire);
   }
 
   matcher = new MyErrorStateMatcher();
@@ -216,6 +248,20 @@ export class NewRentalComponent implements OnInit {
   }
 
 
+  getDate(){
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+    var date = new Date()
+    return date.getDate()+", "+ monthNames[date.getMonth()]+", "+ date.getFullYear(); 
+  }
+
+  getAcdemicYear(){
+    var date = new Date()
+    if(8 <= date.getMonth() &&  date.getMonth() <=11){
+      return date.getFullYear()+1;
+    }
+    else return date.getFullYear();
+  }
 
   redirectArchivedPage(){
     this.showForm = false;

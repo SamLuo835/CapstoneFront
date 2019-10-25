@@ -41,3 +41,10 @@
     font-family: 'Roboto',sans-serif;
     font-weight: 500;
 }
+
+.highLight{
+  font-family: 'Roboto';
+  font-weight: 600;
+  font-style: italic;
+  
+}

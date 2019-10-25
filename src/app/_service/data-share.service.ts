@@ -10,6 +10,10 @@ export class DataShareService {
   
   currentRetnalForm = this.showFormSource.asObservable();
 
+  private showWaiverSource = new BehaviorSubject(false);
+
+  currentWaiverForm = this.showWaiverSource.asObservable();
+
   private showCustomerFormSource = new BehaviorSubject(false);
 
   currentCustomerForm = this.showCustomerFormSource.asObservable();
@@ -18,6 +22,10 @@ export class DataShareService {
 
   currentFormRequire = this.FromRequiredSource.asObservable();
 
+  private waiverFormRequiredSource = new BehaviorSubject(false);
+
+  currentWaiverRequire = this.waiverFormRequiredSource.asObservable()
+
   private customerFormRequiredSource = new BehaviorSubject([]);
 
   currentCustomerFormRequire = this.customerFormRequiredSource.asObservable();
@@ -25,6 +33,10 @@ export class DataShareService {
   private formSubmit = new BehaviorSubject(false);
 
   currentFormSubmit = this.formSubmit.asObservable();
+
+  private waiverSubmit = new BehaviorSubject(false);
+
+  currentWaiverSubmit = this.waiverSubmit.asObservable();
 
   private customerFormSubmit = new BehaviorSubject(false);
 
@@ -63,11 +75,18 @@ export class DataShareService {
     this.showCustomerFormSource.next(message)
   }
 
+  changeShowWaiver(message:boolean){
+    this.showWaiverSource.next(message)
+  }
+
 
 
   //form required observable, disable the submit button and display error text when required field missing
   changeForm(message : Array<any>){
     this.FromRequiredSource.next(message)
+  }
+  changeWaiverForm(message:boolean){
+    this.waiverFormRequiredSource.next(message)  
   }
 
   changeCustomerForm(message : Array<any>){
@@ -77,6 +96,10 @@ export class DataShareService {
   //submit button event emit, as the submit button and the rental form are in different component
   changeSubmit(message : boolean){
     this.formSubmit.next(message);
+  }
+
+  changeWaiverSubmit(message:boolean){
+    this.waiverSubmit.next(message);
   }
 
   changeCustomerSubmit(message : boolean){
