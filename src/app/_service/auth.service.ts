@@ -33,7 +33,7 @@ export class AuthService {
   logoutUser(){
     localStorage.removeItem('role');
     localStorage.removeItem('token');
-    this._dataShare.changeShowForm(false);
+    this._dataShare.changeRentalShowForm(false);
     this._dataShare.changeCustomerShowForm(false);
     this.router.navigate(['/login']);
   }

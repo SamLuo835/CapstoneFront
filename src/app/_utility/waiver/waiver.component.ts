@@ -19,7 +19,7 @@ export class WaiverComponent implements OnInit {
     this.subsctiptions.forEach( s => s.unsubscribe());
   }
 
-  waiverCheck(){
+  waiverCheck($event){
     if(this.waiverFormRequire){
       this.waiverFormRequire = false;
     }
