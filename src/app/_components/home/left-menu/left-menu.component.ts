@@ -149,16 +149,19 @@ export class LeftMenuComponent implements OnInit {
     if(form == 'rental'){
       this.formDisplay = false;
       this._dataShare.changeShowForm(this.formDisplay);
-      this.waiverDisplay = false;
-      this._dataShare.changeShowWaiver(this.waiverDisplay)
+      this.formRequire = []
     }
     if(form == 'customer'){
+      this.waiverDisplay = false;
+      this._dataShare.changeShowWaiver(this.waiverDisplay)
       this.customerFormDisplay = false;
       this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
-      this.componentIndex = 1;
-      this.messageEvent.emit(this.componentIndex);
-      this.panelOpenState = true;
+      this.customerFormRequire = []
+      this.waiverRequire = false;
     }
+    this.componentIndex = 1;
+    this.messageEvent.emit(this.componentIndex);
+    this.panelOpenState = true;
     window.scroll({
       top: 0,
       left: 0,
@@ -174,7 +177,6 @@ export class LeftMenuComponent implements OnInit {
       this._dataShare.changeWaiverSubmit(true);
     }
     if(form == 'customer'){
-      console.log('customer submit')
       this._dataShare.changeCustomerSubmit(true);
     }
   }

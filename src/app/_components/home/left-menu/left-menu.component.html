@@ -29,18 +29,17 @@
 
   <button class="btn btn-light" style="width:100%;font-family: 'Roboto'" (click)="buttonClick('newCustomer')"  *ngIf="!formDisplay && !customerFormDisplay && !waiverDisplay"> New Customer</button>
 
-  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('customer')" *ngIf="customerFormDisplay">Cancel</button>
+  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('customer')" *ngIf="customerFormDisplay || waiverDisplay">Cancel</button>
 
-  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('rental')" *ngIf="formDisplay || waiverDisplay">Cancel Rental</button>
+  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('rental')" *ngIf="formDisplay">Cancel Rental</button>
   <br><br>
-  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('rental')" *ngIf="formDisplay" (click)="submit('rental')">Next</button>
-  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('waiver')" *ngIf="waiverDisplay" (click)="submit('waiver')">Save Rental</button>
+  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('rental')" *ngIf="formDisplay" (click)="submit('rental')">Save Rental</button>
 
-  <span *ngIf="checkFormRequire('rental') && formDisplay || checkFormRequire('waiver')&& waiverDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
-
+  <span *ngIf="checkFormRequire('rental') && formDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
 
 
-  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('customer')" *ngIf="customerFormDisplay" (click)="submit('customer')"> Save Customer</button>
-  <span *ngIf="checkFormRequire('customer') && customerFormDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
+  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('waiver')" *ngIf="waiverDisplay" (click)="submit('waiver')">Save Customer</button>
+  <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('customer')" *ngIf="customerFormDisplay" (click)="submit('customer')"> Next</button>
+  <span *ngIf="checkFormRequire('customer') && customerFormDisplay  || checkFormRequire('waiver')&& waiverDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
 
 

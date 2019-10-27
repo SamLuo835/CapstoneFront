@@ -30,7 +30,6 @@ export class NewRentalComponent implements OnInit {
   basketSelected:String = "";
   resultUserData:Object = {};
   showForm:boolean = false;
-  showWaiver:boolean = false;
 
   hasPayableHistory:boolean;
   payableCount:number;
@@ -46,10 +45,8 @@ export class NewRentalComponent implements OnInit {
   basketList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
-  waiverFormRequire:boolean;
   subsctiptions:Array<any> = [];
 
-  submitting:boolean = false;
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
@@ -59,35 +56,15 @@ export class NewRentalComponent implements OnInit {
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
-    this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
     this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
-    this.subsctiptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
 
     this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
     this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      //show waiver
+      this.showSpinner = true
       this.createRentalDetail();
-      this._dataShare.changeSubmit(false);
-      this.showWaiver = true;
-      this._dataShare.changeShowWaiver(this.showWaiver);
-      this.showForm = false;
-      this._dataShare.changeShowForm(this.showForm);
-      this._dataShare.changeWaiverSubmit(false);
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });   
+      this.saveRental();
     }
   }))
-  this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
-    if(message){
-        this.submitting = true
-        this.saveRental();
-    }
-    }
-  ));
-
   }
 
 
@@ -107,10 +84,10 @@ export class NewRentalComponent implements OnInit {
 
   saveRental(){
     this._coreService.newRental(this.newRentalData).subscribe(res=>{
-      this.submitting = false;
-      this._dataShare.changeWaiverSubmit(false);
-      this.showWaiver = false;
-      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.showSpinner = false;
+      this._dataShare.changeSubmit(false);
+      this.showForm = false;
+      this._dataShare.changeShowForm(this.showForm);
       this.notification.notify( 'success', 'New Rental Created.' );
       //refresh the data share's bikelist since the back end update one bike availablity
       this._coreService.getBikeList().subscribe(res=>{
@@ -119,10 +96,10 @@ export class NewRentalComponent implements OnInit {
           }
         )
     },error=>{
-      this.submitting = false;
-      this._dataShare.changeWaiverSubmit(false);
-      this.showWaiver = false;
-      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.showSpinner = false;
+      this._dataShare.changeSubmit(false);
+      this.showForm = false;
+      this._dataShare.changeShowForm(this.showForm);
       console.log(error)})
   }
 
@@ -159,13 +136,6 @@ export class NewRentalComponent implements OnInit {
     this.stepper.next();
   }
 
-  waiverCheck(){
-    if(this.waiverFormRequire){
-      this.waiverFormRequire = false;
-    }
-    else this.waiverFormRequire = true;
-    this._dataShare.changeWaiverForm(this.waiverFormRequire);
-  }
 
   matcher = new MyErrorStateMatcher();
 
@@ -224,7 +194,6 @@ export class NewRentalComponent implements OnInit {
         this.bikeSelected = ""; 
         this.createFormControl()
         this.showForm = true;
-        this.showSpinner = false;
         this._dataShare.changeShowForm(this.showForm);
         this._coreService.getLockList().subscribe(
           response => {
@@ -237,7 +206,7 @@ export class NewRentalComponent implements OnInit {
               this.hasPayableHistory = true;
               this.payableCount = response.length;
             }
-
+            this.showSpinner = false;
           }
         )
       }
@@ -252,20 +221,6 @@ export class NewRentalComponent implements OnInit {
   }
 
 
-  getDate(){
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    var date = new Date()
-    return date.getDate()+", "+ monthNames[date.getMonth()]+", "+ date.getFullYear(); 
-  }
-
-  getAcdemicYear(){
-    var date = new Date()
-    if(8 <= date.getMonth() &&  date.getMonth() <=11){
-      return date.getFullYear()+1;
-    }
-    else return date.getFullYear();
-  }
 
   redirectArchivedPage(){
     this.showForm = false;

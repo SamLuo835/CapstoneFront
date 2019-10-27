@@ -7,14 +7,14 @@ import 'rxjs/add/operator/take'
 import { NotifierService } from 'angular-notifier';
 
 
-export interface newCustomerData{
-  firstName:String;
-  lastName:String;
-  phone:String;
-  personalEmail:String;
-  sheridanEmail:String;
-  type:String;
-  sheridanId:String;
+export class newCustomerData{
+  firstName:String ="";
+  lastName:String ="";
+  phone:String ="";
+  personalEmail:String ="";
+  sheridanEmail:String ="";
+  type:String ="";
+  sheridanId:String ="";
 
 }
 
@@ -32,7 +32,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class NewCustomerComponent implements OnInit {
 
-  customerData : newCustomerData = {firstName:'',lastName:'',phone:'',sheridanEmail:'',personalEmail:'',type:'',sheridanId:''};
+  customerData : newCustomerData = new newCustomerData();
 
   showForm:boolean =false;
 
@@ -42,6 +42,11 @@ export class NewCustomerComponent implements OnInit {
 
   submitting :boolean = false;
 
+  showWaiver:boolean = false;
+
+  waiverFormRequire:boolean;
+
+
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
@@ -50,11 +55,30 @@ export class NewCustomerComponent implements OnInit {
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
+    this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
+    this.subsctiptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
+
     this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
       this._dataShare.changeCustomerSubmit(false);
-      this.createCustomer();
+      //show waiver
+      this.showWaiver = true;
+      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.showForm = false;
+      this._dataShare.changeCustomerShowForm(this.showForm);
+      this._dataShare.changeWaiverSubmit(false);
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });   
     }}));
+    this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
+      if(message){
+         this.createCustomer();
+        }
+      }
+    ));
   }
 
   createCustomer(){
@@ -69,13 +93,18 @@ export class NewCustomerComponent implements OnInit {
           this._coreService.newCustomer(this.customerData).subscribe(res => {
             this.submitting = false;
             this.notification.notify( 'success', 'New Customer Created.' );
-            this.showForm = false;
-          this._dataShare.changeCustomerShowForm(this.showForm);
+            this.showWaiver = false;
+            this._dataShare.changeShowWaiver(this.showWaiver);
+            this.customerData = new newCustomerData();
+            this.waiverFormRequire = false;
+            this._dataShare.changeWaiverForm(this.waiverFormRequire)
+            this.formRequire = []
         },error=>{this.submitting = false;        
       })
       }
     },error=>{ this.submitting = false;
     })
+    this._dataShare.changeWaiverSubmit(false);
   }
 
 
@@ -133,6 +162,14 @@ export class NewCustomerComponent implements OnInit {
     this._dataShare.changeCustomerForm(this.formRequire);
   }
 
+  waiverCheck(){
+    if(this.waiverFormRequire){
+      this.waiverFormRequire = false;
+    }
+    else this.waiverFormRequire = true;
+    this._dataShare.changeWaiverForm(this.waiverFormRequire);
+  }
+
   accept(){
     window.scroll({
       top: 0,
@@ -143,6 +180,21 @@ export class NewCustomerComponent implements OnInit {
     this._dataShare.changeCustomerShowForm(this.showForm);
     this.formRequire = [true,true,true,true,true,true]
     this._dataShare.changeCustomerForm(this.formRequire);
+  }
+
+  getDate(){
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+    var date = new Date()
+    return date.getDate()+", "+ monthNames[date.getMonth()]+", "+ date.getFullYear(); 
+  }
+
+  getAcdemicYear(){
+    var date = new Date()
+    if(8 <= date.getMonth() &&  date.getMonth() <=11){
+      return date.getFullYear()+1;
+    }
+    else return date.getFullYear();
   }
 
 }
