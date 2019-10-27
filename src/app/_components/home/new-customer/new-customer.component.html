@@ -1,38 +1,6 @@
 <div class="row" *ngIf="!showForm && !showWaiver">
     <div class="col-md-12 " style="margin-left: 35px">
-        <div class="container" style="background-color: white;padding:20px;border-radius: 10px">
-          <h3 style="text-align: center">Terms And Conditions</h3>
-          <p>The Sheridan Bike Hub provides free services to members of the Sheridan Community. Anyone who abuses the program will be banned from accessing Sheridan Bike Hub services. 
-              Renting a bike is a privilege, not a right; please treat the program with respect. 
-              Sheridan Bike Hub equipment includes: bikes, lock, key, basket as well as all tools owned by Sheridan Office for Sustainability.
-          </p>
-          <ul>
-            <li>Renters must provide their Sheridan information, read and sign a waiver before signing out any equipment. </li>
-            <li><u>Renters can <strong>only</strong> rent equipment for their own</u> use using their OneCard. Do not share rental equipment with others.</li>
-            <li>Bike rentals are for a one-week period and must be returned afterwards. There are no renewals of the same bike.</li>
-            <li>All equipment must be returned during the Sheridan Bike Hub hours of operation on their due date to avoid late penalties. If for any reason you cannot return it on time, you must e-mail the Sheridan Bike Hub before your due date and request to have the bike returned the next business day. </li>
-          </ul>
-          <h5>Fines</h5>
-          <ul>
-            <li> Late penalty: <strong>$5 a day</strong> up to a maximum of two weeks after which the bike will be reported missing to the Peel Police</li>
-            <li> <strong>$5</strong> loss/damage to bike lights</li>
-            <li> <strong>$20</strong> loss/damage to the key</li>
-            <li> <strong>$40</strong> loss/damage to the basket</li>
-            <li> <strong>$60</strong> loss/damage to a lock</li>
-          </ul>
-          <h5>Renting privileges will be suspended until all fines are paid in full.</h5>
-          <ul>
-            <li>Fines are charged by the Sheridan Bike Hub Staff. You will be given a slip that states the charges on your account. Payment of the charges should be made at the Office of the Registrar desk by Debit. Return the slip to the Sheridan Bike Hub Staff once the charges have been paid in order to restore the rental privileges. </li>
-            <li>Sheridan has the right to (a) withhold official transcripts; (b) deny further registration; (c) administrate encumbrance; (d) apply financial penalty to the student account where fees are left unpaid. </li>
-            <li>Renters will be held financially responsible for any loss or damage to any equipment (bike, lock, basket, etc.) while they are signed out. </li>
-            <li>Renters are responsible for knowing and obeying all traffic laws and taking safety precautions. Do not rent a bike if you are unsure of your riding ability. The Sheridan Bike Hub and its affiliates will not be responsible for any damages to yourself, others or property that may have occurred while using the Sheridan Bike Hub equipment. </li>
-            <li>Sheridan Bike Hub Staff have the right to refuse rental of a bike to any person(s). </li>
-          </ul>
-          <br>
-          <div style="display: flex">
-            <button style="margin:auto;border-radius:4px;padding:10px" class="btn-light btn" (click)="accept()">I accept the Terms and Conditions.</button>
-          </div>
-        </div>
+       <app-terms-condition (messageEvent)="receiveMessage($event)"></app-terms-condition>
     </div>
 </div>
 <div class="row" *ngIf="showForm && !showWaiver">
@@ -121,44 +89,6 @@
 <div class="row" *ngIf="!showForm && showWaiver">
     <mat-spinner  diameter='40' *ngIf="submitting" style="position: absolute;z-index: 10;"></mat-spinner>
     <div class="col-md-12 " *ngIf="!submitting">
-      <div class="container" style="background-color: white;border-radius: 5px;max-height: 80vh; overflow: auto;margin:5px">
-        <h6  class="highLight" style="text-align: center; margin-top: 10px;">SHERIDAN BIKE HUB RENTAL PROGRAM: RELEASE OF LIABILITY, WAIVER OF CLAIMS, ASSUMPTION OF RISKS AND INDEMNITY AGREEMENT</h6>
-  
-        <h6 class="highLight" style="text-align: center;">WARNING: BY SIGNING THIS DOCUMENT YOU WILL WAIVE CERTAIN LEGAL RIGHTS, INCLUDING THE RIGHT TO SUE.</h6>
-            
-        <h6 class="highLight" style="text-align: center;">PLEASE READ CAREFULLY!</h6>
-        <br>
-        <p>I, the undersigned, do hereby acknowledge the following:</p>
-        <p>1) I am at least 18 years of age;</p>
-        <p>2) I am legally competent to sign this Release of Liability, Waiver of Claims, Assumption of Risks and Indemnity Agreement for participation in The Sheridan College Institute of Technology and Advanced Learning (“Sheridan”) Bike Hub Rental Program;</p>
-        <p>3) I have the requisite cycling experience to operate the rental bike and I will not misuse or unduly abuse the rental bike;</p>
-        <p>4) My use and/or participation in the Sheridan Bike Hub Rental Program is entirely voluntary;</p>
-        <p>5) I have a personal duty and responsibility to learn and to follow road safety standards, guidelines, and procedures, and to operate the rental bike in a manner appropriate to any and all prevailing road and weather conditions. I understand that I need to wear a helmet at all times while operating the rental bike and practice safe cycling while the bike is in my possession. I also acknowledge that it is my responsibility to ensure that the rental bike is in good working condition at all times;</p>
-        <p>6) I understand that I am responsible for the well being of the bike while it is under my possession, including theft and any physical damage to the bike, and I hereby am responsible for paying the costs of replacing or repairing the bike, and any additional costs associated with the loss of the bike, if such theft or damage occurs. I also acknowledge that I am responsible for maintaining function and ensuring replacement of the rental bike’s accessories including but not limited to lights, key, lock, and basket;</p>
-        <p>7) In the event that the bike is not returned as and when due and I cannot be reached for two weeks after the return date, Sheridan Bike Hub will report the bike stolen to the Region of Peel Police; and</p>
-        <p>8) I accept full responsibility for the rental bike for the duration of the rental and it is my responsibility to check for flaws, defects, and damage prior to accepting the rental bike. I understand that all charges for the rental are applied at the time that the bike is in my possession, whether it is in use or not.</p>
-        <br>
-        <h6 class="highLight">ASSUMPTION OF RISK:</h6>
-        <p>I understand and accept that renting this bike and participating in cycling involves risks not limited to: loss or damage to personal property, all manner of personal injury, injury resulting from falling on uneven or slippery terrain including man made features, impacting against the floor, ground, trees, rocks, cement, course structures or other obstructions; impacting with other users of the road; potential for bone and muscular skeletal injury such as sprains and strains; any illness or injury resulting from exposure to cold, wet or windy weather, or the effects of heat and strong sunlight, or any insect bites/stings; any manner of injury or illness resulting from cycling; inability to access medical help in an emergency; cuts and abrasions from ground contact and/ or the bike; negligence of other road users; and other unforeseen dangers and risks. I have no medical conditions, nor have I been diagnosed with a condition that prevents me from cycling. </p>
-        <p>I freely accept and fully assume all such risks, dangers and hazards and the possibility of personal injury, death, property damage or loss, resulting therefrom.</p>
-        <br>
-        <h6 class="highLight">RELEASE OF LIABILITY, WAIVER OF CLAIMS AND INDEMNITY AGREEMENT </h6>
-        <p>In consideration of The Sheridan College Institute of Technology and Advanced Learning (“Sheridan”) Bike Hub Rental Program renting me this bike, I agree as follows:</p>
-        <p>1.	TO WAIVE ANY AND ALL CLAIMS that I have or may have in the future against Sheridan, the Board of Governors of Sheridan and its members, officers, employees, students, agents, volunteers and independent contractors (all of whom are hereinafter collectively referred to as “Releasees”);</p>
-        <p>2.	TO RELEASE THE RELEASEES from any and all liability for any loss, damage, injury or expense that I may suffer, or that my next of kin may suffer as a result of my participation in the Sheridan Bike Rental Program due to any cause whatsoever INCLUDING NEGLIGENCE, BREACH OF CONTRACT, OR BREACH OF ANY STATUTORY OR OTHER DUTY OF CARE; </p>
-        <p>3.	TO HOLD HARMLESS AND INDEMNIFY THE RELEASEES from any and all liability for any damage to the property of, or personal injury to any third party, resulting from my participation in the Sheridan Bike Rental Program; and </p>
-        <p>4.	This agreement shall be effective and binding upon my heirs, next of kin, executors, administrators, assigns and representatives in the event of death or incapacity. </p>
-        <p>In entering into this Agreement, I am not relying upon any oral or written representations of statements made by the Releasees other than what is set forth in this Agreement. </p>
-        <br>
-        <h6 class="highLight">I HAVE READ AND UNDERSTOOD THIS AGREEMENT AND I AM AWARE THAT BY SIGNING THIS AGREEMENT I AM WAIVING CERTAIN LEGAL RIGHTS WHICH I OR MY HEIRS, NEXT OF KIN, EXECUTORS, ADMINISTERS AND ASSIGNS MAY HAVE AGAINST THE RELEASEES.  I DECLARE THAT I HAVE SIGNED IT FREELY AND WITHOUT ANY INDUCEMENT OR ASSURANCES OF ANY KIND WHATSOEVER. I AGREE THAT IF ANY PORTION OF THIS AGREEMENT IS HELD TO BE INVALID, THE REMAINDER SHALL CONTINUE IN FULL FORCE AND EFFECT.</h6>
-        <br>
-        <div style = "display: flex;flex-direction: column;text-align: center;">
-          <mat-checkbox color='primary' name="waiverBox" [checked]="waiverFormRequire"  (change)="waiverCheck($event)">I have read and signed the waiver</mat-checkbox>
-          <p>Signed this day of {{getDate()}}</p>  
-  
-        </div>
-        <br>
-        <h6 class="highLight">This Agreement must be completed in full, signed, dated, and witnessed prior to participation in the Sheridan Bike Rental Program. This agreement is valid for this academic year, from the date of signing until Aug 31, {{getAcdemicYear()}}.</h6>
-      </div>
+      <app-waiver></app-waiver>
       </div>
   </div>

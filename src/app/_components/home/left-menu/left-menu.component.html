@@ -40,6 +40,7 @@
 
   <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('waiver')" *ngIf="waiverDisplay" (click)="submit('waiver')">Save Customer</button>
   <button class="btn btn-success " style="width:100%;font-family: 'Roboto'" [disabled]="checkFormRequire('customer')" *ngIf="customerFormDisplay" (click)="submit('customer')"> Next</button>
-  <span *ngIf="checkFormRequire('customer') && customerFormDisplay  || checkFormRequire('waiver')&& waiverDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
+  <span *ngIf="checkFormRequire('customer') && customerFormDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
 
+  <span *ngIf=" checkFormRequire('waiver')&& waiverDisplay" class="text-danger" style="font-size: 0.7rem">Missing one or more require fields</span>
 

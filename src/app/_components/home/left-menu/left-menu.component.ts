@@ -140,7 +140,7 @@ export class LeftMenuComponent implements OnInit {
     this.customerFormDisplay = false;
     this.waiverDisplay = false;
     this._dataShare.changeShowWaiver(this.waiverDisplay);
-    this._dataShare.changeShowForm(this.formDisplay);
+    this._dataShare.changeRentalShowForm(this.formDisplay);
     this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
 
   }
@@ -148,16 +148,13 @@ export class LeftMenuComponent implements OnInit {
   cancel(form){
     if(form == 'rental'){
       this.formDisplay = false;
-      this._dataShare.changeShowForm(this.formDisplay);
-      this.formRequire = []
+      this._dataShare.changeRentalShowForm(this.formDisplay);
     }
     if(form == 'customer'){
       this.waiverDisplay = false;
       this._dataShare.changeShowWaiver(this.waiverDisplay)
       this.customerFormDisplay = false;
       this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
-      this.customerFormRequire = []
-      this.waiverRequire = false;
     }
     this.componentIndex = 1;
     this.messageEvent.emit(this.componentIndex);
@@ -171,7 +168,7 @@ export class LeftMenuComponent implements OnInit {
 
   submit(form){
     if(form == 'rental'){
-      this._dataShare.changeSubmit(true);
+      this._dataShare.changeRentalSubmit(true);
     }
     if(form == 'waiver'){
       this._dataShare.changeWaiverSubmit(true);

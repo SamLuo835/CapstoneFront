@@ -56,7 +56,7 @@ export class AppComponent {
   }
 
   goToPage(){
-    this._dataShare.changeShowForm(false);
+    this._dataShare.changeRentalShowForm(false);
     this._dataShare.changeCustomerShowForm(false);
     this._dataShare.changeShowWaiver(false);
   }
@@ -138,7 +138,7 @@ export class TimeoutDialog {
         this.menu.closeMenu();
       }
     }
-    this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);this._dataShare.changeCustomerShowForm(false);
+    this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeRentalShowForm(false);this._dataShare.changeCustomerShowForm(false);
   });
   }
 

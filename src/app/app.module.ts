@@ -49,7 +49,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatStepperModule} from '@angular/material/stepper';
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import { WaiverComponent } from './_utility/waiver/waiver.component';
+import { TermsConditionComponent } from './_utility/terms-condition/terms-condition.component'
 
 
 
@@ -83,7 +85,9 @@ import {MatIconModule} from '@angular/material/icon'
     LowerSectionComponentComponent,
     UserDialog,
     LockDialog,
-    ArchivedDialog
+    ArchivedDialog,
+    WaiverComponent,
+    TermsConditionComponent
   ],
   imports: [
     BrowserAnimationsModule,

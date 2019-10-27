@@ -44,21 +44,21 @@ export class NewCustomerComponent implements OnInit {
 
   showWaiver:boolean = false;
 
-  waiverFormRequire:boolean;
 
 
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
+    this._dataShare.changeCustomerFormRequire([]);
+    this._dataShare.changeWaiverFormRequire(false);
     this.subsctiptions.forEach( s => s.unsubscribe());
+
   }
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
     this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
-    this.subsctiptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
-
-    this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
+    //this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
       this._dataShare.changeCustomerSubmit(false);
       //show waiver
@@ -96,8 +96,8 @@ export class NewCustomerComponent implements OnInit {
             this.showWaiver = false;
             this._dataShare.changeShowWaiver(this.showWaiver);
             this.customerData = new newCustomerData();
-            this.waiverFormRequire = false;
-            this._dataShare.changeWaiverForm(this.waiverFormRequire)
+            this._dataShare.changeWaiverFormRequire(false)
+
             this.formRequire = []
         },error=>{this.submitting = false;        
       })
@@ -159,42 +159,21 @@ export class NewCustomerComponent implements OnInit {
       break;   
     }
     console.log(this.formRequire)
-    this._dataShare.changeCustomerForm(this.formRequire);
+    this._dataShare.changeCustomerFormRequire(this.formRequire);
   }
 
-  waiverCheck(){
-    if(this.waiverFormRequire){
-      this.waiverFormRequire = false;
+
+  receiveMessage($event){
+    if($event){
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });    
+      this.showForm = true;
+      this._dataShare.changeCustomerShowForm(this.showForm);
+      this.formRequire = [true,true,true,true,true,true]
+      this._dataShare.changeCustomerFormRequire(this.formRequire);
     }
-    else this.waiverFormRequire = true;
-    this._dataShare.changeWaiverForm(this.waiverFormRequire);
   }
-
-  accept(){
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });    
-    this.showForm = true;
-    this._dataShare.changeCustomerShowForm(this.showForm);
-    this.formRequire = [true,true,true,true,true,true]
-    this._dataShare.changeCustomerForm(this.formRequire);
-  }
-
-  getDate(){
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    var date = new Date()
-    return date.getDate()+", "+ monthNames[date.getMonth()]+", "+ date.getFullYear(); 
-  }
-
-  getAcdemicYear(){
-    var date = new Date()
-    if(8 <= date.getMonth() &&  date.getMonth() <=11){
-      return date.getFullYear()+1;
-    }
-    else return date.getFullYear();
-  }
-
 }
