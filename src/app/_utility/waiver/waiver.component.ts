@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,EventEmitter, Input,OnInit,Output} from '@angular/core';
 import { DataShareService } from 'src/app/_service/data-share.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 export class WaiverComponent implements OnInit {
   waiverFormRequire:boolean;
   subsctiptions = [];
+
+  @Input() source:string ;
+  @Output() messageEvent = new EventEmitter<boolean>();
 
   constructor(private _dataShare:DataShareService) { }
 
@@ -24,7 +27,12 @@ export class WaiverComponent implements OnInit {
       this.waiverFormRequire = false;
     }
     else this.waiverFormRequire = true;
-    this._dataShare.changeWaiverFormRequire(this.waiverFormRequire);
+    if(this.source != "dialog"){
+      this._dataShare.changeWaiverFormRequire(this.waiverFormRequire);
+    }
+    else{
+      this.messageEvent.emit(this.waiverFormRequire);
+    }
   }
 
   getDate(){

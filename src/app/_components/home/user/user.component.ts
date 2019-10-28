@@ -30,6 +30,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
+
   ngOnInit() {
         this._core.customersDataCall().subscribe(res=>{ 
         this.showSpinner = false;
@@ -105,6 +106,7 @@ export class UserComponent implements OnInit {
 
 
 
+import * as _moment from 'moment';
 
 //dialog class
 @Component({
@@ -115,19 +117,35 @@ export class UserDialog {
 
   user:any;
   
+  signedDate:string;
+  expireDate:string;
+
+  expireAlert:boolean;
 
   constructor(public dialogRef: MatDialogRef<UserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
-    private notification : NotifierService,private _dataShare:DataShareService) {
+    private notification : NotifierService,private _modal: MatDialog) {
   }
   
   ngOnInit(){
     this.user = this.data.user;
+    this.signedDate = _moment(this.user.lastWaiverSignedAt).format();
+    this.expireAlert = _moment(this.user.waiverExpirationDate).isAfter(new Date());
+    console.log(this.expireAlert);
+    this.expireDate = _moment(this.user.waiverExpirationDate).format();
   }
 
   saveChanges() {
   }
 
+  openWaiverPage(){
+    const waiverDialogRef = this._modal.open(WaiverDialog, {
+      height: '700px',
+      width: '1000px',
+      autoFocus:false,
+      disableClose: true
+    });
+  }
   
 
   showArchivedRecord(){
@@ -141,4 +159,35 @@ export class UserDialog {
   onClick(): void {
     this.dialogRef.close({});
   }
+}
+
+
+
+@Component({
+  selector: 'WaiverDialog',
+  templateUrl: 'user.component.waiverdialog.html'
+})
+export class WaiverDialog {
+
+  source = 'dialog';
+
+  formRequire:boolean;
+
+  constructor(public dialogRef: MatDialogRef<WaiverDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
+    private notification : NotifierService,private _modal: MatDialog) {
+  }
+
+  onClick(): void {
+    this.dialogRef.close({});
+  }
+
+  ngOnInit(){
+
+  }
+
+
+  receiveMessage($event){
+    this.formRequire = $event;
+    }
 }

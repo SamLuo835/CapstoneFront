@@ -24,7 +24,7 @@ import { PasswordRecoverComponent } from './_components/password-recover/passwor
 import { LeftMenuComponent } from './_components/home/left-menu/left-menu.component';
 import { BikeInventoryComponent, BikeDialog } from './_components/home/bike-inventory/bike-inventory.component';
 import { ActiveRecordComponent,DetailDialog } from './_components/home/active-record/active-record.component';
-import { UserComponent, UserDialog } from './_components/home/user/user.component';
+import { UserComponent, UserDialog, WaiverDialog } from './_components/home/user/user.component';
 import { ArchiveRecordComponent,ArchivedDialog } from './_components/home/archive-record/archive-record.component';
 import { RepairToolComponent } from './_components/home/repair-tool/repair-tool.component';
 import { LockComponent, LockDialog } from './_components/home/lock/lock.component';
@@ -84,6 +84,7 @@ import { TermsConditionComponent } from './_utility/terms-condition/terms-condit
     UpperSectionComponentComponent,
     LowerSectionComponentComponent,
     UserDialog,
+    WaiverDialog,
     LockDialog,
     ArchivedDialog,
     WaiverComponent,
@@ -122,7 +123,7 @@ import { TermsConditionComponent } from './_utility/terms-condition/terms-condit
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],
-  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog,LockDialog,ArchivedDialog],
+  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog,LockDialog,ArchivedDialog,WaiverDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
   bootstrap: [AppComponent]
 })

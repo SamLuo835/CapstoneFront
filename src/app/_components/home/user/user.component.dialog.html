@@ -70,7 +70,24 @@
                 </td>
             </tr>
         </table>
-      
+        <table class="full-width">
+                <tr>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input matInput disabled [matDatepicker]="signedpicker" placeholder="Waiver Signed Date" [value]="signedDate">
+                                <mat-datepicker-toggle matSuffix [for]="signedpicker"></mat-datepicker-toggle>
+                                <mat-datepicker #signedpicker></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                                <mat-form-field class="full-width">
+                                    <input matInput disabled [matDatepicker]="expirepicker" placeholder="Waiver Expire Date" [value]="expireDate">
+                                    <mat-datepicker-toggle matSuffix [for]="expirepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #expirepicker></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                    </tr>
+        </table>
 
        <!-- <table class="full-width">
                 <tr>
@@ -107,7 +124,9 @@
     <mat-dialog-actions class="close-dialog">
             <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
     </mat-dialog-actions>
-        
+    <mat-dialog-actions *ngIf="expireAlert" class="close-dialog">
+            <a class="redirectLink"  (click)="openWaiverPage()">Sign Waiver</a>
+    </mat-dialog-actions>
     <mat-dialog-actions class="close-dialog">
             <a class="redirectLink" mat-dialog-close  (click)="showArchivedRecord()">Show Associated Past Rentals</a>
     </mat-dialog-actions>
