@@ -195,7 +195,6 @@ export class NewRentalComponent implements OnInit {
         this.bikeSelected = ""; 
         this.createFormControl()
         this.showForm = true;
-        this._dataShare.changeRentalShowForm(this.showForm);
         this._coreService.getLockList().subscribe(
           response => {
             this.lockList = JSON.parse((response));
@@ -208,6 +207,7 @@ export class NewRentalComponent implements OnInit {
               this.payableCount = response.length;
             }
             this.showSpinner = false;
+            this._dataShare.changeRentalShowForm(this.showForm);
           }
         )
       }
