@@ -47,6 +47,7 @@ export class CoreService {
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
+  private signWaiver:string = this.baseServerAddress + "/customerSignedWaiver"
 
   //search
   private searchCustomerUrl:string = this.baseServerAddress + "/searchCustomers";
@@ -66,6 +67,13 @@ export class CoreService {
 
 searchCustomer(keyWord):Observable<any>{
   return this.http.get(this.searchCustomerUrl+"/"+keyWord,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
+}
+
+waiverSign(id):Observable<any>{
+  return this.http.patch(this.signWaiver+"/"+id,httpOptions).pipe(catchError(()=>{
     this.notification.notify( 'error', 'Something bad happened, please try again later.' );
     return throwError(
     'Something bad happened; please try again later.');}));

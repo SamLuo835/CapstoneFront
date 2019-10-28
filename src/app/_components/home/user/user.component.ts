@@ -130,8 +130,8 @@ export class UserDialog {
   ngOnInit(){
     this.user = this.data.user;
     this.signedDate = _moment(this.user.lastWaiverSignedAt).format();
+    //need to changed isAfter to isBefore 
     this.expireAlert = _moment(this.user.waiverExpirationDate).isAfter(new Date());
-    console.log(this.expireAlert);
     this.expireDate = _moment(this.user.waiverExpirationDate).format();
   }
 
@@ -140,20 +140,22 @@ export class UserDialog {
 
   openWaiverPage(){
     const waiverDialogRef = this._modal.open(WaiverDialog, {
+      data: this.user.sheridanId,
       height: '700px',
       width: '1000px',
       autoFocus:false,
       disableClose: true
     });
+    waiverDialogRef.afterClosed().subscribe(result => {
+        if(result['user']){
+         this.user = result['user']
+        }
+    }); 
   }
   
 
   showArchivedRecord(){
     this.dialogRef.close({action:'redirect',userId:this.user['sheridanId']});
-  }
-
-  changeImage() {
-    // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
   }
 
   onClick(): void {
@@ -169,6 +171,8 @@ export class UserDialog {
 })
 export class WaiverDialog {
 
+  sheridanId:string;
+
   source = 'dialog';
 
   formRequire:boolean;
@@ -178,12 +182,23 @@ export class WaiverDialog {
     private notification : NotifierService,private _modal: MatDialog) {
   }
 
-  onClick(): void {
+  closeDialog(){
     this.dialogRef.close({});
+
+  }
+
+  onClick(): void {
+      this._core.waiverSign(this.sheridanId).subscribe(res=>{
+      this._core.getCustomerById(this.sheridanId).subscribe(res=>{
+        this.notification.notify('success',"Waiver Signed");
+        console.log(res);
+        this.dialogRef.close({user:res['body']});
+      })
+    })
   }
 
   ngOnInit(){
-
+      this.sheridanId = this.data
   }
 
 
