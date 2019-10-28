@@ -213,7 +213,7 @@ export class NewRentalComponent implements OnInit {
               //first one is locklist, second is payable list third is basketlist
               if(results[1].length!=0){
                 this.hasPayableHistory = true;
-                this.payableCount = response.length;
+                this.payableCount = results[1].length;
               }
               this.showSpinner = false;
               this._dataShare.changeRentalShowForm(this.showForm);
