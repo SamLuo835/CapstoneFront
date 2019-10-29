@@ -33,7 +33,7 @@
       </ng-container>
 
       <!-- Is Black Listed Column -->
-      <ng-container matColumnDef="status">
+      <ng-container matColumnDef="blackListed">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
           <td mat-cell *matCellDef="let element" [ngClass]="element.blackListed?'text-danger':'text-success'"> {{element.blackListed?'Banned':'Active'}} </td>
       </ng-container>

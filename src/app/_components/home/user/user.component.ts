@@ -21,7 +21,7 @@ export class UserComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','status','more'];
+  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','blackListed','more'];
 
   tableDetail:Object = {};
 
@@ -189,6 +189,7 @@ export class WaiverDialog {
 
   onClick(): void {
       this._core.waiverSign(this.sheridanId).subscribe(res=>{
+      ///// resfresh the user after close the waiver dialog 
       this._core.getCustomerById(this.sheridanId).subscribe(res=>{
         this.notification.notify('success',"Waiver Signed");
         console.log(res);

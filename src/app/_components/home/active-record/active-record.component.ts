@@ -19,7 +19,6 @@ export class ActiveRecordComponent implements OnInit {
 
   tableData :Object[];
   showSpinner : boolean = true;
-  dialogSpinner : boolean = false;
   dataSource : MatTableDataSource<any>;
   displayedColumns: string[] = ['id', 'signOutDate', 'dueDate', 'rentalState','manage'];
 
@@ -30,7 +29,9 @@ export class ActiveRecordComponent implements OnInit {
 
   
   ngOnInit() {
-        this._core.activeRentalsDataCall().subscribe(res=>{ 
+        this._core.activeRentalsDataCall().subscribe(res=>{
+        if(res == null)
+            res = [] 
         this.showSpinner = false;
         this.tableData = res;
         this.dataSource = new MatTableDataSource(this.tableData);
@@ -43,13 +44,11 @@ export class ActiveRecordComponent implements OnInit {
 
 //table button on click(only required in active rental table)
   showMore(element){
-    //this.dialogSpinner = true;
     this.tableDetail = element;
     this.openDialog();
   }
 
   openDialog(): void { 
-       //this.dialogSpinner = false;
        const dialogRef = this._modal.open(DetailDialog, {
         data: this.tableDetail,
         height: '600px',
@@ -154,8 +153,8 @@ export class DetailDialog {
 
 
   ngOnInit(){
-    this.signOutDate = _moment(this.data.signOutDate).format();
-    this.dueDate = _moment(this.data.dueDate).format();
+    this.signOutDate = _moment(new Date(this.data.signOutDate[0],this.data.signOutDate[1]-1,this.data.signOutDate[2])).format();
+    this.dueDate = _moment(new Date(this.data.dueDate[0],this.data.dueDate[1]-1,this.data.dueDate[2])).format();
     this._core.getPayablesById(this.data.id).subscribe(res=>{
       for(var i in res){
         this.total += res[i].value;
