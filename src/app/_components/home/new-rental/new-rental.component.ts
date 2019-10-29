@@ -197,6 +197,11 @@ export class NewRentalComponent implements OnInit {
           this.showSpinner = false;
           this.errorMsg = "Customer waiver expired"
         }
+        else if(this.resultUserData['blackListed']){
+          this.showForm = false;
+          this.showSpinner = false;
+          this.errorMsg = "Customer is banned"
+        }
         else{
             this._dataShare.changeRentalFormRequire([true]);
             this.comment = "";
