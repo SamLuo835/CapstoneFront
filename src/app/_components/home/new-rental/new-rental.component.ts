@@ -6,6 +6,8 @@ import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
 import { NotifierService } from 'angular-notifier';
 import { MatHorizontalStepper } from '@angular/material';
+import * as _moment from 'moment';
+import { Observable,forkJoin,fromEvent } from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -39,6 +41,7 @@ export class NewRentalComponent implements OnInit {
   lockFormControl:FormControl;
   basketFormControl:FormControl;
 
+  observables : Observable<any>[] = [];
 
   
   lockList:Array<any> = [];
@@ -188,38 +191,75 @@ export class NewRentalComponent implements OnInit {
     this._coreService.getCustomerById(this.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
-        this.resultUserData = response['body'];
-        console.log(this.resultUserData);
+          this.checkCustomerWithActiveRental(response)
+         }
+        else if(response.status == 204){
+          this.showForm = false;
+          this.showSpinner = false;
+          this.errorMsg = "Customer not found, please register first."
+         }
+    },error=>{ 
+      this.showForm = false;
+      this.showSpinner = false;})
+  }
+
+
+  checkCustomerWithActiveRental(response){
+    this._coreService.activeRentalsDataCall().subscribe(res=>{
+      for(var i in res){
+        if(res[i]['customer']['sheridanId']== response['body']['sheridanId']){
+          this.showForm = false;
+          this.showSpinner = false;
+          this.errorMsg = "Customer already have an active rental."
+          return    
+        }
+      }
+      this.customerValidate(response)
+    })
+  }
+
+  customerValidate(response){
+    this.resultUserData = response['body'];
+    if(_moment(this.resultUserData['endOfProgram']).isBefore(new Date())){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer program ended"
+    }
+    else if(_moment(this.resultUserData['waiverExpirationDate']).isBefore(new Date())){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer waiver expired"
+    }
+    else if(this.resultUserData['blackListed']){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer is banned"
+    }
+    //need to check if customer has active rental 
+    else{
         this._dataShare.changeRentalFormRequire([true]);
         this.comment = "";
         this.bikeSelected = ""; 
         this.createFormControl()
         this.showForm = true;
-        this._dataShare.changeRentalShowForm(this.showForm);
-        this._coreService.getLockList().subscribe(
-          response => {
-            this.lockList = JSON.parse((response));
+        this.observables.push( this._coreService.getLockList());
+        this.observables.push( this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']));
+        //this.observables.push( this._coreService.getBasketList());
+
+        forkJoin(this.observables).subscribe( results =>{
+          this.showSpinner = false;
+          this.lockList = JSON.parse((results[0]));
+          //first one is locklist, second is payable list third is basketlist
+          if(results[1].length!=0){
+            this.hasPayableHistory = true;
+            this.payableCount = results[1].length;
           }
-        )
-        this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']).subscribe(
-          response => {
-            if(response.length!=0){
-              this.hasPayableHistory = true;
-              this.payableCount = response.length;
-            }
-            this.showSpinner = false;
-          }
-        )
-      }
-      else if(response.status == 204){
-        this.showForm = false;
-        this.showSpinner = false;
-        this.errorMsg = "Customer not found, please register first."
-      }
-    },error=>{ 
-      this.showForm = false;
-      this.showSpinner = false;})
-  }
+          this.showSpinner = false;
+          this._dataShare.changeRentalShowForm(this.showForm);
+        }
+      )   
+    }
+  }  
 
 
 

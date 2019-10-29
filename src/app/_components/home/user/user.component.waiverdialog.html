@@ -1,0 +1,10 @@
+<div class="waiverDialog">
+        <button float="right" type="button" (click)="closeDialog()" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+<app-waiver (messageEvent)="receiveMessage($event)" [source]="source"></app-waiver>
+<div style="display: flex;justify-content: center;height: 70px;">
+     <mat-dialog-actions class="close-dialog">
+        <button [disabled]="!formRequire" class="btn btn-warning" (click)="onClick()" mat-dialog-close  style="font-weight: 500;font-size: 0.9rem">CONFIRM</button>
+     </mat-dialog-actions>
+</div>

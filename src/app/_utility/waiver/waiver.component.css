@@ -1,6 +1,12 @@
 .highLight{
     font-family: 'Roboto';
-    font-weight: 600;
-    font-style: italic;
-    
+    font-weight: 600;    
   }
+
+.waiverBox p{
+  font-family: 'Roboto';
+}
+
+.waiverBox{
+  user-select: none;
+}

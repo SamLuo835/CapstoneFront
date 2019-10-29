@@ -100,3 +100,8 @@ button:focus{outline: none!important}
     font-family: 'Roboto',sans-serif;
     font-weight: 500;
 }
+
+.waiverDialog .waiverBox{
+    max-height: 550px!important;
+}
+

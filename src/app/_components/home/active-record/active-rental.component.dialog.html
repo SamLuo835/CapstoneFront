@@ -25,7 +25,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field></td>
                   <td><mat-form-field class="full-width">
-                      <input matInput [matDatepickerFilter]="myFilter" [min]="dueDate" [matDatepicker]="duepicker" readonly  [disabled]="data.status == 'Late'?true:false" placeholder="Due Date" [(ngModel)]="dueDate">
+                      <input matInput [matDatepickerFilter]="myFilter" [min]="dueDate" [matDatepicker]="duepicker" readonly  [disabled]="data.rentalState == 'Late'?true:false" placeholder="Due Date" [(ngModel)]="dueDate">
                      
                       <mat-datepicker-toggle matSuffix [for]="duepicker"></mat-datepicker-toggle>
                       <mat-datepicker #duepicker></mat-datepicker>

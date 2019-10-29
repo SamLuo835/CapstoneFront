@@ -41,12 +41,13 @@ export class CoreService {
 
   //archivedRental
   private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
-
+  private archivedRentalSearchByDateUrl: string = this.baseServerAddress + "/getArchivedRentalByDate";
 
   //customer
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
   private newCustomerUrl:string = this.baseServerAddress + "/newCustomer";
+  private signWaiver:string = this.baseServerAddress + "/customerSignedWaiver"
 
   //search
   private searchCustomerUrl:string = this.baseServerAddress + "/searchCustomers";
@@ -70,6 +71,22 @@ searchCustomer(keyWord):Observable<any>{
     return throwError(
     'Something bad happened; please try again later.');}));
 }
+
+searchArchivedByDate(type,start,end):Observable<any>{
+  return this.http.get(this.archivedRentalSearchByDateUrl+"/"+type+"/"+start+"/"+end,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
+}
+
+waiverSign(id):Observable<any>{
+  return this.http.patch(this.signWaiver+"/"+id,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
+}
+
+
 
 
   returnBike(id,comment):Observable<any>{

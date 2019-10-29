@@ -21,13 +21,14 @@ export class UserComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','status','more'];
+  displayedColumns: string[] = ['sheridanId', 'firstName', 'sheridanEmail','blackListed','more'];
 
   tableDetail:Object = {};
 
   @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
 
   ngOnInit() {
@@ -105,6 +106,7 @@ export class UserComponent implements OnInit {
 
 
 
+import * as _moment from 'moment';
 
 //dialog class
 @Component({
@@ -115,30 +117,93 @@ export class UserDialog {
 
   user:any;
   
+  signedDate:string;
+  expireDate:string;
+
+  expireAlert:boolean;
 
   constructor(public dialogRef: MatDialogRef<UserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
-    private notification : NotifierService,private _dataShare:DataShareService) {
+    private notification : NotifierService,private _modal: MatDialog) {
   }
   
   ngOnInit(){
     this.user = this.data.user;
+    this.signedDate = _moment(this.user.lastWaiverSignedAt).format();
+    //need to changed isAfter to isBefore 
+    this.expireAlert = _moment(this.user.waiverExpirationDate).isAfter(new Date());
+    this.expireDate = _moment(this.user.waiverExpirationDate).format();
   }
 
   saveChanges() {
   }
 
+  openWaiverPage(){
+    const waiverDialogRef = this._modal.open(WaiverDialog, {
+      data: this.user.sheridanId,
+      height: '700px',
+      width: '1000px',
+      autoFocus:false,
+      disableClose: true
+    });
+    waiverDialogRef.afterClosed().subscribe(result => {
+        if(result['user']){
+         this.user = result['user']
+        }
+    }); 
+  }
   
 
   showArchivedRecord(){
     this.dialogRef.close({action:'redirect',userId:this.user['sheridanId']});
   }
 
-  changeImage() {
-    // TODO: IMPLEMENT METHOD FOR CHOOSING AND UPLOADING IMAGE
-  }
-
   onClick(): void {
     this.dialogRef.close({});
   }
+}
+
+
+
+@Component({
+  selector: 'WaiverDialog',
+  templateUrl: 'user.component.waiverdialog.html'
+})
+export class WaiverDialog {
+
+  sheridanId:string;
+
+  source = 'dialog';
+
+  formRequire:boolean;
+
+  constructor(public dialogRef: MatDialogRef<WaiverDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
+    private notification : NotifierService,private _modal: MatDialog) {
+  }
+
+  closeDialog(){
+    this.dialogRef.close({});
+
+  }
+
+  onClick(): void {
+      this._core.waiverSign(this.sheridanId).subscribe(res=>{
+      ///// resfresh the user after close the waiver dialog 
+      this._core.getCustomerById(this.sheridanId).subscribe(res=>{
+        this.notification.notify('success',"Waiver Signed");
+        console.log(res);
+        this.dialogRef.close({user:res['body']});
+      })
+    })
+  }
+
+  ngOnInit(){
+      this.sheridanId = this.data
+  }
+
+
+  receiveMessage($event){
+    this.formRequire = $event;
+    }
 }
