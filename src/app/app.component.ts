@@ -56,8 +56,9 @@ export class AppComponent {
   }
 
   goToPage(){
-    this._dataShare.changeShowForm(false);
+    this._dataShare.changeRentalShowForm(false);
     this._dataShare.changeCustomerShowForm(false);
+    this._dataShare.changeShowWaiver(false);
   }
 
   constructor(private idle: Idle, private keepalive: Keepalive, public _router :Router,private _modal: MatDialog,public _auth :AuthService,private _location :Location,private _dataShare :DataShareService) {
@@ -137,7 +138,7 @@ export class TimeoutDialog {
         this.menu.closeMenu();
       }
     }
-    this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeShowForm(false);this._dataShare.changeCustomerShowForm(false);
+    this.ngZone.run(()=> {this._router.navigate(['/']);this._dataShare.changeRentalShowForm(false);this._dataShare.changeCustomerShowForm(false);
   });
   }
 

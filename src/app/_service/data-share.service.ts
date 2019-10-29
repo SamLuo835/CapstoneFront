@@ -6,9 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DataShareService {
 
-  private showFormSource = new BehaviorSubject(false);
+  private showRentalFormSource = new BehaviorSubject(false);
   
-  currentRetnalForm = this.showFormSource.asObservable();
+  currentRetnalForm = this.showRentalFormSource.asObservable();
+
+  private showWaiverSource = new BehaviorSubject(false);
+
+  currentWaiverForm = this.showWaiverSource.asObservable();
 
   private showCustomerFormSource = new BehaviorSubject(false);
 
@@ -18,13 +22,21 @@ export class DataShareService {
 
   currentFormRequire = this.FromRequiredSource.asObservable();
 
+  private waiverFormRequiredSource = new BehaviorSubject(false);
+
+  currentWaiverRequire = this.waiverFormRequiredSource.asObservable()
+
   private customerFormRequiredSource = new BehaviorSubject([]);
 
   currentCustomerFormRequire = this.customerFormRequiredSource.asObservable();
 
-  private formSubmit = new BehaviorSubject(false);
+  private rentalFormSubmit = new BehaviorSubject(false);
 
-  currentFormSubmit = this.formSubmit.asObservable();
+  currentRentalFormSubmit = this.rentalFormSubmit.asObservable();
+
+  private waiverSubmit = new BehaviorSubject(false);
+
+  currentWaiverSubmit = this.waiverSubmit.asObservable();
 
   private customerFormSubmit = new BehaviorSubject(false);
 
@@ -58,28 +70,39 @@ export class DataShareService {
   }
 
   //toggle to show the rental form or not, controls the left menu 'cancel rental' and 'submit rental' buttons visibility as well
-  changeShowForm(message: boolean) {
-    this.showFormSource.next(message)
+  changeRentalShowForm(message: boolean) {
+    this.showRentalFormSource.next(message)
   }
 
   changeCustomerShowForm(message:boolean){
     this.showCustomerFormSource.next(message)
   }
 
+  changeShowWaiver(message:boolean){
+    this.showWaiverSource.next(message)
+  }
+
 
 
   //form required observable, disable the submit button and display error text when required field missing
-  changeForm(message : Array<any>){
+  changeRentalFormRequire(message : Array<any>){
     this.FromRequiredSource.next(message)
   }
+  changeWaiverFormRequire(message:boolean){
+    this.waiverFormRequiredSource.next(message)  
+  }
 
-  changeCustomerForm(message : Array<any>){
+  changeCustomerFormRequire(message : Array<any>){
     this.customerFormRequiredSource.next(message)
   }
 
   //submit button event emit, as the submit button and the rental form are in different component
-  changeSubmit(message : boolean){
-    this.formSubmit.next(message);
+  changeRentalSubmit(message : boolean){
+    this.rentalFormSubmit.next(message);
+  }
+
+  changeWaiverSubmit(message:boolean){
+    this.waiverSubmit.next(message);
   }
 
   changeCustomerSubmit(message : boolean){

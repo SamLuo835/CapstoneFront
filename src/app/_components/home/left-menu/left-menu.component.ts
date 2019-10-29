@@ -12,9 +12,13 @@ export class LeftMenuComponent implements OnInit {
 
   formDisplay:boolean = false
 
+  waiverDisplay:boolean = false
+
   customerFormDisplay:boolean =false;
 
   formRequire : Array<any>
+
+  waiverRequire : boolean
 
   customerFormRequire : Array<any>
 
@@ -39,8 +43,11 @@ export class LeftMenuComponent implements OnInit {
 
     //for sibling or no relation components, share data with observables
     this.subscriptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.formDisplay = message))
+    this.subscriptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.waiverDisplay = message))
     this.subscriptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.customerFormDisplay = message))
     this.subscriptions.push(this._dataShare.currentFormRequire.subscribe(message => {this.formRequire = message}))
+    this.subscriptions.push(this._dataShare.currentWaiverRequire.subscribe(message => {this.waiverRequire = message}))
+
     this.subscriptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => {this.customerFormRequire = message}))
     this.subscriptions.push(this._dataShare.currentRedirectMessage.subscribe(message =>{
       if(message != null){
@@ -69,6 +76,13 @@ export class LeftMenuComponent implements OnInit {
         }
         return false
       }
+
+    if(form == 'waiver'){
+        if(!this.waiverRequire){
+            return true
+          }
+        else return false
+    }
     if(form == 'customer'){
       for(var i in this.customerFormRequire){
         if(this.customerFormRequire[i]){
@@ -124,7 +138,9 @@ export class LeftMenuComponent implements OnInit {
     }
     this.formDisplay = false;
     this.customerFormDisplay = false;
-    this._dataShare.changeShowForm(this.formDisplay);
+    this.waiverDisplay = false;
+    this._dataShare.changeShowWaiver(this.waiverDisplay);
+    this._dataShare.changeRentalShowForm(this.formDisplay);
     this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
 
   }
@@ -132,15 +148,17 @@ export class LeftMenuComponent implements OnInit {
   cancel(form){
     if(form == 'rental'){
       this.formDisplay = false;
-      this._dataShare.changeShowForm(this.formDisplay);
+      this._dataShare.changeRentalShowForm(this.formDisplay);
     }
     if(form == 'customer'){
+      this.waiverDisplay = false;
+      this._dataShare.changeShowWaiver(this.waiverDisplay)
       this.customerFormDisplay = false;
       this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
-      this.componentIndex = 1;
-      this.messageEvent.emit(this.componentIndex);
-      this.panelOpenState = true;
     }
+    this.componentIndex = 1;
+    this.messageEvent.emit(this.componentIndex);
+    this.panelOpenState = true;
     window.scroll({
       top: 0,
       left: 0,
@@ -149,10 +167,13 @@ export class LeftMenuComponent implements OnInit {
   }
 
   submit(form){
-    if(form == 'rental')
-      this._dataShare.changeSubmit(true);
+    if(form == 'rental'){
+      this._dataShare.changeRentalSubmit(true);
+    }
+    if(form == 'waiver'){
+      this._dataShare.changeWaiverSubmit(true);
+    }
     if(form == 'customer'){
-      console.log('customer submit')
       this._dataShare.changeCustomerSubmit(true);
     }
   }

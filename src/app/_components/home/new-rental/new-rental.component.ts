@@ -29,7 +29,7 @@ export class NewRentalComponent implements OnInit {
   lockSelected:String = "";
   basketSelected:String = "";
   resultUserData:Object = {};
-  showForm:boolean =false;
+  showForm:boolean = false;
 
   hasPayableHistory:boolean;
   payableCount:number;
@@ -39,34 +39,38 @@ export class NewRentalComponent implements OnInit {
   lockFormControl:FormControl;
   basketFormControl:FormControl;
 
+
+  
   lockList:Array<any> = [];
   basketList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
   subsctiptions:Array<any> = [];
 
-  submitting:boolean = false;
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
+    this._dataShare.changeRentalFormRequire([]);
     this.subsctiptions.forEach( s => s.unsubscribe());
   }
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
-    this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
+    //this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
+
     this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
-    this.subsctiptions.push(this._dataShare.currentFormSubmit.subscribe(message => {if(message){
-      this.submitting = true;
-      this.createCustomerRental();
+    this.subsctiptions.push(this._dataShare.currentRentalFormSubmit.subscribe(message => {if(message){
+      this.showSpinner = true
+      this.createRentalDetail();
+      this.saveRental();
     }
-  }));
+  }))
   }
 
 
 
-  createCustomerRental(){
+  createRentalDetail(){
       this.newRentalData['comment'] = this.comment
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
@@ -76,24 +80,28 @@ export class NewRentalComponent implements OnInit {
       if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected},{'@type':'Basket','id':this.basketSelected}];
 
-      this._coreService.newRental(this.newRentalData).subscribe(res=>{
-        this.submitting = false;
-        this._dataShare.changeSubmit(false);
-        this.showForm = false;
-        this._dataShare.changeShowForm(this.showForm);
-        this.notification.notify( 'success', 'New Rental Created.' );
-        //refresh the data share's bikelist since the back end update one bike availablity
-        this._coreService.getBikeList().subscribe(res=>{
-          //calling this will trigger the subscribe event that listening on bike list in other component
-            this._dataShare.changeBikeList( JSON.parse(res));
-            }
-          )
-      },error=>{
-        this.submitting = false;
-        this._dataShare.changeSubmit(false);
-        this.showForm = false;
-        this._dataShare.changeShowForm(this.showForm);
-        console.log(error)})
+  }
+
+
+  saveRental(){
+    this._coreService.newRental(this.newRentalData).subscribe(res=>{
+      this.showSpinner = false;
+      this._dataShare.changeRentalSubmit(false);
+      this.showForm = false;
+      this._dataShare.changeRentalShowForm(this.showForm);
+      this.notification.notify( 'success', 'New Rental Created.' );
+      //refresh the data share's bikelist since the back end update one bike availablity
+      this._coreService.getBikeList().subscribe(res=>{
+        //calling this will trigger the subscribe event that listening on bike list in other component
+          this._dataShare.changeBikeList( JSON.parse(res));
+          }
+        )
+    },error=>{
+      this.showSpinner = false;
+      this._dataShare.changeRentalSubmit(false);
+      this.showForm = false;
+      this._dataShare.changeRentalShowForm(this.showForm);
+      console.log(error)})
   }
 
   idFormControl = new FormControl('', [
@@ -125,11 +133,10 @@ export class NewRentalComponent implements OnInit {
     if(this.stepper.selectedIndex == 0){
       this.lockSelected = "";
     }
-    console.log(this.formRequire)
-    this._dataShare.changeForm(this.formRequire);
-    console.log(this.bikeSelected);
+    this._dataShare.changeRentalFormRequire(this.formRequire);
     this.stepper.next();
   }
+
 
   matcher = new MyErrorStateMatcher();
 
@@ -183,13 +190,12 @@ export class NewRentalComponent implements OnInit {
       if(response.status == 200){
         this.resultUserData = response['body'];
         console.log(this.resultUserData);
-        this._dataShare.changeForm([true]);
+        this._dataShare.changeRentalFormRequire([true]);
         this.comment = "";
         this.bikeSelected = ""; 
         this.createFormControl()
         this.showForm = true;
-        this.showSpinner = false;
-        this._dataShare.changeShowForm(this.showForm);
+        this._dataShare.changeRentalShowForm(this.showForm);
         this._coreService.getLockList().subscribe(
           response => {
             this.lockList = JSON.parse((response));
@@ -201,7 +207,7 @@ export class NewRentalComponent implements OnInit {
               this.hasPayableHistory = true;
               this.payableCount = response.length;
             }
-
+            this.showSpinner = false;
           }
         )
       }
@@ -219,7 +225,7 @@ export class NewRentalComponent implements OnInit {
 
   redirectArchivedPage(){
     this.showForm = false;
-    this._dataShare.changeShowForm(this.showForm);
+    this._dataShare.changeRentalShowForm(this.showForm);
 
     this._dataShare.changeRedirectMessage({index:4,userId:this.resultUserData['sheridanId']});
   }

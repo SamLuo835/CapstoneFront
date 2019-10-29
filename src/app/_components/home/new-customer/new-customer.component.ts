@@ -7,14 +7,14 @@ import 'rxjs/add/operator/take'
 import { NotifierService } from 'angular-notifier';
 
 
-export interface newCustomerData{
-  firstName:String;
-  lastName:String;
-  phone:String;
-  personalEmail:String;
-  sheridanEmail:String;
-  type:String;
-  sheridanId:String;
+export class newCustomerData{
+  firstName:String ="";
+  lastName:String ="";
+  phone:String ="";
+  personalEmail:String ="";
+  sheridanEmail:String ="";
+  type:String ="";
+  sheridanId:String ="";
 
 }
 
@@ -32,7 +32,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class NewCustomerComponent implements OnInit {
 
-  customerData : newCustomerData = {firstName:'',lastName:'',phone:'',sheridanEmail:'',personalEmail:'',type:'',sheridanId:''};
+  customerData : newCustomerData = new newCustomerData();
 
   showForm:boolean =false;
 
@@ -42,19 +42,43 @@ export class NewCustomerComponent implements OnInit {
 
   submitting :boolean = false;
 
+  showWaiver:boolean = false;
+
+
+
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
+    this._dataShare.changeCustomerFormRequire([]);
+    this._dataShare.changeWaiverFormRequire(false);
     this.subsctiptions.forEach( s => s.unsubscribe());
+
   }
 
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
-    this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
+    this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
+    //this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
       this._dataShare.changeCustomerSubmit(false);
-      this.createCustomer();
+      //show waiver
+      this.showWaiver = true;
+      this._dataShare.changeShowWaiver(this.showWaiver);
+      this.showForm = false;
+      this._dataShare.changeCustomerShowForm(this.showForm);
+      this._dataShare.changeWaiverSubmit(false);
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });   
     }}));
+    this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
+      if(message){
+         this.createCustomer();
+        }
+      }
+    ));
   }
 
   createCustomer(){
@@ -69,13 +93,18 @@ export class NewCustomerComponent implements OnInit {
           this._coreService.newCustomer(this.customerData).subscribe(res => {
             this.submitting = false;
             this.notification.notify( 'success', 'New Customer Created.' );
-            this.showForm = false;
-          this._dataShare.changeCustomerShowForm(this.showForm);
+            this.showWaiver = false;
+            this._dataShare.changeShowWaiver(this.showWaiver);
+            this.customerData = new newCustomerData();
+            this._dataShare.changeWaiverFormRequire(false)
+
+            this.formRequire = []
         },error=>{this.submitting = false;        
       })
       }
     },error=>{ this.submitting = false;
     })
+    this._dataShare.changeWaiverSubmit(false);
   }
 
 
@@ -130,19 +159,21 @@ export class NewCustomerComponent implements OnInit {
       break;   
     }
     console.log(this.formRequire)
-    this._dataShare.changeCustomerForm(this.formRequire);
+    this._dataShare.changeCustomerFormRequire(this.formRequire);
   }
 
-  accept(){
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });    
-    this.showForm = true;
-    this._dataShare.changeCustomerShowForm(this.showForm);
-    this.formRequire = [true,true,true,true,true,true]
-    this._dataShare.changeCustomerForm(this.formRequire);
-  }
 
+  receiveMessage($event){
+    if($event){
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });    
+      this.showForm = true;
+      this._dataShare.changeCustomerShowForm(this.showForm);
+      this.formRequire = [true,true,true,true,true,true]
+      this._dataShare.changeCustomerFormRequire(this.formRequire);
+    }
+  }
 }
