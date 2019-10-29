@@ -191,40 +191,7 @@ export class NewRentalComponent implements OnInit {
     this._coreService.getCustomerById(this.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
-        this.resultUserData = response['body'];
-        if(_moment(this.resultUserData['waiverExpirationDate']).isBefore(new Date())){
-          this.showForm = false;
-          this.showSpinner = false;
-          this.errorMsg = "Customer waiver expired"
-        }
-        else if(this.resultUserData['blackListed']){
-          this.showForm = false;
-          this.showSpinner = false;
-          this.errorMsg = "Customer is banned"
-        }
-        else{
-            this._dataShare.changeRentalFormRequire([true]);
-            this.comment = "";
-            this.bikeSelected = ""; 
-            this.createFormControl()
-            this.showForm = true;
-            this.observables.push( this._coreService.getLockList());
-            this.observables.push( this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']));
-            //this.observables.push( this._coreService.getBasketList());
-
-            forkJoin(this.observables).subscribe( results =>{
-              this.showSpinner = false;
-              this.lockList = JSON.parse((results[0]));
-              //first one is locklist, second is payable list third is basketlist
-              if(results[1].length!=0){
-                this.hasPayableHistory = true;
-                this.payableCount = results[1].length;
-              }
-              this.showSpinner = false;
-              this._dataShare.changeRentalShowForm(this.showForm);
-            }
-          )   
-          }
+          this.checkCustomerWithActiveRental(response)
          }
         else if(response.status == 204){
           this.showForm = false;
@@ -235,6 +202,64 @@ export class NewRentalComponent implements OnInit {
       this.showForm = false;
       this.showSpinner = false;})
   }
+
+
+  checkCustomerWithActiveRental(response){
+    this._coreService.activeRentalsDataCall().subscribe(res=>{
+      for(var i in res){
+        if(res[i]['customer']['sheridanId']== response['body']['sheridanId']){
+          this.showForm = false;
+          this.showSpinner = false;
+          this.errorMsg = "Customer already have an active rental."
+          return    
+        }
+      }
+      this.customerValidate(response)
+    })
+  }
+
+  customerValidate(response){
+    this.resultUserData = response['body'];
+    if(_moment(this.resultUserData['endOfProgram']).isBefore(new Date())){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer program ended"
+    }
+    else if(_moment(this.resultUserData['waiverExpirationDate']).isBefore(new Date())){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer waiver expired"
+    }
+    else if(this.resultUserData['blackListed']){
+      this.showForm = false;
+      this.showSpinner = false;
+      this.errorMsg = "Customer is banned"
+    }
+    //need to check if customer has active rental 
+    else{
+        this._dataShare.changeRentalFormRequire([true]);
+        this.comment = "";
+        this.bikeSelected = ""; 
+        this.createFormControl()
+        this.showForm = true;
+        this.observables.push( this._coreService.getLockList());
+        this.observables.push( this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']));
+        //this.observables.push( this._coreService.getBasketList());
+
+        forkJoin(this.observables).subscribe( results =>{
+          this.showSpinner = false;
+          this.lockList = JSON.parse((results[0]));
+          //first one is locklist, second is payable list third is basketlist
+          if(results[1].length!=0){
+            this.hasPayableHistory = true;
+            this.payableCount = results[1].length;
+          }
+          this.showSpinner = false;
+          this._dataShare.changeRentalShowForm(this.showForm);
+        }
+      )   
+    }
+  }  
 
 
 

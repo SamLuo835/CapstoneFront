@@ -41,7 +41,7 @@ export class CoreService {
 
   //archivedRental
   private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
-
+  private archivedRentalSearchByDateUrl: string = this.baseServerAddress + "/getArchivedRentalByDate";
 
   //customer
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
@@ -72,12 +72,21 @@ searchCustomer(keyWord):Observable<any>{
     'Something bad happened; please try again later.');}));
 }
 
+searchArchivedByDate(type,start,end):Observable<any>{
+  return this.http.get(this.archivedRentalSearchByDateUrl+"/"+type+"/"+start+"/"+end,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
+}
+
 waiverSign(id):Observable<any>{
   return this.http.patch(this.signWaiver+"/"+id,httpOptions).pipe(catchError(()=>{
     this.notification.notify( 'error', 'Something bad happened, please try again later.' );
     return throwError(
     'Something bad happened; please try again later.');}));
 }
+
+
 
 
   returnBike(id,comment):Observable<any>{
