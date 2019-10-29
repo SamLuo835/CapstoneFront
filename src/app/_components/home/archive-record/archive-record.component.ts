@@ -253,7 +253,7 @@ export class ArchivedDialog {
     ngOnInit(){
       this.signOutDate = _moment(new Date(this.data.signOutDate[0],this.data.signOutDate[1]-1,this.data.signOutDate[2])).format();
       this.dueDate = _moment(new Date(this.data.dueDate[0],this.data.dueDate[1]-1,this.data.dueDate[2])).format();
-      this.returnDate = _moment(new Date(this.data.returnDate[0],this.data.returnDate[1]-1,this.data.returnDate[2])).format();
+      this.returnDate = _moment(new Date(this.data.returnedDate[0],this.data.returnedDate[1]-1,this.data.returnedDate[2])).format();
       this._core.getPayablesById(this.data.id).subscribe(res=>{
         for(var i in res){
           this.total += res[i].value;
