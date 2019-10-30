@@ -170,10 +170,14 @@
                       <p style="color:#003767;margin-right:20px">Selected Components: </p>
                       </div>
                       <div>
-                          <p style="color:#003767"> Bike: {{bikeSelected.name}}</p>
-                          <p style="color:#003767"> Lock: {{lockSelected.name}}</p>
+                          <p *ngIf="bikeSelected == 'Skip'" style="color:#003767"> Bike: {{bikeSelected}}</p>
+                          <p *ngIf="bikeSelected != 'Skip'" style="color:#003767"> Bike: {{bikeSelected.name}}</p>
+
+                          <p  *ngIf="lockSelected == 'Skip'" style="color:#003767"> Lock: {{lockSelected}}</p>
+                          <p  *ngIf="lockSelected != 'Skip'" style="color:#003767"> Lock: {{lockSelected.name}}</p>
+
                           <p style="color:#003767"> Basket: {{basketSelected}}</p>
-                          <span *ngIf="bikeSelected=='Skip' && basketSelected == 'Skip' && lockSelected=='Skip'" style="color:#dc3545">No component selected</span>
+                          <span *ngIf="bikeSelected=='Skip' && basketSelected == 'Skip' && lockSelected=='Skip'" style="color:#dc3545;font-size: 0.8em;">*No component selected</span>
                       </div>
                       </div>
                     </mat-step>
