@@ -46,27 +46,16 @@ export class ArchiveRecordComponent implements OnInit {
     this.queryMessage = this._dataShare.getRedirectMessage();
 
     if(this.queryMessage == null){
-        this._core.archivedRentalsDataCall().subscribe(res=>{ 
-          this.showSpinner = false;
-          this.tableData = res;
-          this.dataSource = new MatTableDataSource(this.tableData);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        });
+      this.getAllArchivedRental();
     } 
     else{
-      console.log("using query Object");
       //TODO  use query object to search for records
       if(this.queryMessage['bikeId'] != undefined){
         //this.searchType = 'bikeID';
         //this.input.nativeElement.value = this.queryMessage['bikeId'];
-        this._core.archivedRentalsDataCall().subscribe(res=>{ 
-          this.showSpinner = false;
-          this.tableData = res;
-          this.dataSource = new MatTableDataSource(this.tableData);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        });
+        //TODO not sure serach by bikeId
+        this.getAllArchivedRental();
+
       }
       else if((this.queryMessage['userId'] != undefined)){
         this.searchType = 'ID';
@@ -102,6 +91,17 @@ export class ArchiveRecordComponent implements OnInit {
         hasBackdrop: true
        }
     }
+  }
+
+
+  getAllArchivedRental(){
+    this._core.archivedRentalsDataCall().subscribe(res=>{ 
+      this.showSpinner = false;
+      this.tableData = res;
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   setupPresets() {
