@@ -42,7 +42,7 @@ export class CoreService {
   //archivedRental
   private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
   private archivedRentalSearchByDateUrl: string = this.baseServerAddress + "/getArchivedRentalByDate";
-  private archivedRentalSearchByCustId: string = this.baseServerAddress  + "/getArchivedRentalByCustID"
+  private archivedRentalSearchByCustId: string = this.baseServerAddress  + "/getArchivedRentalsByCustID"
   //customer
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
