@@ -57,21 +57,31 @@ export class ArchiveRecordComponent implements OnInit {
     else{
       console.log("using query Object");
       //TODO  use query object to search for records
-      this._core.archivedRentalsDataCall().subscribe(res=>{ 
-        this.showSpinner = false;
-        this.tableData = res;
-        this.dataSource = new MatTableDataSource(this.tableData);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      });
-
       if(this.queryMessage['bikeId'] != undefined){
-        this.searchType = 'bikeID';
-        this.input.nativeElement.value = this.queryMessage['bikeId'];
+        //this.searchType = 'bikeID';
+        //this.input.nativeElement.value = this.queryMessage['bikeId'];
+        this._core.archivedRentalsDataCall().subscribe(res=>{ 
+          this.showSpinner = false;
+          this.tableData = res;
+          this.dataSource = new MatTableDataSource(this.tableData);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
       }
       else if((this.queryMessage['userId'] != undefined)){
         this.searchType = 'ID';
         this.input.nativeElement.value = this.queryMessage['userId'];
+        this._core.searchArchivedByCustId(this.queryMessage['userId']).subscribe(res=>{ 
+          if(res==null){
+            res=[]
+          }
+          this.showSpinner = false;
+          this.tableData = res;
+          this.dataSource = new MatTableDataSource(this.tableData);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
+  
       }
 
       this.queryMessage = null;
@@ -170,8 +180,11 @@ export class ArchiveRecordComponent implements OnInit {
                   })
                 }
                 else{
-                  this._core.testReport().subscribe(res=>{
-                    this.tableData = [] //res;
+                  this._core.searchArchivedByCustId(this.input.nativeElement.value).subscribe(res=>{
+                    if(res == null){
+                      res = []
+                    }
+                    this.tableData = res
                     this.dataSource.paginator.pageIndex = 0;
                     this.dataSource = new MatTableDataSource(this.tableData)
                     this.dataSource.paginator = this.paginator;

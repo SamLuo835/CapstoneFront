@@ -28,7 +28,7 @@ export class NewRentalComponent implements OnInit {
   showSpinner:Boolean = false;
   comment:String = "";
   bikeSelected:String = "";
-  lockSelected:String = "";
+  lockSelected = "";
   basketSelected:String = "";
   resultUserData:Object = {};
   showForm:boolean = false;
@@ -77,11 +77,11 @@ export class NewRentalComponent implements OnInit {
       this.newRentalData['comment'] = this.comment
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
-          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected}];
+          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']}];
       if(this.bikeSelected != 'Skip' && this.basketSelected =='Skip')
-          this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected},{'@type':'LockItem','id':this.lockSelected}];
+          this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected},{'@type':'LockItem','id':this.lockSelected['id']}];
       if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
-          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected},{'@type':'Basket','id':this.basketSelected}];
+          this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']},{'@type':'Basket','id':this.basketSelected}];
 
   }
 

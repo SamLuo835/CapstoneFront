@@ -42,7 +42,7 @@ export class CoreService {
   //archivedRental
   private archivedRentalsUrl: string = this.baseServerAddress + "/getArchivedRentals";
   private archivedRentalSearchByDateUrl: string = this.baseServerAddress + "/getArchivedRentalByDate";
-
+  private archivedRentalSearchByCustId: string = this.baseServerAddress  + "/getArchivedRentalByCustID"
   //customer
   private customersUrl: string = this.baseServerAddress + "/getCustomers/";
   private queryCustomerUrl:string = this.baseServerAddress + "/getCustomer";
@@ -74,6 +74,13 @@ searchCustomer(keyWord):Observable<any>{
 
 searchArchivedByDate(type,start,end):Observable<any>{
   return this.http.get(this.archivedRentalSearchByDateUrl+"/"+type+"/"+start+"/"+end,httpOptions).pipe(catchError(()=>{
+    this.notification.notify( 'error', 'Something bad happened, please try again later.' );
+    return throwError(
+    'Something bad happened; please try again later.');}));
+}
+
+searchArchivedByCustId(id):Observable<any>{
+  return this.http.get(this.archivedRentalSearchByCustId+"/"+id,httpOptions).pipe(catchError(()=>{
     this.notification.notify( 'error', 'Something bad happened, please try again later.' );
     return throwError(
     'Something bad happened; please try again later.');}));
