@@ -27,7 +27,7 @@ export class NewRentalComponent implements OnInit {
   errorMsg:String;
   showSpinner:Boolean = false;
   comment:String = "";
-  bikeSelected:String = "";
+  bikeSelected = "";
   lockSelected = "";
   basketSelected:String = "";
   resultUserData:Object = {};
@@ -79,7 +79,7 @@ export class NewRentalComponent implements OnInit {
       if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']}];
       if(this.bikeSelected != 'Skip' && this.basketSelected =='Skip')
-          this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected},{'@type':'LockItem','id':this.lockSelected['id']}];
+          this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected['id']},{'@type':'LockItem','id':this.lockSelected['id']}];
       if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']},{'@type':'Basket','id':this.basketSelected}];
 

@@ -115,7 +115,7 @@
                         <mat-label>Bike Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="bikeSelected" (selectionChange)="onChange()" [formControl]="bikeFormControl">
                           <mat-option *ngIf="!checkAvaliableBikes()" disabled>Currently No Bike is Avaliable </mat-option>
-                          <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.state == 'AVAILABLE' ? 'block':'none'}" [value]="bike.id ">
+                          <mat-option *ngFor="let bike of bikeList" [ngStyle]="{'display': bike.state == 'AVAILABLE' ? 'block':'none'}" [value]="bike">
                             Bike #{{bike.name}}
                           </mat-option>
                           <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
@@ -134,7 +134,7 @@
                         <mat-label>Lock Component</mat-label>
                         <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="lockSelected" (selectionChange)="onChange()" [formControl]="lockFormControl">
                           <mat-option *ngIf="!checkAvaliableLocks()" disabled>Currently No Lock is Avaliable </mat-option>
-                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock ">
+                          <mat-option *ngFor="let lock of lockList" [ngStyle]="{'display': lock.state == 'AVAILABLE' ? 'block':'none'}" [value]="lock">
                             Lock #{{lock.name}}
                           </mat-option>
                           <mat-option value="Skip" *ngIf="bikeSelected == 'Skip'" style="background-color:#ffc107"> Skip </mat-option>
@@ -170,7 +170,7 @@
                       <p style="color:#003767;margin-right:20px">Selected Components: </p>
                       </div>
                       <div>
-                          <p style="color:#003767"> Bike: {{bikeSelected}}</p>
+                          <p style="color:#003767"> Bike: {{bikeSelected.name}}</p>
                           <p style="color:#003767"> Lock: {{lockSelected.name}}</p>
                           <p style="color:#003767"> Basket: {{basketSelected}}</p>
                           <span *ngIf="bikeSelected=='Skip' && basketSelected == 'Skip' && lockSelected=='Skip'" style="color:#dc3545">No component selected</span>
