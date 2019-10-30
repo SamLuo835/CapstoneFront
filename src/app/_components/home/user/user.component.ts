@@ -32,13 +32,18 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit() {
-        this._core.customersDataCall().subscribe(res=>{ 
-        this.showSpinner = false;
-        this.tableData = res;
-        this.dataSource = new MatTableDataSource(this.tableData);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      })
+       this.getCustomers()
+  }
+
+
+  getCustomers(){
+    this._core.customersDataCall().subscribe(res=>{ 
+      this.showSpinner = false;
+      this.tableData = res;
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
 
@@ -93,6 +98,10 @@ export class UserComponent implements OnInit {
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
+        if(result['waiverSign']){
+            this.showSpinner = true;
+            this.getCustomers()
+        }
         if(result['action'] != undefined){
           if(result['action'] == 'redirect'){
               this._dataShare.changeRedirectMessage({index:4,userId:result['userId']});
@@ -121,6 +130,7 @@ export class UserDialog {
   expireDate:string;
 
   expireAlert:boolean;
+  waiverSigned:boolean = false;
 
   constructor(public dialogRef: MatDialogRef<UserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
@@ -136,6 +146,7 @@ export class UserDialog {
   }
 
   saveChanges() {
+    //need to pass wavierSign boolean here too
   }
 
   openWaiverPage(){
@@ -147,8 +158,10 @@ export class UserDialog {
       disableClose: true
     });
     waiverDialogRef.afterClosed().subscribe(result => {
-        if(result['user']){
-         this.user = result['user']
+        if(result['signDate'] && result['expireDate']){
+         this.waiverSigned = true;
+         this.expireDate = _moment(result['expireDate']).format()
+         this.signedDate = _moment(result['signDate']).format();
         }
     }); 
   }
@@ -159,7 +172,7 @@ export class UserDialog {
   }
 
   onClick(): void {
-    this.dialogRef.close({});
+    this.dialogRef.close({waiverSign:this.waiverSigned});
   }
 }
 
@@ -190,12 +203,10 @@ export class WaiverDialog {
   onClick(): void {
       this._core.waiverSign(this.sheridanId).subscribe(res=>{
       ///// resfresh the user after close the waiver dialog 
-      this._core.getCustomerById(this.sheridanId).subscribe(res=>{
         this.notification.notify('success',"Waiver Signed");
-        console.log(res);
-        this.dialogRef.close({user:res['body']});
+        console.log(res)
+        this.dialogRef.close({signDate:res['signdate'],expireDate:res['expirydate']});
       })
-    })
   }
 
   ngOnInit(){
