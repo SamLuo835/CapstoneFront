@@ -133,7 +133,7 @@ export class LeftMenuComponent implements OnInit {
 
     this.messageEvent.emit(this.componentIndex);
 
-    if(this.componentIndex === 1 || this.componentIndex === 2 ){
+    if(this.componentIndex === 1 || this.componentIndex === 2 || this.componentIndex==8){
       this.panelOpenState = true;
     } 
     else{
