@@ -55,7 +55,6 @@ export class UserComponent implements OnInit {
             debounceTime(800),
             distinctUntilChanged(),
             tap(() => {
-              console.log(this.input.nativeElement.value)
               this.$searching = true;
               setTimeout(()=>{
                 if(this.input.nativeElement.value == ""){
@@ -103,6 +102,7 @@ export class UserComponent implements OnInit {
           this.showSpinner = true
           this.getCustomers()
         }
+        else
         if(result['action'] != undefined){
           if(result['action'] == 'redirect'){
               this._dataShare.changeRedirectMessage({index:4,userId:result['userId']});
@@ -172,8 +172,7 @@ export class UserDialog {
 
   saveChanges() {
     //need to pass wavierSign boolean here too
-    this.user.programEndDate = _moment(new Date(this.programEndDate)).format("YYYY-MM-DD");
-    console.log(this.user)
+    this.user.endOfProgram = _moment(new Date(this.programEndDate)).format("YYYY-MM-DD");
     this._core.editCustomer(this.user).subscribe(res=>{
       this.notification.notify('success',"Customer Edited");
       this.dialogRef.close({waiverSign:this.waiverSigned,action:'edit',user:this.user});
@@ -242,7 +241,6 @@ export class WaiverDialog {
       this._core.waiverSign(this.sheridanId).subscribe(res=>{
       ///// resfresh the user after close the waiver dialog 
         this.notification.notify('success',"Waiver Signed");
-        console.log(res)
         this.dialogRef.close({signDate:res['signdate'],expireDate:res['expirydate']});
       })
   }
