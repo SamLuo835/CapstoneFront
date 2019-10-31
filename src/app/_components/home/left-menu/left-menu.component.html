@@ -29,7 +29,10 @@
 
   <button class="btn btn-light" style="width:100%;font-family: 'Roboto'" (click)="buttonClick('newCustomer')"  *ngIf="!formDisplay && !customerFormDisplay && !waiverDisplay"> New Customer</button>
 
-  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('customer')" *ngIf="customerFormDisplay || waiverDisplay">Cancel</button>
+  <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('customer')" *ngIf="customerFormDisplay ">Cancel</button>
+
+  <button class="btn btn-light " style="width:100%;font-family: 'Roboto'" (click)="goBack('customer')" *ngIf=" waiverDisplay">Go Back</button>
+
 
   <button class="btn btn-danger " style="width:100%;font-family: 'Roboto'" (click)="cancel('rental')" *ngIf="formDisplay">Cancel Rental</button>
   <br><br>

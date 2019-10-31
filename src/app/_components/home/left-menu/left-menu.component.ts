@@ -145,6 +145,13 @@ export class LeftMenuComponent implements OnInit {
 
   }
 
+  goBack(){
+    this.waiverDisplay =false;
+    this._dataShare.changeShowWaiver(this.waiverDisplay);
+    this.customerFormDisplay =true;
+    this._dataShare.changeCustomerShowForm(this.customerFormDisplay);
+  }
+
   cancel(form){
     if(form == 'rental'){
       this.formDisplay = false;
