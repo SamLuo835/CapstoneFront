@@ -50,6 +50,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { WaiverComponent } from './_utility/waiver/waiver.component';
 import { TermsConditionComponent } from './_utility/terms-condition/terms-condition.component'
 
@@ -120,6 +121,7 @@ import { TermsConditionComponent } from './_utility/terms-condition/terms-condit
     MatTabsModule,
     MatStepperModule,
     MatIconModule,
+    MatSlideToggleModule,
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],

@@ -1,10 +1,14 @@
-<h1 mat-dialog-title >Sheridan ID: {{user.sheridanId}}
+<h1 mat-dialog-title >Sheridan ID: {{user.sheridanId}} 
+    <span *ngIf="user.blackListed">(Banned)</span>
+    <span *ngIf="!user.blackListed">(Active)</span>
         <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
 </h1>
+<span><mat-slide-toggle color='primary' style="color: #073063;" [(ngModel)]="user.blackListed" (change)="toggleBanSwitch()">{{toggleText}}</mat-slide-toggle></span>
+
    
-    <div class="dialog-content" mat-dialog-content>
+    <div class="dialog-content" id="custDialog" mat-dialog-content>
         <mat-tab-group>
         <mat-tab label="Basic Information">
         <br>
@@ -67,9 +71,11 @@
                 </td>
                 <td>
                     <mat-checkbox class="full-width" color='primary' [(ngModel)]="user.willRecvEmail">Receive Email Notification</mat-checkbox>
+
                 </td>
             </tr>
         </table>
+        <br>
         <table class="full-width">
                 <tr>
                         <td>
@@ -87,6 +93,24 @@
                                 </mat-form-field>
                             </td>
                     </tr>
+        </table>
+        <table class="full-width">
+            <tr>
+                    <td>
+                            <mat-form-field class="full-width">
+                                <input matInput readonly [matDatepicker]="programEndPicker" placeholder="Program End Date"  [(ngModel)]="programEndDate">
+                                <mat-datepicker-toggle matSuffix [for]="programEndPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #programEndPicker></mat-datepicker>
+                            </mat-form-field>
+                    </td>
+                    <td>
+                            <mat-form-field class="full-width">
+                                <input matInput disabled  [matDatepicker]="createdDatePicker" placeholder="Customer Created Date"  [(ngModel)]="createdOn">
+                                <mat-datepicker-toggle matSuffix [for]="createdDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #createdDatePicker></mat-datepicker>
+                            </mat-form-field>
+                    </td>
+            </tr>
         </table>
 
        <!-- <table class="full-width">
@@ -122,7 +146,7 @@
        <hr>
     <div style="display: flex;justify-content: space-between">
     <mat-dialog-actions class="close-dialog">
-            <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
+            <button class="btn btn-warning" (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
     </mat-dialog-actions>
     <mat-dialog-actions *ngIf="expireAlert" class="close-dialog">
             <a class="redirectLink"  (click)="openWaiverPage()">Sign Waiver</a>

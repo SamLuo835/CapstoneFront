@@ -99,15 +99,31 @@ export class UserComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result['waiverSign']){
-            this.showSpinner = true;
-            this.getCustomers()
+          this.dataSource = undefined
+          this.showSpinner = true
+          this.getCustomers()
         }
         if(result['action'] != undefined){
           if(result['action'] == 'redirect'){
               this._dataShare.changeRedirectMessage({index:4,userId:result['userId']});
            }
+          else if(result['action'] == 'edit'){
+              this.changeTableCell(result['user'])
           }
+        }
       }); 
+    }
+
+    changeTableCell(result){
+      for(let i in this.tableData){
+        if(this.tableData[i]['sheridanId'] == result['sheridanId']){
+          this.tableData[i]=result;
+          this.dataSource = new MatTableDataSource(this.tableData);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          break;
+        }
+      }
     }
 
 }
@@ -128,7 +144,9 @@ export class UserDialog {
   
   signedDate:string;
   expireDate:string;
-
+  programEndDate:string;
+  createdOn:string;
+  toggleText:string;
   expireAlert:boolean;
   waiverSigned:boolean = false;
 
@@ -139,14 +157,34 @@ export class UserDialog {
   
   ngOnInit(){
     this.user = this.data.user;
-    this.signedDate = _moment(this.user.lastWaiverSignedAt).format();
+    this.signedDate =  _moment(this.user.lastWaiverSignedAt).format();
     //need to changed isAfter to isBefore 
     this.expireAlert = _moment(this.user.waiverExpirationDate).isAfter(new Date());
     this.expireDate = _moment(this.user.waiverExpirationDate).format();
+    this.programEndDate = _moment(this.user.endOfProgram).format();
+    this.createdOn = _moment(this.user.createdOn).format();
+    if(this.user.blackListed)
+      this.toggleText = "Unban Customer"
+    else
+    this.toggleText = "Ban Customer"
+
   }
 
   saveChanges() {
     //need to pass wavierSign boolean here too
+    this.user.programEndDate = _moment(new Date(this.programEndDate)).format("YYYY-MM-DD");
+    console.log(this.user)
+    this._core.editCustomer(this.user).subscribe(res=>{
+      this.notification.notify('success',"Customer Edited");
+      this.dialogRef.close({waiverSign:this.waiverSigned,action:'edit',user:this.user});
+    })
+  }
+
+  toggleBanSwitch(){
+    if(this.user.blackListed)
+    this.toggleText = "Unban Customer"
+    else
+    this.toggleText = "Ban Customer"
   }
 
   openWaiverPage(){

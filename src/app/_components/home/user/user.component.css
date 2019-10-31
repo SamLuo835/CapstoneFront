@@ -105,3 +105,6 @@ button:focus{outline: none!important}
     max-height: 550px!important;
 }
 
+#custDialog{
+   height:400px!important; 
+}
