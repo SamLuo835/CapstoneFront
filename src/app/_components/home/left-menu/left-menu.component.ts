@@ -104,6 +104,9 @@ export class LeftMenuComponent implements OnInit {
       case 'active':
         this.componentIndex = 3
         break;
+        case 'basket':
+          this.componentIndex = 8
+        break;
       case 'archive':
         this.componentIndex = 4
         break;

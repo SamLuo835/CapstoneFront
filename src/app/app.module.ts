@@ -52,7 +52,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { WaiverComponent } from './_utility/waiver/waiver.component';
-import { TermsConditionComponent } from './_utility/terms-condition/terms-condition.component'
+import { TermsConditionComponent } from './_utility/terms-condition/terms-condition.component';
+import { BasketComponent } from './_components/home/basket/basket.component'
 
 
 
@@ -89,7 +90,8 @@ import { TermsConditionComponent } from './_utility/terms-condition/terms-condit
     LockDialog,
     ArchivedDialog,
     WaiverComponent,
-    TermsConditionComponent
+    TermsConditionComponent,
+    BasketComponent
   ],
   imports: [
     BrowserAnimationsModule,
