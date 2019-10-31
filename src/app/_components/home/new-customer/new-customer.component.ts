@@ -5,17 +5,18 @@ import {CoreService} from '../../../_service/core.service';
 import {DataShareService} from '../../../_service/data-share.service';
 import 'rxjs/add/operator/take'
 import { NotifierService } from 'angular-notifier';
+import * as _moment from 'moment';
 
 
 export class newCustomerData{
-  firstName:String ="";
-  lastName:String ="";
-  phone:String ="";
-  personalEmail:String ="";
-  sheridanEmail:String ="";
-  type:String ="";
-  sheridanId:String ="";
-
+  firstName:string ="";
+  lastName:string ="";
+  phone:string ="";
+  personalEmail:string ="";
+  sheridanEmail:string ="";
+  type:string ="";
+  sheridanId:string ="";
+  endOfProgram:string =""
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -44,6 +45,8 @@ export class NewCustomerComponent implements OnInit {
 
   showWaiver:boolean = false;
 
+  today:Date = new Date()
+
 
 
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
@@ -58,7 +61,6 @@ export class NewCustomerComponent implements OnInit {
   ngOnInit() {
     this.subsctiptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
     this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
-    //this.subsctiptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => this.formRequire = message));
     this.subsctiptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
       this._dataShare.changeCustomerSubmit(false);
       //show waiver
@@ -83,6 +85,7 @@ export class NewCustomerComponent implements OnInit {
 
   createCustomer(){
     this.submitting = true;
+    this.customerData['endOfProgram'] = _moment(this.customerData['endOfProgram']).format('YYYY-MM-DD');
     this._coreService.getCustomerById(this.customerData.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
@@ -90,6 +93,7 @@ export class NewCustomerComponent implements OnInit {
         this.notification.notify( 'error', 'Customer Already Registered.' );
       }
       else if(response.status == 204){
+        
           this._coreService.newCustomer(this.customerData).subscribe(res => {
             this.submitting = false;
             this.notification.notify( 'success', 'New Customer Created.' );
@@ -136,6 +140,10 @@ export class NewCustomerComponent implements OnInit {
     Validators.required
   ]);
 
+  programEndDateFormControl = new FormControl({value:'',disabled:false}, [
+    Validators.required
+  ]);
+
   idFormControl = new FormControl({value:'',disables:false},[Validators.required]);
 
 
@@ -157,6 +165,9 @@ export class NewCustomerComponent implements OnInit {
       break;   
       case 6: this.formRequire[6] = this.idFormControl.hasError('required');
       break;   
+      case 7: this.formRequire[7] = this.programEndDateFormControl.hasError('required');
+      break;
+
     }
     console.log(this.formRequire)
     this._dataShare.changeCustomerFormRequire(this.formRequire);
@@ -172,7 +183,7 @@ export class NewCustomerComponent implements OnInit {
       });    
       this.showForm = true;
       this._dataShare.changeCustomerShowForm(this.showForm);
-      this.formRequire = [true,true,true,true,true,true]
+      this.formRequire = new Array(8).fill(true)
       this._dataShare.changeCustomerFormRequire(this.formRequire);
     }
   }
