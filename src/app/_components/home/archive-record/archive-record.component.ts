@@ -240,10 +240,7 @@ export class ArchivedDialog {
   categoryList = [];
   rowEditMode = [];
   
-  //predifineCategory should be an object in backEnd with 'category','value','paid','rental' property;
-  predefinedCat = [{'category':'Bike Lost','value':300,'paid':false,'rental':{'id':null}},{'category':'Lock Lost','value':60,'paid':false,'rental':{'id':null}},{'category':'Key Lost','value':30,'paid':false,'rental':{'id':null}},
-                  {'category':'Basket Lost','value':50,'paid':false,'rental':{'id':null}},{'category':'Light Lost','value':5,'paid':false,'rental':{'id':null}},{'category':'Bike Damage','value':5,'paid':false,'rental':{'id':null}},
-                  {'category':'Key Damage','value':5,'paid':false,'rental':{'id':null}}]
+  predefinedCat = []
 
   tabSwitch:boolean = false;
   currentIndex ;
@@ -264,6 +261,15 @@ export class ArchivedDialog {
 
 
     ngOnInit(){
+      this._core.getAllPredefinedPayables().subscribe(res=>{
+        res.forEach(preDefPayable => {
+          let category = preDefPayable.category;
+          let value = preDefPayable.value;
+  
+          this.predefinedCat[this.predefinedCat.length] = {"category": category, "value": value, "isPaid": false, 'rental':{'id':this.data.id}};
+        });
+      });
+
       this.signOutDate = _moment(this.data['signOutDate']).format();
       this.dueDate = _moment(this.data['dueDate']).format();
       this.returnDate = _moment(this.data['returnedDate']).format();

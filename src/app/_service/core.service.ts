@@ -62,6 +62,9 @@ export class CoreService {
   private reportData:string = this.baseServerAddress + "/getReportGeneralData";
   private reportHistoricalData:string = this.baseServerAddress + "/getReportHistoricalData";
 
+  //PreDefinedPayables
+  private getAllPredefinedPayablesUrl:string = this.baseServerAddress + "/getAllPreDefinedPayables";
+
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
  }
@@ -289,6 +292,15 @@ export class CoreService {
   newLock(newLock):Observable<any>{
     newLock['@type'] = 'LockItem';
     return this.http.post(this.newLockUrl, newLock, httpOptions).pipe(
+      catchError((httpError) => {
+        let errorMessage = this.handleError(httpError);
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  getAllPredefinedPayables():Observable<any>{
+    return this.http.get(this.getAllPredefinedPayablesUrl, httpOptions).pipe(
       catchError((httpError) => {
         let errorMessage = this.handleError(httpError);
         return throwError(errorMessage);
