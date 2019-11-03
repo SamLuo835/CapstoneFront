@@ -344,7 +344,7 @@ export class ArchivedDialog {
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
       else{
-        this._core.updatePayables(this.categoryList).subscribe(res => {
+        this._core.updatePayables(this.data.id, this.categoryList).subscribe(res => {
           this.notification.notify('success', "Receivables Updated.");
         });
       }

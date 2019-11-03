@@ -158,8 +158,8 @@ export class CoreService {
     );
   }
 
-  updatePayables(categoryList):Observable<any>{
-    return this.http.patch(this.updateCategoryUrl,categoryList,httpOptions).pipe(
+  updatePayables(rentalId, categoryList):Observable<any>{
+    return this.http.patch(this.updateCategoryUrl + "/" + rentalId,categoryList,httpOptions).pipe(
       catchError((httpError) => {
         let errorMessage = this.handleError(httpError);
         return throwError(errorMessage);

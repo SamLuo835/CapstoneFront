@@ -256,7 +256,7 @@ export class DetailDialog {
         this.notification.notify( 'error', 'Please confirm unsave category first.' );
       }
       else{
-        this._core.updatePayables(this.categoryList).subscribe(res => {
+        this._core.updatePayables(this.data.id, this.categoryList).subscribe(res => {
           this.notification.notify('success', "Receivables Updated.");
         });
       }
@@ -268,7 +268,7 @@ export class DetailDialog {
       }
       else{
         console.log(this.categoryList);
-        this._core.updatePayables(this.categoryList).subscribe(res => {
+        this._core.updatePayables(this.data.id, this.categoryList).subscribe(res => {
           this.dialogRef.close({rentalId:this.data.id,comment:this.data.comment,action:'return'});
         });
       }
