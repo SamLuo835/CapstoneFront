@@ -257,6 +257,7 @@ export class CoreService {
   }
 
   newBike(newBike):Observable<any>{
+    newBike['@type'] = 'Bike';
     return this.http.post(this.newBikeUrl, newBike, httpOptions).pipe(
       catchError((httpError) => {
         let errorMessage = this.handleError(httpError);

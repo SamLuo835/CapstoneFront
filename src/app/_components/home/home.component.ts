@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
 
     openBikeDialog(): void { 
       const dialogRef = this._modal.open(BikeDialog, {
-        data:{bike:{ state:'',name: null,imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
+        data:{bike:{ state:'',name: '', imgPath:'',manufacturer:'',notes:'',productCode:'',serialNumber:''},action:'create'},
        height: '600px',
        width: '600px',
        autoFocus:false,
