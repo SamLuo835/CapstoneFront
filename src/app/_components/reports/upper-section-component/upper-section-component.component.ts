@@ -4,8 +4,6 @@ import * as _moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { CoreService } from 'src/app/_service/core.service';
 
-
-
 @Component({
   selector: 'app-upper-section-component',
   templateUrl: './upper-section-component.component.html',
@@ -17,12 +15,11 @@ export class UpperSectionComponentComponent implements OnInit {
   constructor(private notification :NotifierService,private _core:CoreService) { 
   }
 
-
   init: boolean = false;
-  total:Number;
-  average:Number;
-  user:Number;
-  late:Number;
+  totalRentals:Number;
+  averageRentDays:Number;
+  newCustomers:Number;
+  lateRentals:Number;
   displayNumber: boolean = false;
 
   range:Range = {fromDate:new Date(), toDate: new Date()};
@@ -35,13 +32,6 @@ export class UpperSectionComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-  setTimeout(()=>{this._core.testReport().subscribe(res => {
-      this.displayNumber = true;
-      this.total = res['body'].total;
-      this.average = res['body'].average;
-      this.user = res['body'].user;
-      this.late = res['body'].late;
-    })},1000);
     const today = new Date();
     const lastMonth = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
 
@@ -57,40 +47,31 @@ export class UpperSectionComponentComponent implements OnInit {
         hasBackdrop: true
        }
     }
+
+    this.updateReportData(lastMonth, today);
   }
 
   // handler function that receives the updated date range object
-    updateRange(range: Range): void {
-      // init will prevent the double call in the initialization
-      if (this.init) {
-            if(_moment(range.fromDate).isAfter(range.toDate)){
-              this.notification.notify( 'error', 'From Date Is After To Date.' );
-              return;
-            }
-            else{
-              this.range = range;
-              console.log(_moment(this.range.fromDate).format("YYYY-MM-DD"))
-              console.log(_moment(this.range.toDate).format("YYYY-MM-DD"))
-              setTimeout(()=>{this._core.testReport().subscribe(res => {
-                this.total = 200;
-                this.average = 22;
-                this.user = 99;
-                this.late = 54;
-              })},1000);
-            }
-
-      }
-      else {
-        this.init = true;
-      }
+  updateRange(range: Range): void {
+    // init will prevent the double call in the initialization
+    if (this.init) {
+          if(_moment(range.fromDate).isAfter(range.toDate)){
+            this.notification.notify( 'error', 'From Date Is After To Date.' );
+            return;
+          }
+          else{
+            this.range = range;
+            console.log(_moment(this.range.fromDate).format("YYYY-MM-DD"))
+            console.log(_moment(this.range.toDate).format("YYYY-MM-DD"))
+            this.updateReportData(this.range.fromDate, this.range.toDate);
+          }
     }
-
-
- 
-
+    else {
+      this.init = true;
+    }
+  }
 
   setupPresets() {
- 
     const backDate = (numOfDays) => {
       const today = new Date();
       return new Date(today.setDate(today.getDate() - numOfDays));
@@ -110,5 +91,13 @@ export class UpperSectionComponentComponent implements OnInit {
     ]
   }
 
-  
+  updateReportData(fromDate, toDate) {
+    setTimeout(()=>{this._core.getReportData(fromDate, toDate).subscribe(res => {
+      this.displayNumber = true;
+      this.totalRentals = res['totalRentals'];
+      this.averageRentDays = res['avgRentDays'].toFixed(1);
+      this.newCustomers = res['numOfNewCustomers'];
+      this.lateRentals = res['numOfLateRentals'];
+    })},1000)
+  }
 }

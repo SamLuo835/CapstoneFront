@@ -58,9 +58,35 @@ export class CoreService {
   private editLockUrl:string = this.baseServerAddress + "/editLock";
   private newLockUrl:string = this.baseServerAddress + "/newLock";
 
+  //report
+  private reportData:string = this.baseServerAddress + "/getReportGeneralData";
+
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
  }
+
+getReportData(fromDate, toDate): Observable<any> {
+  return this.http.get(this.reportData + "/from=" + this.formatDate(fromDate) + "&to=" + this.formatDate(toDate)).pipe(catchError((httpError)=>{
+    let errorMessage = (httpError.error) ? httpError.error : 'Something bad happened, please try again later.';
+    this.notification.notify( 'error', errorMessage );
+    return throwError(errorMessage);
+  }));
+}
+
+// format date to yyyy-mm-dd
+formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) 
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
 
  testReport():Observable<any>{
   return  of(new HttpResponse({ body: {total:100,user:120,late:20,average:4.5}, status: 200 }));
