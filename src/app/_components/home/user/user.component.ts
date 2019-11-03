@@ -132,6 +132,7 @@ export class UserComponent implements OnInit {
 
 
 import * as _moment from 'moment';
+import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
 
 //dialog class
 @Component({
@@ -150,6 +151,21 @@ export class UserDialog {
   expireAlert:boolean;
   waiverSigned:boolean = false;
 
+  categoryList = [];
+  rowEditMode = [];
+  total:number = 0;
+  previousCategory:number = 0;
+  hoverText:boolean = false;
+  checkBoxState:boolean = false;
+  currentIndex ;
+  //convert to moment formatted date string
+  signOutDate:string;
+  dueDate:string;
+  //predifineCategory should be an object in backEnd with 'category','value','paid','rental' property;
+  predefinedCat = [{'category':'Bike Lost','value':300,'paid':false,'rental':{'id':null}},{'category':'Lock Lost','value':60,'paid':false,'rental':{'id':null}},{'category':'Key Lost','value':30,'paid':false,'rental':{'id':null}},
+                  {'category':'Basket Lost','value':50,'paid':false,'rental':{'id':null}},{'category':'Light Lost','value':5,'paid':false,'rental':{'id':null}},{'category':'Bike Damage','value':5,'paid':false,'rental':{'id':null}},
+                  {'category':'Key Damage','value':5,'paid':false,'rental':{'id':null}}]
+
   constructor(public dialogRef: MatDialogRef<UserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private _core :CoreService, 
     private notification : NotifierService,private _modal: MatDialog) {
@@ -166,7 +182,13 @@ export class UserDialog {
       this.toggleText = "Unban Customer"
     else
     this.toggleText = "Ban Customer"
-
+    this._core.getPayablesByCustomerId(this.user.sheridanId).subscribe(res => {
+      for(var i in res) {
+        this.total += res[i].value;
+      }
+      this.categoryList = JSON.parse(JSON.stringify(res));
+      this.rowEditMode = new Array(this.categoryList.length).fill(false);
+    })
   }
 
   saveChanges() {
@@ -210,6 +232,88 @@ export class UserDialog {
   onClick(): void {
     this.dialogRef.close({waiverSign:this.waiverSigned});
   }
+
+  // payables
+  enterEditMode(i){
+    if(!this.checkEditModeOn()){
+        this.rowEditMode[i] = true
+        this.previousCategory = this.categoryList[i].value;
+     }
+  }
+
+  confirmEdit(i){
+
+    this.rowEditMode[i] = false;
+    this.total -= this.previousCategory;
+    this.total += this.categoryList[i].value;
+    this.previousCategory = 0;
+  }
+
+  addTableRow(){
+    this.rowEditMode.unshift(true);    
+    this.categoryList.unshift({'category':'','value':0,'paid':false,'rental':{'id':this.data.id}});
+    this.checkBoxState = false;
+  }
+
+  deleteRow(i){
+    this.categoryList.splice(i,1);
+    this.rowEditMode.splice(i,1);
+    this.total -= this.previousCategory;
+    this.previousCategory = 0;
+  }
+
+
+  isEditMode(i){
+    if(this.rowEditMode[i] == true){
+      return true;
+    }
+    else return false;
+  }
+
+  checkEditModeOn(){
+    for(var i in this.rowEditMode){
+      if(this.rowEditMode[i]==true){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  updateReceivables(){
+    if(this.checkEditModeOn()){
+      this.notification.notify( 'error', 'Please confirm unsave category first.' );
+    }
+    else{
+      this._core.updatePayables(this.categoryList).subscribe(res => {
+        this.notification.notify('success', "Receivables Updated.");
+      });
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+    } else {
+      copyArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+            
+      this.total += event.container.data[event.currentIndex]['value'];
+      this.rowEditMode.unshift(false);    
+      this.categoryList[0].rental['id'] = this.data.id;
+      this.checkBoxState = false;
+    }
+  }
+
+  hoverIn(i){
+    this.currentIndex = i;
+    this.hoverText = true;
+}
+
+hoverOut(){
+  this.currentIndex = null;
+  this.hoverText = false;
+}
 }
 
 
