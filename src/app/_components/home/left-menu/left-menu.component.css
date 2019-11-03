@@ -32,7 +32,9 @@ mat-panel-title:hover{
   }
 
 mat-expansion-panel-header{
-  background: #eeeeee
+  padding:0 10px!important;
+  background: #eeeeee;
+  font-size: 1vw!important;
 }
 
 .backgoundBlack{
@@ -54,12 +56,13 @@ mat-expansion-panel-header{
 }
 
 .menuButton{
- 
+  font-size: 1vw;
   text-align: left!important;  
   width:100%;
   color:#5f6368;
   font-family: 'Roboto',sans-serif;
   font-weight: 500;
+  padding:0 10px;
 }
 
 .menuButton:focus{outline: none!important}

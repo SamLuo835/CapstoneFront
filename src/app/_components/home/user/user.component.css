@@ -83,7 +83,7 @@ button:focus{outline: none!important}
 .table_name{
     margin:15px 0 0 5%;
     font-weight: 600;
-    font-size: 1.9em;
+    font-size: 2vw;
     color:#073063;
     font-family: 'Roboto',sans-serif;
 }

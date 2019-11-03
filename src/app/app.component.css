@@ -9,7 +9,6 @@
 
 .content-transition{
   top:70px!important;
-  transition: 0.5s;
 }
 
 .header{
@@ -33,10 +32,11 @@
 h1{
     font-family: Arial, Helvetica, sans-serif;
     margin-right: 7px;
-    font-size: 3.0em;
+    font-size: 4vw;
     color:#073063;
 }
 .menuflexbox{
+    width: 60%;
     position: relative;
     padding-top:40px;
     display: flex;
@@ -219,7 +219,7 @@ h1{
   /* Standard syntax */
   @keyframes animateMenu {
     0%{top:0;left:0vw}
-    100% { top:-65px; left:13vw }
+    100% { top:-65px; left:14% }
   }
 
 
@@ -227,13 +227,13 @@ h1{
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:45vw; bottom:25px; font-size: 1.8em;text-align: left}
+    100% { right:50%; bottom:25px; font-size: 1.8em;text-align: left}
   }
   
   /* Standard syntax */
   @keyframes animateTitle {
     0%{right:0;bottom:0}
-    100% { right:45vw; bottom:25px; font-size: 1.8em;text-align: left}
+    100% { right:50%; bottom:25px; font-size: 1.8em;text-align: left}
   }
 
   /* Safari 4.0 - 8.0 */

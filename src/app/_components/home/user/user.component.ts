@@ -158,8 +158,7 @@ export class UserDialog {
   ngOnInit(){
     this.user = this.data.user;
     this.signedDate =  _moment(this.user.lastWaiverSignedAt).format();
-    //need to changed isAfter to isBefore 
-    this.expireAlert = _moment(this.user.waiverExpirationDate).isAfter(new Date());
+    this.expireAlert = _moment(this.user.waiverExpirationDate).isBefore(new Date());
     this.expireDate = _moment(this.user.waiverExpirationDate).format();
     this.programEndDate = _moment(this.user.endOfProgram).format();
     this.createdOn = _moment(this.user.createdOn).format();
