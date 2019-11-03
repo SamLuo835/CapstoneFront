@@ -14,22 +14,27 @@
         <tr>
             <td>
                 <mat-form-field class="full-width">
+                    <input matInput placeholder="Bike ID" [(ngModel)]="bike.name">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Serial Number" [(ngModel)]="bike.serialNumber">
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+
+    <table class="full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field class="full-width">
                     <input matInput placeholder="Manufacturer" [(ngModel)]="bike.manufacturer">
                 </mat-form-field>
             </td>
             <td>
                 <mat-form-field class="full-width">
                     <input matInput placeholder="Product Code" [(ngModel)]="bike.productCode">
-                </mat-form-field>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <table class="full-width" cellspacing="0">
-        <tr>
-            <td>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Serial Number" [(ngModel)]="bike.serialNumber">
                 </mat-form-field>
             </td>
         </tr>

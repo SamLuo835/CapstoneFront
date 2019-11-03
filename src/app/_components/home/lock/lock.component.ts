@@ -70,6 +70,10 @@ export class LockDialog {
   
   ngOnInit() {
     this.lock = this.data.lock;
+    // by default, state is set to AVAILABLE (for adding new locks)
+    if (this.lock.state === null || this.lock.state === "") {
+      this.lock.state = "AVAILABLE";
+    }
   }
 
   saveChanges() {

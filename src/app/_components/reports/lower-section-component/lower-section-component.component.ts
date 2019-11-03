@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreService } from 'src/app/_service/core.service';
 
 @Component({
   selector: 'app-lower-section-component',
@@ -7,12 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LowerSectionComponentComponent implements OnInit {
 
-  constructor() { }
-  totalStudent:Number = 311;
-  totalStaff:Number = 233;
-  historicalAvg:Number =4;
+  constructor(private _core:CoreService) { }
+  totalStudent:Number = 0;
+  totalStaff:Number = 0;
+  historicalAvg:Number = 0;
   
   ngOnInit() {
+    setTimeout(()=>{this._core.getReportHistoricalData().subscribe(res => {
+      this.totalStudent = res['numberOfStudents'];
+      this.totalStaff = res['numberOfStaff'];
+      this.historicalAvg = res['historicalRentDays'].toFixed(1);
+    })},1000);
   }
-
 }

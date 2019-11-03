@@ -37,7 +37,7 @@ export class NewCustomerComponent implements OnInit {
 
   showForm:boolean =false;
 
-  subsctiptions = [];
+  subscriptions = [];
 
   formRequire = [];
 
@@ -54,14 +54,14 @@ export class NewCustomerComponent implements OnInit {
   ngOnDestroy(){
     this._dataShare.changeCustomerFormRequire([]);
     this._dataShare.changeWaiverFormRequire(false);
-    this.subsctiptions.forEach( s => s.unsubscribe());
+    this.subscriptions.forEach( s => s.unsubscribe());
 
   }
 
   ngOnInit() {
-    this.subsctiptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
-    this.subsctiptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
-    this.subsctiptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
+    this.subscriptions.push(this._dataShare.currentCustomerForm.subscribe(message => this.showForm = message));
+    this.subscriptions.push(this._dataShare.currentWaiverForm.subscribe(message => this.showWaiver = message));
+    this.subscriptions.push(this._dataShare.currentCustomerFormSubmit.subscribe(message => { if(message){
       this._dataShare.changeCustomerSubmit(false);
       //show waiver
       this.showWaiver = true;
@@ -75,7 +75,7 @@ export class NewCustomerComponent implements OnInit {
         behavior: 'smooth'
       });   
     }}));
-    this.subsctiptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
+    this.subscriptions.push(this._dataShare.currentWaiverSubmit.subscribe(message => {
       if(message){
          this.createCustomer();
         }
