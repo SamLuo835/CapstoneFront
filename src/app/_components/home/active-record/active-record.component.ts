@@ -20,7 +20,8 @@ export class ActiveRecordComponent implements OnInit {
   tableData :Object[];
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['id', 'bike-id', 'signOutDate', 'dueDate', 'rentalState','manage'];
+  displayedColumns: string[] = ['id', 'bike-id', 'signOutDate', 'dueDate', 'rentalState', 'daysLate','manage'];
+  today;
 
   tableDetail:Object = {};
 
@@ -29,15 +30,30 @@ export class ActiveRecordComponent implements OnInit {
 
   
   ngOnInit() {
-        this._core.activeRentalsDataCall().subscribe(res=>{
-        if(res == null)
-            res = [] 
-        this.showSpinner = false;
-        this.tableData = res;
-        this.dataSource = new MatTableDataSource(this.tableData);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      });
+    let dates = new Date();
+    this.today = `${dates.getFullYear()}-${dates.getMonth()}-${dates.getDate()}`;
+
+      this._core.activeRentalsDataCall().subscribe(res=>{
+      if(res == null)
+          res = [] 
+      
+      for (var el of res) {
+        if (el.rentalState === "Late") {
+          let dayToday = new Date(this.today);
+          let dayDue = new Date(el.dueDate);
+          let daysLate = dayDue.getTime() - dayToday.getTime()
+          el.daysLate = Math.round(daysLate / (1000*60*60*24*5))
+        } else {
+          el.daysLate = null
+        }
+      }
+      
+      this.showSpinner = false;
+      this.tableData = res;
+      this.dataSource = new MatTableDataSource(this.tableData);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 
