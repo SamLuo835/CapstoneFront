@@ -29,7 +29,7 @@
           </td>
           <td>
             <mat-form-field class="full-width">
-              <mat-select [(ngModel)]="lock.state" [(value)]="lock.state" placeholder="Lock Status">
+              <mat-select [(ngModel)]="lock.state" [disabled]="lock.state == 'RENTED'" [(value)]="lock.state" placeholder="Lock Status">
                 <mat-option value="AVAILABLE">
                   <span class="text-success">Available</span>
                 </mat-option>
@@ -38,6 +38,9 @@
                 </mat-option>
                 <mat-option value="ARCHIVED">
                   <span class="text-danger">Archived</span>
+                </mat-option>
+                <mat-option style="display:none" value="RENTED">
+                  <span class="text-danger">Rented</span>
                 </mat-option>
               </mat-select>
             </mat-form-field>
