@@ -60,6 +60,7 @@ export class CoreService {
 
   //report
   private reportData:string = this.baseServerAddress + "/getReportGeneralData";
+  private reportHistoricalData:string = this.baseServerAddress + "/getReportHistoricalData";
 
   test():Observable<any>{
     return  of(new HttpResponse({ body: {text:"it works!"}, status: 200 }));
@@ -67,6 +68,14 @@ export class CoreService {
 
 getReportData(fromDate, toDate): Observable<any> {
   return this.http.get(this.reportData + "/from=" + this.formatDate(fromDate) + "&to=" + this.formatDate(toDate)).pipe(catchError((httpError)=>{
+    let errorMessage = (httpError.error) ? httpError.error : 'Something bad happened, please try again later.';
+    this.notification.notify( 'error', errorMessage );
+    return throwError(errorMessage);
+  }));
+}
+
+getReportHistoricalData(): Observable<any> {
+  return this.http.get(this.reportHistoricalData).pipe(catchError((httpError)=>{
     let errorMessage = (httpError.error) ? httpError.error : 'Something bad happened, please try again later.';
     this.notification.notify( 'error', errorMessage );
     return throwError(errorMessage);

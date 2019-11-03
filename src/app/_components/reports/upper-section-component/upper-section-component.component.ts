@@ -98,6 +98,6 @@ export class UpperSectionComponentComponent implements OnInit {
       this.averageRentDays = res['avgRentDays'].toFixed(1);
       this.newCustomers = res['numOfNewCustomers'];
       this.lateRentals = res['numOfLateRentals'];
-    })},1000)
+    })},1000);
   }
 }
