@@ -8,7 +8,7 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 })
 export class WaiverComponent implements OnInit {
   waiverFormRequire:boolean;
-  subsctiptions = [];
+  subscriptions = [];
 
   @Input() source:string ;
   @Output() messageEvent = new EventEmitter<boolean>();
@@ -16,10 +16,10 @@ export class WaiverComponent implements OnInit {
   constructor(private _dataShare:DataShareService) { }
 
   ngOnInit() {
-    this.subsctiptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
+    this.subscriptions.push(this._dataShare.currentWaiverRequire.subscribe(message => this.waiverFormRequire = message));
   }
   ngOnDestroy(){
-    this.subsctiptions.forEach( s => s.unsubscribe());
+    this.subscriptions.forEach( s => s.unsubscribe());
   }
 
   waiverCheck($event){

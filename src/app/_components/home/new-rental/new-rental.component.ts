@@ -48,22 +48,22 @@ export class NewRentalComponent implements OnInit {
   basketList:Array<any> = [];
   bikeList:Array<any> = [];
   formRequire:Array<any> = [];
-  subsctiptions:Array<any> = [];
+  subscriptions:Array<any> = [];
 
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
   constructor(private _coreService:CoreService,private _dataShare:DataShareService,private notification :NotifierService) { }
 
   ngOnDestroy(){
     this._dataShare.changeRentalFormRequire([]);
-    this.subsctiptions.forEach( s => s.unsubscribe());
+    this.subscriptions.forEach( s => s.unsubscribe());
   }
 
   ngOnInit() {
-    this.subsctiptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
-    //this.subsctiptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
+    this.subscriptions.push(this._dataShare.currentRetnalForm.subscribe(message => this.showForm = message));
+    //this.subscriptions.push(this._dataShare.currentFormRequire.subscribe(message => this.formRequire = message));
 
-    this.subsctiptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
-    this.subsctiptions.push(this._dataShare.currentRentalFormSubmit.subscribe(message => {if(message){
+    this.subscriptions.push(this._dataShare.currentBikeList.subscribe(message => this.bikeList = message));
+    this.subscriptions.push(this._dataShare.currentRentalFormSubmit.subscribe(message => {if(message){
       this.showSpinner = true
       this.createRentalDetail();
       this.saveRental();
