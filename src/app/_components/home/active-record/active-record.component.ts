@@ -134,6 +134,7 @@ import * as _moment from 'moment';
 import { DataShareService } from 'src/app/_service/data-share.service';
 import { NotifierService } from 'angular-notifier';
 import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'DetailDialog',
@@ -157,6 +158,16 @@ export class DetailDialog {
   signOutDate:string;
   dueDate:string;
 
+  showErrorMessage:boolean;
+
+
+  categoryNameControl  = new FormControl({value:'',disabled:false}, [
+    Validators.required,
+  ]);
+
+  categoryValueControl = new FormControl({value:'',disabled:false}, [
+    Validators.required,
+  ]);
 
   constructor( 
     public dialogRef: MatDialogRef<DetailDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService,
@@ -166,6 +177,7 @@ export class DetailDialog {
 
 
   ngOnInit(){
+    
     this._core.getAllPredefinedPayables().subscribe(res=>{
       res.forEach(preDefPayable => {
         let category = preDefPayable.category;
@@ -214,7 +226,9 @@ export class DetailDialog {
     }
 
     confirmEdit(i){
-
+      if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
+        return;
+      }
       this.rowEditMode[i] = false;
       this.total -= this.previousCategory;
       this.total += this.categoryList[i].value;
@@ -289,7 +303,8 @@ export class DetailDialog {
     drop(event: CdkDragDrop<string[]>) {
       if (event.previousContainer === event.container) {
       } else {
-        copyArrayItem(event.previousContainer.data,
+        let deepCopyItem = JSON.parse(JSON.stringify(event.previousContainer.data));
+        copyArrayItem(deepCopyItem,
                           event.container.data,
                           event.previousIndex,
                           event.currentIndex);
