@@ -171,17 +171,18 @@ export class NewCustomerComponent implements OnInit {
       break;
 
     }
-    
-    if(this.customerData['type'] !== "" && this.customerData['type'] !=='STUDENT'){
-      //remove the last form require( program end date in case type is not student)
-      this.formRequire.pop()
-      console.log(this.customerData)
+    if( this.formRequire.length >= 8){
+      if(this.customerData['type'] !== "" && this.customerData['type'] !=='STUDENT'){
+        this.formRequire.pop();
+        this.customerData['endOfProgram']=''
+      }
     }
+    //
     else{
-      //add the form require with the default state
-      this.formRequire[7] = true;
-      console.log(this.formRequire)
-    } 
+      if(this.customerData['type'] !== "" && this.customerData['type'] ==='STUDENT'){
+        this.formRequire.push(true);
+      }
+    }
 
     this._dataShare.changeCustomerFormRequire(this.formRequire);
   }
