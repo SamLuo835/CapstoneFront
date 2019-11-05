@@ -58,12 +58,9 @@
                     <mat-error *ngIf="emailFormControl.hasError('required')">
                           Sheridan Email is <strong>required</strong>
                     </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('email')">
-                            Sheridan Email is <strong>invalid</strong>
-                    </mat-error>
                     <mat-error *ngIf="emailFormControl.hasError('pattern')">
                       Sheridan Email is <strong>invalid</strong>
-              </mat-error>
+                    </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
                     <input matInput placeholder="Personal Email *" [errorStateMatcher]="matcher"  name="personalEmail" (change)="onChange(3)" [formControl]="pEmailFormControl"   [(ngModel)]="customerData['personalEmail']">

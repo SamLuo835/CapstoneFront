@@ -118,8 +118,7 @@ export class NewCustomerComponent implements OnInit {
 
   emailFormControl  = new FormControl({value:'',disabled:false}, [
     Validators.required,
-    Validators.email,
-    Validators.pattern(/@sheridan\.com$/)
+    Validators.pattern(/@sheridancollege\.ca$/)
   ]);
 
   pEmailFormControl  = new FormControl({value:'',disabled:false}, [
@@ -160,7 +159,7 @@ export class NewCustomerComponent implements OnInit {
       break;
       case 1 : this.formRequire[1] = this.lastNameFormControl.hasError('required');
       break;
-      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email')||this.emailFormControl.hasError('pattern');
+      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('pattern');
       break; 
       case 3: this.formRequire[3] = this.pEmailFormControl.hasError('required') || this.pEmailFormControl.hasError('email');
       break;
