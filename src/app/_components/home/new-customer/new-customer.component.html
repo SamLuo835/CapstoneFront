@@ -54,12 +54,12 @@
                 
                 <br><br>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Sheridan Email *" [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(2)" [formControl]="emailFormControl" [(ngModel)]="customerData['sheridanEmail']">
+                    <input matInput placeholder="Sheridan Email *"  [errorStateMatcher]="matcher" name="sheridanEmail" (change)="onChange(2)" [formControl]="emailFormControl" [(ngModel)]="customerData['sheridanEmail']">
                     <mat-error *ngIf="emailFormControl.hasError('required')">
                           Sheridan Email is <strong>required</strong>
                     </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('email')">
-                            Sheridan Email is <strong>invalid</strong>
+                    <mat-error *ngIf="emailFormControl.hasError('pattern')">
+                      Sheridan Email is <strong>invalid</strong>
                     </mat-error>
                 </mat-form-field><br><br>
                 <mat-form-field class="full-width">
@@ -78,9 +78,12 @@
                     <mat-error *ngIf="phoneFormControl.hasError('required')">
                         Phone is <strong>required</strong>
                     </mat-error>
+                    <mat-error *ngIf="phoneFormControl.hasError('pattern')">
+                      Phone is <strong>invalid</strong>
+                  </mat-error>
                 </mat-form-field></td>
-                <td>
-                    <mat-form-field class="full-width">
+                <td >
+                    <mat-form-field class="full-width" *ngIf="customerData['type']==='STUDENT'">
                       <input matInput  [min]="today" [matDatepicker]="programEndPicker" [errorStateMatcher]="matcher" readonly name="endOfProgram" (dateChange)="onChange(7)" placeholder="Program end date *" [formControl]="programEndDateFormControl" [(ngModel)]="customerData['endOfProgram']">
                      
                       <mat-datepicker-toggle matSuffix [for]="programEndPicker"></mat-datepicker-toggle>

@@ -141,6 +141,7 @@ export class ArchiveRecordComponent implements OnInit {
             console.log(_moment(this.range.toDate).format("YYYY-MM-DD"))
             console.log(this.searchType);
             setTimeout(()=>{this._core.searchArchivedByDate(this.searchType,_moment(this.range.fromDate).format("YYYY-MM-DD"),_moment(this.range.toDate).format("YYYY-MM-DD")).subscribe(res => {
+              if (res===null){res=[]}
               this.tableData = res
               this.dataSource.paginator.pageIndex = 0;
               this.dataSource = new MatTableDataSource(this.tableData)

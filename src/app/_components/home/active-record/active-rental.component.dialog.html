@@ -117,7 +117,7 @@
               </a>
             </td>
             <td *ngIf="isEditMode(i)">
-                <a class="editRentalIcon"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
+                <a class="editRentalIcon" [ngClass]="categoryNameControl.hasError('required') || categoryValueControl.hasError('required') ? 'disableIcon':''"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
                   <mat-icon>check</mat-icon>
                 </a>
                 <a  class="editRentalIcon" style="color:#dc3545" matTooltip="Remove Category"  matTooltipPosition="right"   (click)="deleteRow(i)">

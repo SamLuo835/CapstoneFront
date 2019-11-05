@@ -210,7 +210,7 @@ export class NewRentalComponent implements OnInit {
         if(res[i]['customer']['sheridanId']== response['body']['sheridanId']){
           this.showForm = false;
           this.showSpinner = false;
-          this.errorMsg = "Customer already have an active rental."
+          this.errorMsg = "Customer already has an active rental."
           return    
         }
       }
@@ -225,7 +225,7 @@ export class NewRentalComponent implements OnInit {
       this.showSpinner = false;
       this.errorMsg = "Customer program ended"
     }
-    else if(_moment(this.resultUserData['waiverExpirationDate']).isBefore(new Date())){
+    else if(this.resultUserData['waiverExpirationDate'] != null &&_moment(this.resultUserData['waiverExpirationDate']).isBefore(new Date())){
       this.showForm = false;
       this.showSpinner = false;
       this.errorMsg = "Customer waiver expired"

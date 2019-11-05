@@ -85,7 +85,9 @@ export class NewCustomerComponent implements OnInit {
 
   createCustomer(){
     this.submitting = true;
-    this.customerData['endOfProgram'] = _moment(this.customerData['endOfProgram']).format('YYYY-MM-DD');
+    if(this.customerData['endOfProgram']){
+      this.customerData['endOfProgram'] = _moment(this.customerData['endOfProgram']).format('YYYY-MM-DD');
+    }
     this._coreService.getCustomerById(this.customerData.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
@@ -116,7 +118,7 @@ export class NewCustomerComponent implements OnInit {
 
   emailFormControl  = new FormControl({value:'',disabled:false}, [
     Validators.required,
-    Validators.email
+    Validators.pattern(/@sheridancollege\.ca$/)
   ]);
 
   pEmailFormControl  = new FormControl({value:'',disabled:false}, [
@@ -133,7 +135,9 @@ export class NewCustomerComponent implements OnInit {
   ]);
 
   phoneFormControl  = new FormControl({value:'',disabled:false}, [
-    Validators.required
+    Validators.required,
+    Validators.pattern(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
+
   ]);
 
   custTypeFormControl = new FormControl({value:'',disabled:false}, [
@@ -155,11 +159,11 @@ export class NewCustomerComponent implements OnInit {
       break;
       case 1 : this.formRequire[1] = this.lastNameFormControl.hasError('required');
       break;
-      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email');
+      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('pattern');
       break; 
       case 3: this.formRequire[3] = this.pEmailFormControl.hasError('required') || this.pEmailFormControl.hasError('email');
       break;
-      case 4: this.formRequire[4] = this.phoneFormControl.hasError('required');
+      case 4: this.formRequire[4] = this.phoneFormControl.hasError('required') || this.phoneFormControl.hasError('pattern');
       break;
       case 5: this.formRequire[5] = this.custTypeFormControl.hasError('required');
       break;   
@@ -169,7 +173,19 @@ export class NewCustomerComponent implements OnInit {
       break;
 
     }
-    console.log(this.formRequire)
+    if( this.formRequire.length >= 8){
+      if(this.customerData['type'] !== "" && this.customerData['type'] !=='STUDENT'){
+        this.formRequire.pop();
+        this.customerData['endOfProgram']=''
+      }
+    }
+    //
+    else{
+      if(this.customerData['type'] !== "" && this.customerData['type'] ==='STUDENT'){
+        this.formRequire.push(true);
+      }
+    }
+
     this._dataShare.changeCustomerFormRequire(this.formRequire);
   }
 

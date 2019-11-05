@@ -97,7 +97,7 @@
         <table class="full-width">
             <tr>
                     <td>
-                            <mat-form-field class="full-width">
+                            <mat-form-field *ngIf="programEndDate === undefined " class="full-width">
                                 <input matInput readonly [matDatepicker]="programEndPicker" placeholder="Program End Date"  [(ngModel)]="programEndDate">
                                 <mat-datepicker-toggle matSuffix [for]="programEndPicker"></mat-datepicker-toggle>
                                 <mat-datepicker #programEndPicker></mat-datepicker>
