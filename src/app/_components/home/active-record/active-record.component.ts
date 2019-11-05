@@ -165,7 +165,7 @@ export class DetailDialog {
     Validators.required,
   ]);
 
-  categoryValueControl = new FormControl({value:'',disabled:false}, [
+  categoryValueControl = new FormControl({value:'0',disabled:false}, [
     Validators.required,
   ]);
 
@@ -229,6 +229,9 @@ export class DetailDialog {
       if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
         return;
       }
+      this.categoryNameControl.setErrors({required:false})
+      this.categoryValueControl.setErrors({required:false})
+
       this.rowEditMode[i] = false;
       this.total -= this.previousCategory;
       this.total += this.categoryList[i].value;
@@ -242,6 +245,9 @@ export class DetailDialog {
     }
 
     deleteRow(i){
+      this.categoryNameControl.setErrors({required:false})
+      this.categoryValueControl.setErrors({required:false})
+
       this.categoryList.splice(i,1);
       this.rowEditMode.splice(i,1);
       this.total -= this.previousCategory;
