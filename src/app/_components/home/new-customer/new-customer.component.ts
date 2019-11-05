@@ -118,7 +118,8 @@ export class NewCustomerComponent implements OnInit {
 
   emailFormControl  = new FormControl({value:'',disabled:false}, [
     Validators.required,
-    Validators.email
+    Validators.email,
+    Validators.pattern(/@sheridan\.com$/)
   ]);
 
   pEmailFormControl  = new FormControl({value:'',disabled:false}, [
@@ -135,7 +136,9 @@ export class NewCustomerComponent implements OnInit {
   ]);
 
   phoneFormControl  = new FormControl({value:'',disabled:false}, [
-    Validators.required
+    Validators.required,
+    Validators.pattern(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)
+
   ]);
 
   custTypeFormControl = new FormControl({value:'',disabled:false}, [
@@ -157,11 +160,11 @@ export class NewCustomerComponent implements OnInit {
       break;
       case 1 : this.formRequire[1] = this.lastNameFormControl.hasError('required');
       break;
-      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email');
+      case 2: this.formRequire[2] = this.emailFormControl.hasError('required') || this.emailFormControl.hasError('email')||this.emailFormControl.hasError('pattern');
       break; 
       case 3: this.formRequire[3] = this.pEmailFormControl.hasError('required') || this.pEmailFormControl.hasError('email');
       break;
-      case 4: this.formRequire[4] = this.phoneFormControl.hasError('required');
+      case 4: this.formRequire[4] = this.phoneFormControl.hasError('required') || this.phoneFormControl.hasError('pattern');
       break;
       case 5: this.formRequire[5] = this.custTypeFormControl.hasError('required');
       break;   
