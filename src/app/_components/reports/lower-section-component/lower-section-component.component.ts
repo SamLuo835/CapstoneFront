@@ -20,4 +20,34 @@ export class LowerSectionComponentComponent implements OnInit {
       this.historicalAvg = res['historicalRentDays'].toFixed(1);
     })},1000);
   }
+
+  onGenerate() {
+    console.log("pressed!");
+    this._core.getReportExcel().subscribe(fileData =>{
+      
+      const blob: any = new Blob([fileData], { 
+        //type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
+        type: 'application/vnd.ms-excel' }
+      );
+      let link = document.createElement("a");
+
+      if (link.download !== undefined) {
+        console.log(blob);
+        let url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "BikeHubReport.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+
+    })};
+
+    // private getFilenameFromContentDisposition(contentDisposition: string): string {
+    //   const regex = /filename=(?<filename>[^,;]+);/g;
+    //   const match = regex.exec(contentDisposition);
+    //   const filename = match.groups.filename;
+    //   return filename;
+    // }
 }

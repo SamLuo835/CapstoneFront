@@ -61,6 +61,7 @@ export class CoreService {
   //report
   private reportData:string = this.baseServerAddress + "/getReportGeneralData";
   private reportHistoricalData:string = this.baseServerAddress + "/getReportHistoricalData";
+  private reportExcel:string = this.baseServerAddress + "/download/report.xlsx";
 
   //PreDefinedPayables
   private getAllPredefinedPayablesUrl:string = this.baseServerAddress + "/getAllPreDefinedPayables";
@@ -79,6 +80,14 @@ export class CoreService {
 
   getReportHistoricalData(): Observable<any> {
     return this.http.get(this.reportHistoricalData).pipe(
+      catchError((httpError)=>{
+        let errorMessage = this.handleError(httpError);
+        return throwError(errorMessage);
+      }));
+  }
+
+  getReportExcel(): Observable<any> {
+    return this.http.get(this.reportExcel, { responseType: 'blob' as 'blob' }).pipe(
       catchError((httpError)=>{
         let errorMessage = this.handleError(httpError);
         return throwError(errorMessage);
