@@ -49,6 +49,9 @@ export class DataShareService {
   private lockList = new BehaviorSubject([]);
   currentLockList = this.lockList.asObservable();
 
+  private basketList = new BehaviorSubject([]);
+  currentBasketList = this.basketList.asObservable();
+
   private redirectMessage = new BehaviorSubject(null);
 
   currentRedirectMessage = this.redirectMessage.asObservable();
@@ -121,5 +124,13 @@ export class DataShareService {
   }
   changeLockList(message : Array<any>) {
     this.lockList.next(message);
+  }
+
+  //Basket related
+  getBasketList() {
+    return this.basketList.getValue();
+  }
+  changeBasketList(message : Array<any>) {
+    this.basketList.next(message);
   }
 }

@@ -7,7 +7,7 @@
     margin-left:0; 
 }
 
-.addBike, .addLock{
+.addBike, .addLock, .addBasket{
     z-index: 50;
     position: fixed;
     top:90vh;

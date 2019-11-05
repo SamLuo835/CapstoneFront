@@ -1,0 +1,64 @@
+<h1 mat-dialog-title *ngIf="action == 'modify'">Basket ID: {{basket.name}}
+    <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </h1>
+  <h1 mat-dialog-title *ngIf="action == 'create'">Add a New Basket
+    <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </h1>
+  
+  <div class="dialog-content" mat-dialog-content>
+    <mat-tab-group>
+      <mat-tab label="Basket Information">
+        <br>
+        <table class="full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="basket.name" [(value)]="basket.name" placeholder="Basket ID">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field class="full-width">
+                <mat-select [(ngModel)]="basket.state" [disabled]="basket.state == 'RENTED'" [(value)]="basket.state" placeholder="Basket Status">
+                  <mat-option value="AVAILABLE">
+                    <span class="text-success">Available</span>
+                  </mat-option>
+                  <mat-option value="UNAVAILABLE">
+                    <span class="text-secondary">Unavailable</span>
+                  </mat-option>
+                  <mat-option value="ARCHIVED">
+                    <span class="text-danger">Archived</span>
+                  </mat-option>
+                  <mat-option style="display:none" value="RENTED">
+                    <span class="text-danger">Rented</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field class="full-width">
+                <textarea matInput [(ngModel)]="basket.notes" [(value)]="basket.notes" placeholder="Notes"></textarea>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  
+    <hr>
+    <div style="display: flex;justify-content: space-between">
+      <mat-dialog-actions class="close-dialog" *ngIf="action == 'modify'">
+        <button class="btn btn-warning" mat-dialog-close (click)="saveChanges()" style="font-weight: 500;font-size: 0.9rem">SAVE CHANGES</button>
+      </mat-dialog-actions>
+      <mat-dialog-actions class="close-dialog " *ngIf="action == 'create'">
+        <button class="btn btn-warning" mat-dialog-close (click)="addBasket()" style="font-weight: 500">ADD BASKET</button>
+      </mat-dialog-actions>
+    </div>
+  </div>

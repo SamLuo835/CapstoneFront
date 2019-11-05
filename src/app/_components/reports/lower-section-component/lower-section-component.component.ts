@@ -22,7 +22,6 @@ export class LowerSectionComponentComponent implements OnInit {
   }
 
   onGenerate() {
-    console.log("pressed!");
     this._core.getReportExcel().subscribe(fileData =>{
       
       const blob: any = new Blob([fileData], { 
@@ -30,9 +29,7 @@ export class LowerSectionComponentComponent implements OnInit {
         type: 'application/vnd.ms-excel' }
       );
       let link = document.createElement("a");
-
       if (link.download !== undefined) {
-        console.log(blob);
         let url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
         link.setAttribute("download", "BikeHubReport.xlsx");
@@ -41,13 +38,6 @@ export class LowerSectionComponentComponent implements OnInit {
         document.body.removeChild(link);
       }
 
-
     })};
 
-    // private getFilenameFromContentDisposition(contentDisposition: string): string {
-    //   const regex = /filename=(?<filename>[^,;]+);/g;
-    //   const match = regex.exec(contentDisposition);
-    //   const filename = match.groups.filename;
-    //   return filename;
-    // }
 }

@@ -58,6 +58,11 @@ export class CoreService {
   private editLockUrl:string = this.baseServerAddress + "/editLock";
   private newLockUrl:string = this.baseServerAddress + "/newLock";
 
+  //Baskets
+  private basketListUrl: string = this.baseServerAddress + "/getBaskets";
+  private editBasketUrl:string = this.baseServerAddress + "/editBasket";
+  private newBasketUrl:string = this.baseServerAddress + "/newBasket";
+
   //report
   private reportData:string = this.baseServerAddress + "/getReportGeneralData";
   private reportHistoricalData:string = this.baseServerAddress + "/getReportHistoricalData";
@@ -301,6 +306,36 @@ export class CoreService {
   newLock(newLock):Observable<any>{
     newLock['@type'] = 'LockItem';
     return this.http.post(this.newLockUrl, newLock, httpOptions).pipe(
+      catchError((httpError) => {
+        let errorMessage = this.handleError(httpError);
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  // Baskets List
+  getBasketList(){
+    return this.http.get(this.basketListUrl,{responseType:'text'}).pipe(
+      catchError((httpError) => {
+        let errorMessage = this.handleError(httpError);
+        return throwError(errorMessage);
+      })
+    );
+  }
+  
+  editBasket(editedBasketInfo):Observable<any>{
+    editedBasketInfo['@type'] = 'Basket';
+    return this.http.patch(this.editBasketUrl, editedBasketInfo, httpOptions).pipe(
+      catchError((httpError) => {
+        let errorMessage = this.handleError(httpError);
+        return throwError(errorMessage);
+      })
+    );
+  }
+
+  newBasket(newBasket):Observable<any>{
+    newBasket['@type'] = 'Basket';
+    return this.http.post(this.newBasketUrl, newBasket, httpOptions).pipe(
       catchError((httpError) => {
         let errorMessage = this.handleError(httpError);
         return throwError(errorMessage);

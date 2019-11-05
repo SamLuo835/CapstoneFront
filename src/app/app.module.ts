@@ -53,7 +53,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { WaiverComponent } from './_utility/waiver/waiver.component';
 import { TermsConditionComponent } from './_utility/terms-condition/terms-condition.component';
-import { BasketComponent } from './_components/home/basket/basket.component'
+import { BasketComponent, BasketDialog } from './_components/home/basket/basket.component'
 
 
 
@@ -88,6 +88,7 @@ import { BasketComponent } from './_components/home/basket/basket.component'
     UserDialog,
     WaiverDialog,
     LockDialog,
+    BasketDialog,
     ArchivedDialog,
     WaiverComponent,
     TermsConditionComponent,
@@ -127,7 +128,7 @@ import { BasketComponent } from './_components/home/basket/basket.component'
     NotifierModule.withConfig( { position:{horizontal:{position:'right',distance:12},vertical:{position:'top',distance:5}},behaviour:{autoHide:3000},
     } )
   ],
-  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog,LockDialog,ArchivedDialog,WaiverDialog],
+  entryComponents:[TimeoutDialog,DetailDialog,BikeDialog,UserDialog,LockDialog,ArchivedDialog,WaiverDialog, BasketDialog],
   providers: [AuthService,CoreService,AuthGuard,RootGuard,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},DataShareService],
   bootstrap: [AppComponent]
 })
