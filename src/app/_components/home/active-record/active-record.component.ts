@@ -227,6 +227,7 @@ export class DetailDialog {
 
     confirmEdit(i){
       if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
+     
         return;
       }
       this.categoryNameControl.setErrors({required:false})

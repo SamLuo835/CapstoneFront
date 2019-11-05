@@ -144,6 +144,10 @@ button:focus{outline: none!important}
     background-color: #5f6368 
 }
 
+.disableIcon{
+    color:darkgray!important;
+}
+
 
 
 

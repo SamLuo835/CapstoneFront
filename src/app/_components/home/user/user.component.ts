@@ -170,6 +170,7 @@ export class UserDialog {
   }
   
   ngOnInit(){
+    console.log(this.programEndDate)
     this._core.getAllPredefinedPayables().subscribe(res=>{
       res.forEach(preDefPayable => {
         let category = preDefPayable.category;

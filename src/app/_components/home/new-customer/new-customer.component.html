@@ -79,8 +79,8 @@
                         Phone is <strong>required</strong>
                     </mat-error>
                 </mat-form-field></td>
-                <td>
-                    <mat-form-field class="full-width">
+                <td >
+                    <mat-form-field class="full-width" *ngIf="customerData['type']==='STUDENT'">
                       <input matInput  [min]="today" [matDatepicker]="programEndPicker" [errorStateMatcher]="matcher" readonly name="endOfProgram" (dateChange)="onChange(7)" placeholder="Program end date *" [formControl]="programEndDateFormControl" [(ngModel)]="customerData['endOfProgram']">
                      
                       <mat-datepicker-toggle matSuffix [for]="programEndPicker"></mat-datepicker-toggle>

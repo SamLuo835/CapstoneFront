@@ -85,7 +85,9 @@ export class NewCustomerComponent implements OnInit {
 
   createCustomer(){
     this.submitting = true;
-    this.customerData['endOfProgram'] = _moment(this.customerData['endOfProgram']).format('YYYY-MM-DD');
+    if(this.customerData['endOfProgram']){
+      this.customerData['endOfProgram'] = _moment(this.customerData['endOfProgram']).format('YYYY-MM-DD');
+    }
     this._coreService.getCustomerById(this.customerData.sheridanId)
     .subscribe(response=>{
       if(response.status == 200){
@@ -169,7 +171,18 @@ export class NewCustomerComponent implements OnInit {
       break;
 
     }
-    console.log(this.formRequire)
+    
+    if(this.customerData['type'] !== "" && this.customerData['type'] !=='STUDENT'){
+      //remove the last form require( program end date in case type is not student)
+      this.formRequire.pop()
+      console.log(this.customerData)
+    }
+    else{
+      //add the form require with the default state
+      this.formRequire[7] = true;
+      console.log(this.formRequire)
+    } 
+
     this._dataShare.changeCustomerFormRequire(this.formRequire);
   }
 
