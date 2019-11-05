@@ -231,6 +231,7 @@ export class ArchiveRecordComponent implements OnInit {
 
 //dialog class
 import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'ArchivedDialog',
@@ -254,6 +255,13 @@ export class ArchivedDialog {
 
   returnDate:string;
 
+  categoryNameControl  = new FormControl({value:'',disabled:false}, [
+    Validators.required,
+  ]);
+
+  categoryValueControl = new FormControl({value:'0',disabled:false}, [
+    Validators.required,
+  ]);
 
   constructor( 
     public dialogRef: MatDialogRef<ArchivedDialog>,@Inject(MAT_DIALOG_DATA) public data: any,private notification :NotifierService,
@@ -303,7 +311,11 @@ export class ArchivedDialog {
     }
 
     confirmEdit(i){
-
+      if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
+        return;
+      }
+      this.categoryNameControl.setErrors({required:false})
+      this.categoryValueControl.setErrors({required:false})
       this.rowEditMode[i] = false;
       this.total -= this.previousCategory;
       this.total += this.categoryList[i].value;
@@ -316,6 +328,8 @@ export class ArchivedDialog {
     }
 
     deleteRow(i){
+      this.categoryNameControl.setErrors({required:false})
+      this.categoryValueControl.setErrors({required:false})
       this.categoryList.splice(i,1);
       this.rowEditMode.splice(i,1);
       this.total -= this.previousCategory;

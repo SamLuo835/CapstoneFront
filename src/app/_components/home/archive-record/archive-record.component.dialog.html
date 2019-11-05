@@ -92,7 +92,10 @@
                     </td>
                     <td *ngIf="isEditMode(i)" class="alignleft" style="height: 60px">
                         <mat-form-field style="width:80%">
-                          <input matInput [(ngModel)]="item.category">
+                          <input matInput required [formControl]="categoryNameControl"  [(ngModel)]="item.category">
+                          <mat-error *ngIf="categoryNameControl.hasError('required')">
+                            Name is <strong>required</strong>
+                           </mat-error>
                         </mat-form-field> 
                     </td>
                     <td *ngIf="!isEditMode(i)">
@@ -100,7 +103,11 @@
                     </td>
                     <td *ngIf="isEditMode(i)">
                         <mat-form-field  style="width:80%">
-                          <input matInput style="text-align: center"  type="number" [(ngModel)]="item.value">
+                          <mat-error *ngIf="categoryValueControl.hasError('required')">
+                            Value is <strong>required</strong>
+                        </mat-error>
+                          <input matInput style="text-align: center" [formControl]="categoryValueControl" type="number" [(ngModel)]="item.value">
+                         
                         </mat-form-field> 
                     </td>
                     <td>
