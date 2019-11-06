@@ -132,7 +132,6 @@ export class UserComponent implements OnInit {
 
 
 import * as _moment from 'moment';
-import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
 
 //dialog class
 @Component({
@@ -169,17 +168,7 @@ export class UserDialog {
     private notification : NotifierService,private _modal: MatDialog) {
   }
   
-  ngOnInit(){
-    console.log(this.programEndDate)
-    this._core.getAllPredefinedPayables().subscribe(res=>{
-      res.forEach(preDefPayable => {
-        let category = preDefPayable.category;
-        let value = preDefPayable.value;
-
-        this.predefinedCat[this.predefinedCat.length] = {"category": category, "value": value, "isPaid": false, 'rental':{'id':this.data.id}};
-      });
-    });
-    
+  ngOnInit(){    
     this.user = this.data.user;
     this.signedDate =  _moment(this.user.lastWaiverSignedAt).format();
     this.expireAlert = _moment(this.user.waiverExpirationDate).isBefore(new Date());
@@ -195,7 +184,6 @@ export class UserDialog {
         this.total += res[i].value;
       }
       this.categoryList = JSON.parse(JSON.stringify(res));
-      this.rowEditMode = new Array(this.categoryList.length).fill(false);
     })
   }
 
@@ -237,91 +225,9 @@ export class UserDialog {
     this.dialogRef.close({action:'redirect',userId:this.user['sheridanId']});
   }
 
-  onClick(): void {
+  closeDialog(): void {
     this.dialogRef.close({waiverSign:this.waiverSigned});
   }
-
-  // payables
-  enterEditMode(i){
-    if(!this.checkEditModeOn()){
-        this.rowEditMode[i] = true
-        this.previousCategory = this.categoryList[i].value;
-     }
-  }
-
-  confirmEdit(i){
-
-    this.rowEditMode[i] = false;
-    this.total -= this.previousCategory;
-    this.total += this.categoryList[i].value;
-    this.previousCategory = 0;
-  }
-
-  addTableRow(){
-    this.rowEditMode.unshift(true);    
-    this.categoryList.unshift({'category':'','value':0,'paid':false,'rental':{'id':this.data.id}});
-    this.checkBoxState = false;
-  }
-
-  deleteRow(i){
-    this.categoryList.splice(i,1);
-    this.rowEditMode.splice(i,1);
-    this.total -= this.previousCategory;
-    this.previousCategory = 0;
-  }
-
-
-  isEditMode(i){
-    if(this.rowEditMode[i] == true){
-      return true;
-    }
-    else return false;
-  }
-
-  checkEditModeOn(){
-    for(var i in this.rowEditMode){
-      if(this.rowEditMode[i]==true){
-        return true;
-      }
-    }
-    return false;
-  }
-
-  updateReceivables(){
-    if(this.checkEditModeOn()){
-      this.notification.notify( 'error', 'Please confirm unsave category first.' );
-    }
-    else{
-      this._core.updatePayables(this.data.id, this.categoryList).subscribe(res => {
-        this.notification.notify('success', "Receivables Updated.");
-      });
-    }
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-    } else {
-      copyArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-            
-      this.total += event.container.data[event.currentIndex]['value'];
-      this.rowEditMode.unshift(false);    
-      this.categoryList[0].rental['id'] = this.data.id;
-      this.checkBoxState = false;
-    }
-  }
-
-  hoverIn(i){
-    this.currentIndex = i;
-    this.hoverText = true;
-}
-
-hoverOut(){
-  this.currentIndex = null;
-  this.hoverText = false;
-}
 }
 
 

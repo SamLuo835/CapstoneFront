@@ -1,7 +1,7 @@
 <h1 mat-dialog-title >Sheridan ID: {{user.sheridanId}} 
     <span *ngIf="user.blackListed">(Banned)</span>
     <span *ngIf="!user.blackListed">(Active)</span>
-        <button float="right" type="button" (click)="onClick()" class="close" aria-label="Close">
+        <button float="right" type="button" (click)="closeDialog()" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
 </h1>
@@ -112,86 +112,33 @@
                     </td>
             </tr>
         </table>
-
-       <!-- <table class="full-width">
-                <tr>
-                    <td>
-                        <mat-form-field class="full-width">
-                            <input matInput placeholder="Emergency Contact First Name" [(ngModel)]="user.emergencyContactFirstName">
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field class="full-width">
-                                <input matInput placeholder="Emergency Contact Last Name"  [(ngModel)]="user.emergencyContactLastName">
-                        </mat-form-field>
-                    </td>
-                   
-                </tr>
-                <tr>
-                    <td >
-                        <mat-form-field class="full-width">
-                            <input matInput placeholder="Emergency Contact Phone"  [(ngModel)]="user.emergencyContactPhone">
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
-        -->
        
     </mat-tab>
-    <mat-tab label="Active Rental/ Owing Amount">
+    <mat-tab label="Owing Amount">
       <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
-        <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
-        <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "categoryList" [cdkDropListConnectedTo]="[predefine]" (cdkDropListDropped)="drop($event)">  
+        <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Rental id</td></tr>
+        <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "categoryList" [cdkDropListConnectedTo]="[predefine]">  
         <tr style="height:20px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
         <tr  *ngFor="let item of categoryList; let i = index">
-              <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
+              <td class="alignleft" style="height: 60px">
                 {{item.category}}
               </td>
-              <td *ngIf="isEditMode(i)" class="alignleft" style="height: 60px">
-                  <mat-form-field style="width:80%">
-                    <input matInput [(ngModel)]="item.category">
-                  </mat-form-field> 
-              </td>
-              <td *ngIf="!isEditMode(i)">
+              <td>
                 ${{item.value}}
               </td>
-              <td *ngIf="isEditMode(i)">
-                  <mat-form-field  style="width:80%">
-                    <input matInput style="text-align: center"  type="number" [(ngModel)]="item.value">
-                  </mat-form-field> 
+              <td>
+                <mat-checkbox style="margin:0 10px;" color='primary' disabled [(ngModel)]="item.paid"></mat-checkbox>
               </td>
               <td>
-                <mat-checkbox  style="margin:0 10px;" color='primary' [disabled]="!isEditMode(i)"  [(ngModel)]="item.paid"  ></mat-checkbox>
+                {{item.rental.id}}
               </td>
-              <td *ngIf="!isEditMode(i)">
-                <a class="penIcon"  matTooltipPosition="right"  [matTooltipDisabled]="!checkEditModeOn()" matTooltip="Confirm unsave category first" (click)="enterEditMode(i)">
-                  <mat-icon>create</mat-icon>
-                </a>
-              </td>
-              <td *ngIf="isEditMode(i)">
-                  <a class="editRentalIcon"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
-                    <mat-icon>check</mat-icon>
-                  </a>
-                  <a  class="editRentalIcon" style="color:#dc3545" matTooltip="Remove Category"  matTooltipPosition="right"   (click)="deleteRow(i)">
-                      <mat-icon>delete_outline</mat-icon>
-                    </a>
-                </td>
             </tr>
           </tbody>
-  
         </table>
         
-        <h6  *ngIf="categoryList.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
+        <h6  *ngIf="categoryList.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this customer.</h6>
         <div style="display: flex;justify-content: flex-end">
-        <mat-checkbox  style="margin:0 10px;color:#073063;font-size: 0.7em" color='primary' [(ngModel)]="checkBoxState" >The rental is ready to be closed</mat-checkbox>
         </div>
-        <hr style="margin-top: 0">
-        <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
-          <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
-            <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
-          </div>
-  
-        <span  style="font-size: 0.8em;color:#5f6368;margin-left: 15px;">* You can add predifined categories in Settings</span>  
     </mat-tab>
 </mat-tab-group>
 </div>
