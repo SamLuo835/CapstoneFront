@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CoreService } from '../../../_service/core.service';
 import {MatSort, MatTableDataSource,MatPaginator,MatDialogRef,MAT_DIALOG_DATA,MatDialog} from '@angular/material';
 import { NotifierService } from 'angular-notifier';
@@ -11,12 +11,12 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 })
 export class BasketComponent implements OnInit {
 
-  constructor(private _core :CoreService,private _modal: MatDialog) { }
+  constructor(private _core :CoreService,private _modal: MatDialog, private _dataShare:DataShareService) { }
 
   tableData : Array<any>;
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['id', 'state', 'manage'];
+  displayedColumns: string[] = ['name', 'state', 'manage'];
   tableDetail:Object = {};
 
   @ViewChild('input') input: ElementRef;
@@ -26,16 +26,27 @@ export class BasketComponent implements OnInit {
 
   ngOnInit() {
     this.getBasketList();
+    var basketSubject = this._dataShare.currentBasketList;
+    basketSubject.subscribe(value => {
+      this.refreshTable(value);
+    });
   }
 
   getBasketList() {
     this._core.getBasketList().subscribe(res => {
-      this.showSpinner = false;
-      this.tableData = JSON.parse(res);
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      this.refreshTable(res);
     });
+  }
+
+  refreshTable(data:any) {
+    this.showSpinner = false;
+    if (typeof data == 'string') 
+      this.tableData = JSON.parse(data);
+    else
+      this.tableData = data;
+    this.dataSource = new MatTableDataSource(this.tableData);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   openDialog(element, action): void {
@@ -79,13 +90,12 @@ export class BasketDialog {
   }
 
   saveChanges() {
-    console.log(this.basket);
     this._core.editBasket(this.basket).subscribe(res => {
       this.notification.notify('success', res.message);
       this._core.getBasketList().subscribe(res => {
         this._dataShare.changeBasketList(JSON.parse(res))
       })
-    }, error => {console.log("88", error)});
+    }, error => {});
   }
 
   onClick(): void {
@@ -97,7 +107,7 @@ export class BasketDialog {
       this.notification.notify('success', res.message);
       this._core.getBasketList().subscribe(res=>{
         this._dataShare.changeBasketList(JSON.parse(res));
-        },error =>{console.log("100", error)})
-    },error =>{console.log("101", error)});
+        },error =>{})
+    },error =>{});
   }
 }

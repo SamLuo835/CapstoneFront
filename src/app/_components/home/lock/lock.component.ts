@@ -11,12 +11,12 @@ import { DataShareService } from 'src/app/_service/data-share.service';
 })
 export class LockComponent implements OnInit {
 
-  constructor(private _core :CoreService,private _modal: MatDialog) {}
+  constructor(private _core :CoreService,private _modal: MatDialog, private _dataShare:DataShareService) {}
 
   tableData :Array<any>;
   showSpinner : boolean = true;
   dataSource : MatTableDataSource<any>;
-  displayedColumns: string[] = ['id', 'state', 'manage'];
+  displayedColumns: string[] = ['name', 'state', 'manage'];
   tableDetail:Object = {};
 
   @ViewChild('input') input: ElementRef;
@@ -25,16 +25,27 @@ export class LockComponent implements OnInit {
 
   ngOnInit() {
     this.getLockList();
+    var lockSubject = this._dataShare.currentLockList;
+    lockSubject.subscribe(value => {
+      this.refreshTable(value);
+    });
   }
 
   getLockList() {
     this._core.getLockList().subscribe(res => {
-      this.showSpinner = false;
-      this.tableData = JSON.parse(res);
-      this.dataSource = new MatTableDataSource(this.tableData);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      this.refreshTable(res);
     });
+  }
+
+  refreshTable(data:any) {
+    this.showSpinner = false;
+    if (typeof data == 'string') 
+      this.tableData = JSON.parse(data);
+    else
+      this.tableData = data;
+    this.dataSource = new MatTableDataSource(this.tableData);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   openDialog(element, action): void {
@@ -79,7 +90,7 @@ export class LockDialog {
   saveChanges() {
     this._core.editLock(this.lock).subscribe(res => {
       this.notification.notify('success', res.message);
-      this._core.getBikeList().subscribe(res => {
+      this._core.getLockList().subscribe(res => {
         this._dataShare.changeLockList(JSON.parse(res))
       })
     }, error => {});
@@ -89,7 +100,7 @@ export class LockDialog {
     this.dialogRef.close({});
   }
 
-  addLock() {
+  addLock() { 
     this._core.newLock(this.lock).subscribe(res => {
       this.notification.notify('success', res.message);
       this._core.getLockList().subscribe(res=>{
