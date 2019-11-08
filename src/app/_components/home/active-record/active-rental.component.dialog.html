@@ -117,12 +117,17 @@
               </a>
             </td>
             <td *ngIf="isEditMode(i)">
+              <div>
                 <a class="editRentalIcon" [ngClass]="categoryNameControl.hasError('required') || categoryValueControl.hasError('required') ? 'disableIcon':''"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
                   <mat-icon>check</mat-icon>
                 </a>
                 <a  class="editRentalIcon" style="color:#dc3545" matTooltip="Remove Category"  matTooltipPosition="right"   (click)="deleteRow(i)">
                     <mat-icon>delete_outline</mat-icon>
                   </a>
+                </div>
+                <span style="font-size: 0.1em; color:#dc3545" *ngIf="componentNotInRental">
+                    Component <strong>Not</strong> in the rental
+                   </span>
               </td>
           </tr>
         </tbody>
@@ -136,7 +141,7 @@
       <hr style="margin-top: 0">
       <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
         <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
-          <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
+          <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()"  [cdkDragDisabled]="dragDisable(category)" cdkDrag  [ngClass]="dragDisable(category) ? 'dragDisabled' :'dragCategory'" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
         </div>
 
       <span  style="font-size: 0.8em;color:#5f6368;margin-left: 15px;">* You can add predifined categories in Settings</span>

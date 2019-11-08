@@ -151,9 +151,9 @@
                           <mat-label>Basket Component</mat-label>
                           <mat-select panelClass="selectdropdown" [errorStateMatcher]="matcher" [(ngModel)]="basketSelected" (selectionChange)="onChange()" [formControl]="basketFormControl">
                             <mat-option *ngIf="!checkAvaliableBaskets()" disabled>Currently No Basket is Avaliable </mat-option>
-                            <!--<mat-option *ngFor="let basket of basketList" [ngStyle]="{'display': key.keyState == 'AVAILABLE' ? 'block':'none'}" [value]="key.id ">
+                            <mat-option *ngFor="let basket of basketList" [ngStyle]="{'display': basket.state == 'AVAILABLE' ? 'block':'none'}" [value]="basket.id ">
                               Basket #{{basket.id}}
-                            </mat-option>-->
+                            </mat-option>
                             <mat-option value="Skip" style="background-color:#ffc107"> Skip </mat-option>
                           </mat-select>
                           <mat-error *ngIf="basketFormControl.hasError('required')">

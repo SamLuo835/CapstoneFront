@@ -144,6 +144,19 @@ button:focus{outline: none!important}
     background-color: #5f6368 
 }
 
+.dragDisabled{
+    padding:5px;
+    margin:15px;
+    border-radius: 5px;
+    border:1px solid #5f6368;
+    color: #5f6368;
+    min-width:100px;
+    text-align: center;
+    font-size: .8em;
+    background-color: white ;
+    user-select:none;
+}
+
 .disableIcon{
     color:darkgray!important;
 }

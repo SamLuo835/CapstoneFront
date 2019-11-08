@@ -78,15 +78,17 @@ export class NewRentalComponent implements OnInit {
       this.newRentalData['customer']['sheridanId'] = this.resultUserData['sheridanId'];
       if(this.bikeSelected == 'Skip' && this.basketSelected =='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']}];
-      if(this.bikeSelected != 'Skip' && this.basketSelected =='Skip')
+      else if(this.bikeSelected != 'Skip' && this.basketSelected =='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'Bike','id':this.bikeSelected['id']},{'@type':'LockItem','id':this.lockSelected['id']}];
-      if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
+      else if(this.bikeSelected == 'Skip' && this.basketSelected !='Skip')
           this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']},{'@type':'Basket','id':this.basketSelected}];
+      else     this.newRentalData['rentalComponents'] = [{'@type':'LockItem','id':this.lockSelected['id']},{'@type':'Basket','id':this.basketSelected},{'@type':'Bike','id':this.bikeSelected['id']}];
 
   }
 
 
   saveRental(){
+    console.log(this.newRentalData)
     this._coreService.newRental(this.newRentalData).subscribe(res=>{
       this.showSpinner = false;
       this._dataShare.changeRentalSubmit(false);
@@ -146,7 +148,7 @@ export class NewRentalComponent implements OnInit {
   checkAvaliableBaskets(){
     if(this.basketList.length == 0) return false;
     for(let index in this.basketList){
-      if(this.basketList[index].keyState == 'AVAILABLE'){
+      if(this.basketList[index].state == 'AVAILABLE'){
           return true;
       }
       
@@ -244,11 +246,13 @@ export class NewRentalComponent implements OnInit {
         this.showForm = true;
         this.observables.push( this._coreService.getLockList());
         this.observables.push( this._coreService.getPayablesByCustomerId(this.resultUserData['sheridanId']));
+        this.observables.push(this._coreService.getBasketList());
         //this.observables.push( this._coreService.getBasketList());
 
         forkJoin(this.observables).subscribe( results =>{
           this.showSpinner = false;
           this.lockList = JSON.parse((results[0]));
+          this.basketList = JSON.parse((results[2]));
           //first one is locklist, second is payable list third is basketlist
           if(results[1].length!=0){
             this.hasPayableHistory = true;

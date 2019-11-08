@@ -31,7 +31,7 @@ export class ActiveRecordComponent implements OnInit {
   
   ngOnInit() {
     let dates = new Date();
-    this.today = `${dates.getFullYear()}-${dates.getMonth()}-${dates.getDate()}`;
+    this.today = `${dates.getFullYear()}/${dates.getMonth()}/${dates.getDate()}`;
 
       this._core.activeRentalsDataCall().subscribe(res=>{
       if(res == null)
@@ -40,9 +40,9 @@ export class ActiveRecordComponent implements OnInit {
       for (var el of res) {
         if (el.rentalState === "Late") {
           let dayToday = new Date(this.today);
-          let dayDue = new Date(el.dueDate);
-          let daysLate = dayDue.getTime() - dayToday.getTime()
-          el.daysLate = Math.round(daysLate / (1000*60*60*24*5))
+          let dayDue = new Date(el.dueDate.replace("-","/"));
+          let daysLate = dayToday.getDate() - dayDue.getDate()
+          el.daysLate =daysLate
         } else {
           el.daysLate = null
         }
@@ -144,6 +144,9 @@ export class DetailDialog {
   categoryList = [];
   rowEditMode = [];
 
+  existingTypes = ['Bike','Basket','Lock','Key','Light']
+  componentTypes = [];
+
   predefinedCat = [];
 
   tabSwitch:boolean = false;
@@ -159,7 +162,7 @@ export class DetailDialog {
   dueDate:string;
 
   showErrorMessage:boolean;
-
+  componentNotInRental:boolean = false;
 
   categoryNameControl  = new FormControl({value:'',disabled:false}, [
     Validators.required,
@@ -187,6 +190,21 @@ export class DetailDialog {
       });
     });
     
+
+    this.data['rentalComponents'].map((v)=>{
+        if(v['@type']=== 'LockItem'){
+          this.componentTypes.push("Lock");
+          this.componentTypes.push('Key');
+        }
+        else{
+          this.componentTypes.push(v['@type']);
+        }
+    })
+
+    this.componentTypes.push("Light")
+
+    console.log(this.componentTypes)
+
     this.signOutDate = _moment(this.data['signOutDate']).format();
     this.dueDate = _moment(this.data['dueDate']).format();
     this._core.getPayablesById(this.data.id).subscribe(res=>{
@@ -225,11 +243,41 @@ export class DetailDialog {
        }
     }
 
+    validateCategoryName(itemName,flag){
+      for(let j in this.componentTypes){
+        if(itemName.toUpperCase().includes(this.componentTypes[j].toUpperCase())){
+          flag = true
+        }
+      }
+      return flag;
+    }
+
     confirmEdit(i){
       if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
-     
         return;
       }
+      let flag = false;
+
+      //check if the input names exist in the existing types.
+      //if yes begin validation, if no, continue
+      for(let k in this.existingTypes){
+        if(this.categoryList[i]['category'].toUpperCase().includes(this.existingTypes[k].toUpperCase())){
+          //start validation
+          flag = this.validateCategoryName(this.categoryList[i]['category'],flag)
+          break;
+        }
+        if(Number(k) === 4){
+          flag = true
+        }
+      }
+      
+      if(!flag){
+        this.componentNotInRental = true;
+        return;
+      }
+
+      this.componentNotInRental = false;
+
       this.categoryNameControl.setErrors({required:false})
       this.categoryValueControl.setErrors({required:false})
 
@@ -332,6 +380,17 @@ export class DetailDialog {
       this.currentIndex = null;
       this.hoverText = false;
     }
+
+    dragDisable(item){
+      let itemName = item['category'].split(" ",1);
+
+      for(let i in this.componentTypes){
+        if(this.componentTypes[i].includes(itemName[0])){
+          return false;
+        }
+      }
+      return true;
+      }
       
 }
 
