@@ -85,7 +85,7 @@
             <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
               <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Edit/Remove</td></tr>
               <tbody cdkDropList #example = "cdkDropList" [cdkDropListData] = "categoryList" [cdkDropListConnectedTo]="[predefine]" (cdkDropListDropped)="drop($event)">  
-              <tr style="height:20px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
+              <tr style="height:80px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
               <tr  *ngFor="let item of categoryList; let i = index">
                     <td *ngIf="!isEditMode(i)" class="alignleft" style="height: 60px">
                       {{item.category}}
@@ -119,12 +119,17 @@
                       </a>
                     </td>
                     <td *ngIf="isEditMode(i)">
-                        <a class="editRentalIcon"  style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
+                      <div>
+                        <a class="editRentalIcon" [ngClass]="categoryNameControl.hasError('required') || categoryValueControl.hasError('required') ? 'disableIcon':''" style="margin-right: 15px;color:#28a745" matTooltip="Confirm" matTooltipPosition="right" (click)="confirmEdit(i)">
                           <mat-icon>check</mat-icon>
                         </a>
                         <a  class="editRentalIcon" style="color:#dc3545" matTooltip="Remove Category"  matTooltipPosition="right"   (click)="deleteRow(i)">
                             <mat-icon>delete_outline</mat-icon>
-                          </a>
+                        </a>
+                        </div>
+                        <span style="font-size: 5%; color:#dc3545" *ngIf="componentNotInRental">
+                            Component <strong>Not</strong> in the rental
+                        </span>
                       </td>
                   </tr>
                 </tbody>
@@ -134,14 +139,6 @@
               <h6  *ngIf="categoryList.length==0" style="color:#073063;margin:20px;text-align: center">No receivables found for this rental.</h6>
               <div style="display: flex;justify-content: flex-end">
               </div>
-              <hr style="margin-top: 0">
-              <h6 style="color:#073063;font-weight: 600;">Drag The Following Pre-defined Category To The Table</h6>
-                <div style="display: flex;flex-wrap: wrap;align-content: center" cdkDropList #predefine="cdkDropList" [cdkDropListData]="predefinedCat" [cdkDropListConnectedTo]="[example]">
-                  <span (mouseover)="hoverIn(i)" (mouseout)="hoverOut()" cdkDrag class="dragCategory" *ngFor="let category of predefinedCat; let i = index"  >{{hoverText && (i == currentIndex)?'$'+category['value']:category['category']}}</span>
-                </div>
-        
-              <span  style="font-size: 0.8em;color:#5f6368;margin-left: 15px;">* You can add predifined categories in Settings</span>
-        
       </mat-tab>
 
     </mat-tab-group>

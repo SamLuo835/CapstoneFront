@@ -189,21 +189,8 @@ export class DetailDialog {
         this.predefinedCat[this.predefinedCat.length] = {"category": category, "value": value, "isPaid": false, 'rental':{'id':this.data.id}};
       });
     });
-    
 
-    this.data['rentalComponents'].map((v)=>{
-        if(v['@type']=== 'LockItem'){
-          this.componentTypes.push("Lock");
-          this.componentTypes.push('Key');
-        }
-        else{
-          this.componentTypes.push(v['@type']);
-        }
-    })
-
-    this.componentTypes.push("Light")
-
-    console.log(this.componentTypes)
+    this.generateComponentType();
 
     this.signOutDate = _moment(this.data['signOutDate']).format();
     this.dueDate = _moment(this.data['dueDate']).format();
@@ -215,6 +202,21 @@ export class DetailDialog {
       this.rowEditMode = new Array(this.categoryList.length).fill(false);
       
     });
+  }
+
+  //generate the array of the component type in this rental 
+  generateComponentType(){
+    this.data['rentalComponents'].map((v)=>{
+      if(v['@type']=== 'LockItem'){
+        this.componentTypes.push("Lock");
+        this.componentTypes.push('Key');
+      }
+      else{
+        this.componentTypes.push(v['@type']);
+      }
+  })
+
+  this.componentTypes.push("Light")
   }
 
 
@@ -383,15 +385,15 @@ export class DetailDialog {
 
     dragDisable(item){
       let itemName = item['category'].split(" ",1);
-
-      for(let i in this.componentTypes){
-        if(this.componentTypes[i].includes(itemName[0])){
-          return false;
+      let flag = true;
+      this.componentTypes.map((v,k)=>{
+        if(v.toUpperCase().includes(itemName[0].toUpperCase())){
+          flag = false;
+          return;
         }
-      }
-      return true;
-      }
-      
+      })
+      return flag;
+      }      
 }
 
 

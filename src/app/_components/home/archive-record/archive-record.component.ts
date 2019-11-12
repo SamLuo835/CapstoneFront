@@ -231,7 +231,6 @@ export class ArchiveRecordComponent implements OnInit {
 
 
 //dialog class
-import {CdkDragDrop,copyArrayItem,} from '@angular/cdk/drag-drop';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -241,8 +240,10 @@ import {FormControl, Validators} from '@angular/forms';
 export class ArchivedDialog {
   categoryList = [];
   rowEditMode = [];
-  
+  existingTypes = ['Bike','Basket','Lock','Key','Light']
+
   predefinedCat = []
+  componentTypes = [];
 
   tabSwitch:boolean = false;
   currentIndex ;
@@ -255,6 +256,7 @@ export class ArchivedDialog {
   dueDate:string;
 
   returnDate:string;
+  componentNotInRental:boolean = false;
 
   categoryNameControl  = new FormControl({value:'',disabled:false}, [
     Validators.required,
@@ -279,6 +281,8 @@ export class ArchivedDialog {
         });
       });
 
+      this.generateComponentType()
+
       this.signOutDate = _moment(this.data['signOutDate']).format();
       this.dueDate = _moment(this.data['dueDate']).format();
       this.returnDate = _moment(this.data['returnedDate']).format();
@@ -289,6 +293,21 @@ export class ArchivedDialog {
         this.categoryList = JSON.parse(JSON.stringify(res));
         this.rowEditMode = new Array(this.categoryList.length).fill(false);
       });
+    }
+
+    //generate the array of the component type in this rental 
+    generateComponentType(){
+      this.data['rentalComponents'].map((v)=>{
+        if(v['@type']=== 'LockItem'){
+          this.componentTypes.push("Lock");
+          this.componentTypes.push('Key');
+        }
+        else{
+          this.componentTypes.push(v['@type']);
+        }
+    })
+
+    this.componentTypes.push("Light")
     }
 
    
@@ -311,10 +330,41 @@ export class ArchivedDialog {
        }
     }
 
+    validateCategoryName(itemName,flag){
+      for(let j in this.componentTypes){
+        if(itemName.toUpperCase().includes(this.componentTypes[j].toUpperCase())){
+          flag = true
+        }
+      }
+      return flag;
+    }
+
     confirmEdit(i){
       if(this.categoryNameControl.hasError('required') || this.categoryValueControl.hasError('required')){
         return;
       }
+      let flag = false;
+
+      //check if the input names exist in the existing types.
+      //if yes begin validation, if no, continue
+      for(let k in this.existingTypes){
+        if(this.categoryList[i]['category'].toUpperCase().includes(this.existingTypes[k].toUpperCase())){
+          //start validation
+          flag = this.validateCategoryName(this.categoryList[i]['category'],flag)
+          break;
+        }
+        if(Number(k) === 4){
+          flag = true
+        }
+      }
+      
+      if(!flag){
+        this.componentNotInRental = true;
+        return;
+      }
+
+      this.componentNotInRental = false;
+
       this.categoryNameControl.setErrors({required:false})
       this.categoryValueControl.setErrors({required:false})
       this.rowEditMode[i] = false;
@@ -363,29 +413,5 @@ export class ArchivedDialog {
           this.notification.notify('success', "Receivables Updated.");
         });
       }
-    }
-
-    drop(event: CdkDragDrop<string[]>) {
-      if (event.previousContainer === event.container) {
-      } else {
-        copyArrayItem(event.previousContainer.data,
-                          event.container.data,
-                          event.previousIndex,
-                          event.currentIndex);
-              
-        this.total += event.container.data[event.currentIndex]['value'];
-        this.rowEditMode.unshift(false);    
-        this.categoryList[0].rental['id'] = this.data.id;
-      }
-    }
-
-    hoverIn(i){
-        this.currentIndex = i;
-        this.hoverText = true;
-    }
-
-    hoverOut(){
-      this.currentIndex = null;
-      this.hoverText = false;
     }
 }
