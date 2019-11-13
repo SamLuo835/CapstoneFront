@@ -46,12 +46,28 @@ mat-paginator{
     width:90%;
 }
 
-.activeRentalDialog{
-    display:flex;
-    justify-content: space-between;
-    position: relative;
-    top:80px;
 
+.filter_container{
+    background:white;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1px;
+    width:95%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    min-height: 75px;
+}
+
+.table_name{
+    margin:15px 0 0 5%;
+    font-weight: 600;
+    font-size: 2vw;
+    color:#073063;
+    font-family: 'Roboto',sans-serif;
+}
+
+.mat-elevation-z8{
+    box-shadow: none;
 }
 
 button:focus{outline: none!important}
