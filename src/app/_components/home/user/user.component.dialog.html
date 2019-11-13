@@ -115,10 +115,14 @@
        
     </mat-tab>
     <mat-tab label="Owing Amount">
+        <hr style="margin-top: 0">
+        <div style="display: flex;justify-content:start;margin:0 0 15px 0;height: 35px;">
+            <h6 style="margin:10px 0;color:#003767;font-weight: 600">Receivables Summary</h6>
+        </div>
       <table  class="full-width" style="color:#5f6368;margin:auto;table-layout: fixed">
         <tr class="tableHeader" style="border-bottom:solid 1px black" ><td class="alignleft">Category</td><td>Amount</td><td>Paid</td><td>Rental id</td></tr>
         <tbody >  
-        <tr style="height:20px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
+        <tr style="height:80px;" *ngIf="categoryList.length==0"><td></td><td></td><td></td><td></td><tr>
         <tr  *ngFor="let item of categoryList; let i = index">
               <td class="alignleft" style="height: 60px">
                 {{item.category}}
