@@ -15,7 +15,7 @@ export class BasketComponent implements OnInit {
 
   tableData : Array<any>;
   showSpinner : boolean = true;
-  dataSource : MatTableDataSource<any>;
+  dataSource : MatTableDataSource<any> = undefined;
   displayedColumns: string[] = ['name', 'state', 'manage'];
   tableDetail:Object = {};
 
@@ -28,14 +28,15 @@ export class BasketComponent implements OnInit {
     this.getBasketList();
     var basketSubject = this._dataShare.currentBasketList;
     basketSubject.subscribe(value => {
+      if(value.length !== 0)
       this.refreshTable(value);
     });
   }
 
   getBasketList() {
-    this._core.getBasketList().subscribe(res => {
+   this._core.getBasketList().subscribe(res => {
       this.refreshTable(res);
-    });
+    }); 
   }
 
   refreshTable(data:any) {

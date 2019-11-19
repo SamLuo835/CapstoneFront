@@ -46,6 +46,12 @@ mat-paginator{
     width:90%;
 }
 
+.table_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .filter_container{
     background:white;

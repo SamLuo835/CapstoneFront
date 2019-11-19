@@ -27,6 +27,7 @@ export class LockComponent implements OnInit {
     this.getLockList();
     var lockSubject = this._dataShare.currentLockList;
     lockSubject.subscribe(value => {
+      if(value.length !== 0)
       this.refreshTable(value);
     });
   }
