@@ -103,6 +103,6 @@
 <div class="row" *ngIf="!showForm && showWaiver">
     <mat-spinner  diameter='40' *ngIf="submitting" style="position: absolute;z-index: 10;"></mat-spinner>
     <div class="col-md-12 " *ngIf="!submitting">
-      <app-waiver></app-waiver>
+      <app-waiver [customerName]="customerData.firstName + customerData.lastName"></app-waiver>
       </div>
   </div>

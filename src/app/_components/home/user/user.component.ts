@@ -205,7 +205,7 @@ export class UserDialog {
 
   openWaiverPage(){
     const waiverDialogRef = this._modal.open(WaiverDialog, {
-      data: this.user.sheridanId,
+      data: this.user,
       height: '700px',
       width: '1000px',
       autoFocus:false,
@@ -263,7 +263,7 @@ export class WaiverDialog {
   }
 
   ngOnInit(){
-      this.sheridanId = this.data
+      this.sheridanId = this.data.sheridanId
   }
 
 

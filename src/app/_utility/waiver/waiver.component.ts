@@ -11,7 +11,11 @@ export class WaiverComponent implements OnInit {
   subscriptions = [];
 
   @Input() source:string ;
+  @Input() customerName:string;
   @Output() messageEvent = new EventEmitter<boolean>();
+  
+  input:string;
+  showError:boolean = false;
 
   constructor(private _dataShare:DataShareService) { }
 
@@ -22,11 +26,21 @@ export class WaiverComponent implements OnInit {
     this.subscriptions.forEach( s => s.unsubscribe());
   }
 
+
   waiverCheck($event){
-    if(this.waiverFormRequire){
-      this.waiverFormRequire = false;
+    //algo to check name match
+    this.input = this.input.trim()
+    console.log(this.input)
+    console.log(this.customerName)
+    if(this.input.replace(" ","").toLowerCase() === this.customerName.toLowerCase()){
+      this.showError = false;
+      this.waiverFormRequire = true
     }
-    else this.waiverFormRequire = true;
+    else{
+      this.showError = true;
+      this.waiverFormRequire = false
+    }
+
     if(this.source != "dialog"){
       this._dataShare.changeWaiverFormRequire(this.waiverFormRequire);
     }
@@ -49,6 +63,5 @@ export class WaiverComponent implements OnInit {
     }
     else return date.getFullYear();
   }
-
 
 }
