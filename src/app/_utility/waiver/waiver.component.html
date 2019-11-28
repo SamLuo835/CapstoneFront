@@ -33,7 +33,8 @@
         <mat-form-field >
             <input matInput placeholder="Please Type Your Name"   name="customerName" (change)="waiverCheck($event)" [(ngModel)]="input">
         </mat-form-field>
-        <span [hidden]="!showError" style="font-size: 0.8em;
+        <span [hidden]="!showError" style="margin-bottom: 10px;
+        font-size: 0.8em;
         color:#f44336;text-align: start;">Name does not matched</span>
       <p>Signed this day of {{getDate()}}</p>  
 

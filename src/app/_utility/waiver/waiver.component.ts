@@ -30,8 +30,6 @@ export class WaiverComponent implements OnInit {
   waiverCheck($event){
     //algo to check name match
     this.input = this.input.trim()
-    console.log(this.input)
-    console.log(this.customerName)
     if(this.input.replace(" ","").toLowerCase() === this.customerName.toLowerCase()){
       this.showError = false;
       this.waiverFormRequire = true
