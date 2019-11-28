@@ -101,10 +101,8 @@ export class NewCustomerComponent implements OnInit {
             this.notification.notify( 'success', 'New Customer Created.' );
             this.showWaiver = false;
             this._dataShare.changeShowWaiver(this.showWaiver);
-            this.customerData = new newCustomerData();
             this._dataShare.changeWaiverFormRequire(false)
-
-            this.formRequire = []
+            this._dataShare.changeRedirectMessage({index:1});
         },error=>{this.submitting = false;        
       })
       }

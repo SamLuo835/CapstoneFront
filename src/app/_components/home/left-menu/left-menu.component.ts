@@ -51,7 +51,8 @@ export class LeftMenuComponent implements OnInit {
     this.subscriptions.push(this._dataShare.currentCustomerFormRequire.subscribe(message => {this.customerFormRequire = message}))
     this.subscriptions.push(this._dataShare.currentRedirectMessage.subscribe(message =>{
       if(message != null){
-        this.componentIndex = message['index'];this.panelOpenState = false;
+        this.componentIndex = message['index'];
+        this.componentIndex<3? this.panelOpenState = true : this.panelOpenState=false;
         this.messageEvent.emit(this.componentIndex);
         window.scroll({
           top: 0,
